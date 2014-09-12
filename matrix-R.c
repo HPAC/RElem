@@ -1,4 +1,3 @@
-
 #include "R-El.h"
 
 
@@ -17,8 +16,9 @@ SEXP newMatrix_d(){
   e=ElMatrixCreate_d(pMat);
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
-  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   UNPROTECT(1);
+  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_d"));
   return Rptr;
 }
 
