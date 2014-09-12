@@ -1,14 +1,5 @@
 #include "R-El.h"
 
-
-static void _clear(SEXP Rptr){
-  if (R_ExternalPtrAddr(Rptr) != NULL){
-    void *Cptr = (void *) R_ExternalPtrAddr(Rptr);
-    free(Cptr);
-    R_ClearExternalPtr(Rptr);
-  }
-}
-
 //Section: Environment
 SEXP elInitialize(){
   int argc = 0;
@@ -67,44 +58,6 @@ SEXP worldBarrier(){
   return R_NilValue;
 }
 
-//Section: aux functions
-
-
-SEXP ReturnString(){
-  SEXP text;
-  text = PROTECT(allocVector(STRSXP,10));
-  UNPROTECT(1);
-  strcpy( (char *)CHAR(STRING_ELT(text,1)),"Hola Rod");
-  return text;
-}
-
-
-//Section: Matrices (sequential)
-
-
-//Section: Grids
-
-SEXP newGrid(){
-  ElConstGrid *pGrid = malloc(sizeof(ElConstGrid));
-  ElDefaultGrid(pGrid);
-  SEXP Rptr = PROTECT(R_MakeExternalPtr(pGrid, install("Grid"),R_NilValue));
-  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
-  return Rptr;
-}
-
-//  *Check if it really necessary
-SEXP newGridC(){
-  ElGrid *pGrid = malloc(sizeof(ElGrid));
-  ElGridCreate(MPI_COMM_WORLD, EL_COLUMN_MAJOR, pGrid);
-  SEXP Rptr = PROTECT(R_MakeExternalPtr(pGrid, install("Grid"),R_NilValue));
-  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
-  return Rptr;
-}
-
-//Section: DistMatrices
-
 
 //Section Matrices  
 
@@ -125,35 +78,27 @@ SEXP uniformDistMatrix_d(SEXP Rptr, SEXP height, SEXP width){
 
 SEXP hermitianEig_d(SEXP RptrA, SEXP Rptrw){
   //Assuming Lower and unsorted:
-  ElMatrix_d A = *(ElMatrix_d *) R_ExternalPtrAddr(RptrA);
-  ElMatrix_d w = *(ElMatrix_d *) R_ExternalPtrAddr(Rptrw);
-  ElHermitianEig_d(EL_LOWER,A,w,EL_UNSORTED);
+  ElHermitianEig_d(EL_LOWER, toMatrix_d(RptrA), toMatrix_d(Rptrw), EL_UNSORTED);
   return R_NilValue;
 }
 
 SEXP hermitianEigDist_d(SEXP RptrA, SEXP Rptrw){
   //Assuming Lower and unsorted:
-  ElDistMatrix_d A = *(ElDistMatrix_d *) R_ExternalPtrAddr(RptrA);
-  ElDistMatrix_d w = *(ElDistMatrix_d *) R_ExternalPtrAddr(Rptrw);
-  ElHermitianEigDist_d(EL_LOWER,A,w,EL_UNSORTED);
+  ElHermitianEigDist_d( EL_LOWER,toDistMatrix_d(RptrA), toDistMatrix_d(Rptrw), EL_UNSORTED );
   return R_NilValue;
 }
 
 SEXP hermitianEigPair_d(SEXP RptrA, SEXP Rptrw, SEXP RptrZ){
   //Assuming Lower and unsorted:
-  ElMatrix_d A = *(ElMatrix_d *) R_ExternalPtrAddr(RptrA);
-  ElMatrix_d w = *(ElMatrix_d *) R_ExternalPtrAddr(Rptrw);
-  ElMatrix_d Z = *(ElMatrix_d *) R_ExternalPtrAddr(RptrZ);
-  ElHermitianEigPair_d(EL_LOWER,A,w,Z,EL_UNSORTED);
+  ElHermitianEigPair_d(EL_LOWER,toMatrix_d(RptrA), toMatrix_d(Rptrw),
+                       toMatrix_d(RptrZ), EL_UNSORTED);
   return R_NilValue;
 }
 
 SEXP hermitianEigPairDist_d(SEXP RptrA, SEXP Rptrw, SEXP RptrZ){
   //Assuming Lower and unsorted:
-  ElDistMatrix_d A = *(ElDistMatrix_d *) R_ExternalPtrAddr(RptrA);
-  ElDistMatrix_d w = *(ElDistMatrix_d *) R_ExternalPtrAddr(Rptrw);
-  ElDistMatrix_d Z = *(ElDistMatrix_d *) R_ExternalPtrAddr(RptrZ);
-  ElHermitianEigPairDist_d(EL_LOWER,A,w,Z,EL_UNSORTED);
+  ElHermitianEigPairDist_d( EL_LOWER, toDistMatrix_d(RptrA), toDistMatrix_d(Rptrw), 
+                            toDistMatrix_d(RptrZ), EL_UNSORTED );
   return R_NilValue;
 }
 
@@ -170,11 +115,10 @@ SEXP hermitianEigPairPartialDist_d(SEXP RptrA, SEXP Rptrw, SEXP RptrZ, SEXP idx1
   ElInt idxa = (ElInt)INTEGER(idx1)[0];
   ElInt idxb = (ElInt)INTEGER(idx2)[0];
   ElHermitianEigSubset_d subset = subsetParamsIdx_d(idxa,idxb);
-  ElDistMatrix_d A = *(ElDistMatrix_d *) R_ExternalPtrAddr(RptrA);
-  ElDistMatrix_d w = *(ElDistMatrix_d *) R_ExternalPtrAddr(Rptrw);
-  ElDistMatrix_d Z = *(ElDistMatrix_d *) R_ExternalPtrAddr(RptrZ);
   ElError e;
-  e = ElHermitianEigPairPartialDist_d(EL_LOWER,A,w,Z,EL_UNSORTED, subset);
+  e = ElHermitianEigPairPartialDist_d( EL_LOWER, toDistMatrix_d(RptrA), 
+                                       toDistMatrix_d(Rptrw), toDistMatrix_d(RptrZ),
+                                       EL_UNSORTED, subset );
   EL_ABORT_ON_ERROR(e);
   return R_NilValue;
 }

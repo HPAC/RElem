@@ -9,6 +9,28 @@ static void _clear(SEXP Rptr){
   }
 }
 
+SEXP newDistMatrix_i(SEXP RptrGrid){
+  ElError e;
+  ElDistMatrix_i *pDMat = malloc(sizeof(ElDistMatrix_i));
+  e=ElDistMatrixCreate_i(*(ElGrid *) R_ExternalPtrAddr(RptrGrid), pDMat);
+  EL_ABORT_ON_ERROR(e);
+  SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),R_NilValue));
+  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
+  UNPROTECT(1);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_i"));
+  return Rptr;
+}
+SEXP newDistMatrix_s(SEXP RptrGrid){
+  ElError e;
+  ElDistMatrix_s *pDMat = malloc(sizeof(ElDistMatrix_s));
+  e=ElDistMatrixCreate_s(*(ElGrid *) R_ExternalPtrAddr(RptrGrid), pDMat);
+  EL_ABORT_ON_ERROR(e);
+  SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),R_NilValue));
+  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
+  UNPROTECT(1);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_s"));
+  return Rptr;
+}
 SEXP newDistMatrix_d(SEXP RptrGrid){
   ElError e;
   ElDistMatrix_d *pDMat = malloc(sizeof(ElDistMatrix_d));
@@ -20,7 +42,58 @@ SEXP newDistMatrix_d(SEXP RptrGrid){
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_d"));
   return Rptr;
 }
+SEXP newDistMatrix_c(SEXP RptrGrid){
+  ElError e;
+  ElDistMatrix_c *pDMat = malloc(sizeof(ElDistMatrix_c));
+  e=ElDistMatrixCreate_c(*(ElGrid *) R_ExternalPtrAddr(RptrGrid), pDMat);
+  EL_ABORT_ON_ERROR(e);
+  SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),R_NilValue));
+  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
+  UNPROTECT(1);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_c"));
+  return Rptr;
+}
+SEXP newDistMatrix_z(SEXP RptrGrid){
+  ElError e;
+  ElDistMatrix_z *pDMat = malloc(sizeof(ElDistMatrix_z));
+  e=ElDistMatrixCreate_z(*(ElGrid *) R_ExternalPtrAddr(RptrGrid), pDMat);
+  EL_ABORT_ON_ERROR(e);
+  SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),R_NilValue));
+  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
+  UNPROTECT(1);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_z"));
+  return Rptr;
+}
 
+SEXP newDistMatrixSpecific_i(SEXP U, SEXP V, SEXP RptrGrid){
+  ElError e;
+  ElDistMatrix_i *pDMat = malloc(sizeof(ElDistMatrix_i));
+  ElDist colD = parseDistText(U);
+  ElDist rowD = parseDistText(V);
+  /* Pending: check if the distribution is valid */
+  e=ElDistMatrixCreateSpecific_i(colD, rowD, *(ElGrid *) R_ExternalPtrAddr(RptrGrid), pDMat);
+  EL_ABORT_ON_ERROR(e);
+  SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),R_NilValue));
+  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
+  UNPROTECT(1);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_i"));
+  return Rptr;
+}
+
+SEXP newDistMatrixSpecific_s(SEXP U, SEXP V, SEXP RptrGrid){
+  ElError e;
+  ElDistMatrix_s *pDMat = malloc(sizeof(ElDistMatrix_s));
+  ElDist colD = parseDistText(U);
+  ElDist rowD = parseDistText(V);
+  /* Pending: check if the distribution is valid */
+  e=ElDistMatrixCreateSpecific_s(colD, rowD, *(ElGrid *) R_ExternalPtrAddr(RptrGrid), pDMat);
+  EL_ABORT_ON_ERROR(e);
+  SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),R_NilValue));
+  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
+  UNPROTECT(1);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_s"));
+  return Rptr;
+}
 
 SEXP newDistMatrixSpecific_d(SEXP U, SEXP V, SEXP RptrGrid){
   ElError e;
@@ -34,6 +107,36 @@ SEXP newDistMatrixSpecific_d(SEXP U, SEXP V, SEXP RptrGrid){
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_d"));
+  return Rptr;
+}
+
+SEXP newDistMatrixSpecific_c(SEXP U, SEXP V, SEXP RptrGrid){
+  ElError e;
+  ElDistMatrix_c *pDMat = malloc(sizeof(ElDistMatrix_c));
+  ElDist colD = parseDistText(U);
+  ElDist rowD = parseDistText(V);
+  /* Pending: check if the distribution is valid */
+  e=ElDistMatrixCreateSpecific_c(colD, rowD, *(ElGrid *) R_ExternalPtrAddr(RptrGrid), pDMat);
+  EL_ABORT_ON_ERROR(e);
+  SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),R_NilValue));
+  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
+  UNPROTECT(1);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_c"));
+  return Rptr;
+}
+
+SEXP newDistMatrixSpecific_z(SEXP U, SEXP V, SEXP RptrGrid){
+  ElError e;
+  ElDistMatrix_z *pDMat = malloc(sizeof(ElDistMatrix_z));
+  ElDist colD = parseDistText(U);
+  ElDist rowD = parseDistText(V);
+  /* Pending: check if the distribution is valid */
+  e=ElDistMatrixCreateSpecific_z(colD, rowD, *(ElGrid *) R_ExternalPtrAddr(RptrGrid), pDMat);
+  EL_ABORT_ON_ERROR(e);
+  SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),R_NilValue));
+  R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
+  UNPROTECT(1);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_z"));
   return Rptr;
 }
 
