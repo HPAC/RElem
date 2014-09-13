@@ -131,3 +131,10 @@ ElLeftOrRight parseSide(SEXP side){
   if (strcmp("RIGHT", text) == 0) return EL_RIGHT;
   return EL_LEFT;
 }
+
+ElUnitOrNonUnit parseUnit(SEXP unit){
+  char *text = (char*)toChar_p(unit);
+  if (strcmp("NON_UNIT", text) == 0) return EL_NON_UNIT;
+  if (strcmp("UNIT", text) == 0) return EL_UNIT;
+  return EL_NON_UNIT;
+}

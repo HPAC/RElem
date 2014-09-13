@@ -30,3 +30,4 @@ const char * parseDistEnum(ElDist dist);
 ElUpperOrLower parseUpLo(SEXP uplo);
 ElOrientation parseOrientation(SEXP orientation);
 ElLeftOrRight parseSide(SEXP side);
+ElUnitOrNonUnit parseUnit(SEXP unit);

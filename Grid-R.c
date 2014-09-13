@@ -14,6 +14,7 @@ SEXP newGrid(){
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pGrid, install("Grid"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   UNPROTECT(1);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElGrid") );
   return Rptr;
 }
 
@@ -24,6 +25,7 @@ SEXP newGridC(){
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pGrid, install("Grid"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   UNPROTECT(1);
+  setAttrib(Rptr, R_ClassSymbol, mkString("ElGrid") );
   return Rptr;
 }
 
