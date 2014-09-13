@@ -120,7 +120,8 @@ SEXP bufferMatrix_d(SEXP Rptr){
 SEXP lockedBufferMatrix_d(SEXP Rptr){
   const double *buffer;
   ElMatrixLockedBuffer_d( toMatrix_d(Rptr), &buffer);
-  SEXP pBuff = PROTECT(R_MakeExternalPtr((void *)buffer, R_NilValue, R_NilValue));
+  SEXP pBuff = PROTECT(R_MakeExternalPtr( (void *)buffer, R_NilValue, 
+                                          R_NilValue));
   UNPROTECT(1);
   R_RegisterCFinalizerEx(pBuff, _clear, TRUE);
   return pBuff;

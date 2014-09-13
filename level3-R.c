@@ -47,67 +47,78 @@ Her2k
 */
 
 SEXP multiShiftQuasiTrsm_d
-(SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP Rptrshifts,
- SEXP RptrB){
-  ElMultiShiftQuasiTrsm_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
-                      toDouble(alpha), toMatrix_d(RptrA), toMatrix_d(Rptrshifts),
-                      toMatrix_d(RptrB) );
+(SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA,
+ SEXP Rptrshifts, SEXP RptrB){
+  ElMultiShiftQuasiTrsm_d( parseSide(side), parseUpLo(uplo),
+                           parseOrientation(orientation),toDouble(alpha),
+                           toMatrix_d(RptrA), toMatrix_d(Rptrshifts),
+                           toMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP multiShiftQuasiTrsmDist_d
-(SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP Rptrshifts,
- SEXP RptrB){
-  ElMultiShiftQuasiTrsmDist_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
-                          toDouble(alpha), toDistMatrix_d(RptrA), toDistMatrix_d(Rptrshifts),
-                          toDistMatrix_d(RptrB) );
+(SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA,
+ SEXP Rptrshifts, SEXP RptrB){
+  ElMultiShiftQuasiTrsmDist_d( parseSide(side), parseUpLo(uplo), 
+                               parseOrientation(orientation),
+                               toDouble(alpha), toDistMatrix_d(RptrA),
+                               toDistMatrix_d(Rptrshifts),
+                               toDistMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 
 SEXP multiShiftTrsm_d
-(SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP Rptrshifts,
- SEXP RptrB){
-  ElMultiShiftTrsm_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
-                      toDouble(alpha), toMatrix_d(RptrA), toMatrix_d(Rptrshifts),
+(SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, 
+ SEXP Rptrshifts, SEXP RptrB){
+  ElMultiShiftTrsm_d( parseSide(side), parseUpLo(uplo), 
+                      parseOrientation(orientation), toDouble(alpha),
+                      toMatrix_d(RptrA), toMatrix_d(Rptrshifts),
                       toMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP multiShiftTrsmDist_d
-(SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP Rptrshifts,
- SEXP RptrB){
-  ElMultiShiftTrsmDist_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
-                          toDouble(alpha), toDistMatrix_d(RptrA), toDistMatrix_d(Rptrshifts),
+(SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA,
+ SEXP Rptrshifts, SEXP RptrB){
+  ElMultiShiftTrsmDist_d( parseSide(side), parseUpLo(uplo), 
+                          parseOrientation(orientation),toDouble(alpha),
+                          toDistMatrix_d(RptrA), toDistMatrix_d(Rptrshifts),
                           toDistMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP QuasiTrsm_d
 (SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB){
-  ElQuasiTrsm_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
-                      toDouble(alpha), toMatrix_d(RptrA), toMatrix_d(RptrB) );
+  ElQuasiTrsm_d( parseSide(side), parseUpLo(uplo),
+                 parseOrientation(orientation), toDouble(alpha), 
+                 toMatrix_d(RptrA), toMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP QuasiTrsmDist_d
 (SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB){
-  ElQuasiTrsmDist_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
-                          toDouble(alpha), toDistMatrix_d(RptrA), toDistMatrix_d(RptrB) );
+  ElQuasiTrsmDist_d( parseSide(side), parseUpLo(uplo), 
+                     parseOrientation(orientation), toDouble(alpha), 
+                     toDistMatrix_d(RptrA), toDistMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP symm_d
-(SEXP side, SEXP uplo, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta, SEXP RptrC){
-  ElSymm_d( parseSide(side), parseUpLo(uplo), toDouble(alpha), toMatrix_d(RptrA),
-            toMatrix_d(RptrB), toDouble(beta), toMatrix_d(RptrC) );
+(SEXP side, SEXP uplo, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta,
+ SEXP RptrC){
+  ElSymm_d( parseSide(side), parseUpLo(uplo), toDouble(alpha), 
+            toMatrix_d(RptrA), toMatrix_d(RptrB), toDouble(beta), 
+            toMatrix_d(RptrC) );
   return R_NilValue;
 }
 
 SEXP symmDist_d
-(SEXP side, SEXP uplo, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta, SEXP RptrC){
-  ElSymmDist_d( parseSide(side), parseUpLo(uplo), toDouble(alpha), toDistMatrix_d(RptrA),
-            toDistMatrix_d(RptrB), toDouble(beta), toDistMatrix_d(RptrC) );
+(SEXP side, SEXP uplo, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta,
+ SEXP RptrC){
+  ElSymmDist_d( parseSide(side), parseUpLo(uplo), toDouble(alpha), 
+                toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), toDouble(beta),
+                toDistMatrix_d(RptrC) );
   return R_NilValue;
 }
 
@@ -120,14 +131,16 @@ SEXP syrk_d
 
 SEXP syrkDist_d
 (SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP beta, SEXP RptrC){
-  ElSyrkDist_d( parseUpLo(uplo), parseOrientation(orientation), toDouble(alpha),
-            toDistMatrix_d(RptrA), toDouble(beta), toDistMatrix_d(RptrC) );
+  ElSyrkDist_d( parseUpLo(uplo), parseOrientation(orientation), 
+                toDouble(alpha), toDistMatrix_d(RptrA), toDouble(beta),
+                toDistMatrix_d(RptrC) );
   return R_NilValue;
 }
 
 
 SEXP syr2k_d
-(SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta, SEXP RptrC){
+(SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta, 
+ SEXP RptrC){
   ElSyr2k_d(parseUpLo(uplo), parseOrientation(orientation), toDouble(alpha),
             toMatrix_d(RptrA), toMatrix_d(RptrB), toDouble(beta),
             toMatrix_d(RptrC) );
@@ -135,9 +148,158 @@ SEXP syr2k_d
 }
 
 SEXP syr2kDist_d
-(SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta, SEXP RptrC){
-  ElSyr2kDist_d( parseUpLo(uplo), parseOrientation(orientation), toDouble(alpha),
-                 toDistMatrix_d(RptrA), toDistMatrix_d(RptrA), toDouble(beta),
+(SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta, 
+ SEXP RptrC){
+  ElSyr2kDist_d( parseUpLo(uplo), parseOrientation(orientation), 
+                 toDouble(alpha), toDistMatrix_d(RptrA), 
+                 toDistMatrix_d(RptrA), toDouble(beta), 
                  toDistMatrix_d(RptrC) );
+  return R_NilValue;
+}
+
+SEXP trdtrmm_d( SEXP uplo, SEXP RptrA, SEXP conjugate){
+  ElTrdtrmm_d( parseUpLo(uplo), toMatrix_d(RptrA), toBool(conjugate) );
+  return R_NilValue;
+}
+
+SEXP trdtrmmDist_d( SEXP uplo, SEXP RptrA, SEXP conjugate){
+  ElTrdtrmmDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), toBool(conjugate) );
+  return R_NilValue;
+}
+
+SEXP trdtrmmQuasi_d( SEXP uplo, SEXP RptrA, SEXP RptrdOff, SEXP conjugate){
+  ElTrdtrmmQuasi_d( parseUpLo(uplo), toMatrix_d(RptrA), toMatrix_d(RptrdOff),
+                    toBool(conjugate) );
+  return R_NilValue;
+}
+
+SEXP trdtrmmQuasiDist_d( SEXP uplo, SEXP RptrA, SEXP RptrdOff, SEXP conjugate){
+  ElTrdtrmmQuasiDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), 
+                        toDistMatrix_d(RptrdOff), toBool(conjugate) );
+  return R_NilValue;
+}
+
+SEXP trmm_d
+( SEXP side, SEXP uplo, SEXP orientation, SEXP diag, SEXP alpha, SEXP RptrA, 
+  SEXP RptrB){
+  ElTrmm_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation), 
+            parseUnit(diag), toDouble(alpha), toMatrix_d(RptrA),
+            toMatrix_d(RptrB) );
+  return R_NilValue;
+}
+
+SEXP trmmDist_d
+( SEXP side, SEXP uplo, SEXP orientation, SEXP diag, SEXP alpha, SEXP RptrA, 
+  SEXP RptrB){
+  ElTrmmDist_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
+            parseUnit(diag), toDouble(alpha), toDistMatrix_d(RptrA),
+            toDistMatrix_d(RptrB) );
+  return R_NilValue;
+}
+
+SEXP trrk_d
+( SEXP uplo, SEXP orientationA, SEXP orientationB, SEXP alpha, SEXP RptrA,
+  SEXP RptrB, SEXP beta, SEXP RptrC){
+  ElTrrk_d( parseUpLo(uplo), parseOrientation(orientationA),
+            parseOrientation(orientationB), toDouble(alpha), toMatrix_d(RptrA),
+            toMatrix_d(RptrB), toDouble(beta), toMatrix_d(RptrC) ); 
+  return R_NilValue;
+}
+
+SEXP trrkDist_d
+( SEXP uplo, SEXP orientationA, SEXP orientationB, SEXP alpha, SEXP RptrA,
+  SEXP RptrB, SEXP beta, SEXP RptrC){
+  ElTrrkDist_d( parseUpLo(uplo), parseOrientation(orientationA),
+                parseOrientation(orientationB), toDouble(alpha),
+                toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), toDouble(beta),
+                toDistMatrix_d(RptrC) ); 
+  return R_NilValue;
+}
+
+/*
+Trr2k not yet implemented for sequential
+*/
+
+SEXP trr2kDist_d
+( SEXP uplo, SEXP orientationA, SEXP orientationB, SEXP orientationC,
+  SEXP orientationD, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP RptrC, SEXP RptrD,
+  SEXP beta, SEXP RptrE ){
+  ElTrr2kDist_d( parseUpLo(uplo), parseOrientation(orientationA), 
+                 parseOrientation(orientationB), parseOrientation(orientationC),
+                 parseOrientation(orientationD), toDouble(alpha), 
+                 toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), 
+                 toDistMatrix_d(RptrC), toDistMatrix_d(RptrD), toDouble(beta), 
+                 toDistMatrix_d(RptrE) );
+  return R_NilValue;
+}
+
+SEXP trsm_d
+( SEXP side, SEXP uplo, SEXP orientation, SEXP diag, SEXP alpha, SEXP RptrA, 
+  SEXP RptrB){
+  ElTrsm_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
+            parseUnit(diag), toDouble(alpha), toMatrix_d(RptrA),
+            toMatrix_d(RptrB) );
+  return R_NilValue;
+}
+
+SEXP trsmDist_d
+( SEXP side, SEXP uplo, SEXP orientation, SEXP diag, SEXP alpha, SEXP RptrA, 
+  SEXP RptrB){
+  ElTrsmDist_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
+                parseUnit(diag), toDouble(alpha), toDistMatrix_d(RptrA),
+                toDistMatrix_d(RptrB) );
+  return R_NilValue;
+}
+
+SEXP trstrm_d
+( SEXP side, SEXP uplo, SEXP orientation, SEXP diag, SEXP alpha, SEXP RptrA, 
+  SEXP RptrB){
+  ElTrstrm_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation), 
+              parseUnit(diag), toDouble(alpha), toMatrix_d(RptrA),
+              toMatrix_d(RptrB) );
+  return R_NilValue;
+}
+
+SEXP trstrmDist_d
+( SEXP side, SEXP uplo, SEXP orientation, SEXP diag, SEXP alpha, SEXP RptrA, 
+  SEXP RptrB){
+  ElTrstrmDist_d( parseSide(side), parseUpLo(uplo), 
+                  parseOrientation(orientation),
+                  parseUnit(diag), toDouble(alpha), toDistMatrix_d(RptrA),
+                  toDistMatrix_d(RptrB) );
+  return R_NilValue;
+}
+
+SEXP trtrmm_d( SEXP uplo, SEXP RptrA, SEXP conjugate){
+  ElTrtrmm_d( parseUpLo(uplo), toMatrix_d(RptrA), toBool(conjugate) );
+  return R_NilValue;
+}
+
+SEXP trtrmmDist_d( SEXP uplo, SEXP RptrA, SEXP conjugate){
+  ElTrtrmmDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), toBool(conjugate) );
+  return R_NilValue;
+}
+
+SEXP twoSidedTrmm_d( SEXP uplo, SEXP diag, SEXP RptrA, SEXP RptrB){
+  ElTwoSidedTrmm_d( parseUpLo(uplo), parseUnit(diag), toMatrix_d(RptrA),
+                    toMatrix_d(RptrB) );
+  return R_NilValue;
+}
+
+SEXP twoSidedTrmmDist_d( SEXP uplo, SEXP diag, SEXP RptrA, SEXP RptrB){
+  ElTwoSidedTrmmDist_d( parseUpLo(uplo), parseUnit(diag), toDistMatrix_d(RptrA),
+                    toDistMatrix_d(RptrB) );
+  return R_NilValue;
+}
+
+SEXP twoSidedTrsm_d( SEXP uplo, SEXP diag, SEXP RptrA, SEXP RptrB){
+  ElTwoSidedTrsm_d( parseUpLo(uplo), parseUnit(diag), toMatrix_d(RptrA),
+                    toMatrix_d(RptrB) );
+  return R_NilValue;
+}
+
+SEXP twoSidedTrsmDist_d( SEXP uplo, SEXP diag, SEXP RptrA, SEXP RptrB){
+  ElTwoSidedTrsmDist_d( parseUpLo(uplo), parseUnit(diag), toDistMatrix_d(RptrA),
+                    toDistMatrix_d(RptrB) );
   return R_NilValue;
 }

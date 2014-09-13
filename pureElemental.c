@@ -78,13 +78,15 @@ SEXP uniformDistMatrix_d(SEXP Rptr, SEXP height, SEXP width){
 
 SEXP hermitianEig_d(SEXP RptrA, SEXP Rptrw){
   //Assuming Lower and unsorted:
-  ElHermitianEig_d(EL_LOWER, toMatrix_d(RptrA), toMatrix_d(Rptrw), EL_UNSORTED);
+  ElHermitianEig_d(EL_LOWER, toMatrix_d(RptrA), toMatrix_d(Rptrw), 
+                   EL_UNSORTED);
   return R_NilValue;
 }
 
 SEXP hermitianEigDist_d(SEXP RptrA, SEXP Rptrw){
   //Assuming Lower and unsorted:
-  ElHermitianEigDist_d( EL_LOWER,toDistMatrix_d(RptrA), toDistMatrix_d(Rptrw), EL_UNSORTED );
+  ElHermitianEigDist_d( EL_LOWER,toDistMatrix_d(RptrA), toDistMatrix_d(Rptrw),
+                        EL_UNSORTED );
   return R_NilValue;
 }
 
@@ -97,8 +99,9 @@ SEXP hermitianEigPair_d(SEXP RptrA, SEXP Rptrw, SEXP RptrZ){
 
 SEXP hermitianEigPairDist_d(SEXP RptrA, SEXP Rptrw, SEXP RptrZ){
   //Assuming Lower and unsorted:
-  ElHermitianEigPairDist_d( EL_LOWER, toDistMatrix_d(RptrA), toDistMatrix_d(Rptrw), 
-                            toDistMatrix_d(RptrZ), EL_UNSORTED );
+  ElHermitianEigPairDist_d( EL_LOWER, toDistMatrix_d(RptrA), 
+                            toDistMatrix_d(Rptrw),toDistMatrix_d(RptrZ),
+                            EL_UNSORTED );
   return R_NilValue;
 }
 
@@ -111,13 +114,15 @@ ElHermitianEigSubset_d subsetParamsIdx_d(ElInt idxa, ElInt idxb){
   return subset;
 }
 
-SEXP hermitianEigPairPartialDist_d(SEXP RptrA, SEXP Rptrw, SEXP RptrZ, SEXP idx1, SEXP idx2){
+SEXP hermitianEigPairPartialDist_d
+(SEXP RptrA, SEXP Rptrw, SEXP RptrZ, SEXP idx1, SEXP idx2){
   ElInt idxa = (ElInt)INTEGER(idx1)[0];
   ElInt idxb = (ElInt)INTEGER(idx2)[0];
   ElHermitianEigSubset_d subset = subsetParamsIdx_d(idxa,idxb);
   ElError e;
   e = ElHermitianEigPairPartialDist_d( EL_LOWER, toDistMatrix_d(RptrA), 
-                                       toDistMatrix_d(Rptrw), toDistMatrix_d(RptrZ),
+                                       toDistMatrix_d(Rptrw), 
+                                       toDistMatrix_d(RptrZ),
                                        EL_UNSORTED, subset );
   EL_ABORT_ON_ERROR(e);
   return R_NilValue;

@@ -10,7 +10,8 @@ SEXP axpyDist_d( SEXP alpha, SEXP RptrX, SEXP RptrY){
 }
 
 SEXP axpyTriangle_d( SEXP uplo, SEXP alpha, SEXP RptrX, SEXP RptrY){
-  ElAxpyTriangle_d( parseUpLo(uplo), toDouble(alpha), toMatrix_d(RptrX), toMatrix_d(RptrY) );
+  ElAxpyTriangle_d( parseUpLo(uplo), toDouble(alpha), toMatrix_d(RptrX), 
+                    toMatrix_d(RptrY) );
   return R_NilValue;
 }
 
@@ -44,15 +45,18 @@ SEXP diagonalScaleDist_d( SEXP side, SEXP orientation, SEXP Rptrd, SEXP RptrX){
 
 SEXP diagonalScaleTrapezoid_d
 ( SEXP side, SEXP uplo, SEXP orientation, SEXP Rptrd, SEXP RptrX, SEXP offset){
-  ElDiagonalScaleTrapezoid_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
-                     toMatrix_d(Rptrd), toMatrix_d(RptrX), toElInt(offset) );
+  ElDiagonalScaleTrapezoid_d( parseSide(side), parseUpLo(uplo), 
+                              parseOrientation(orientation), toMatrix_d(Rptrd), 
+                              toMatrix_d(RptrX), toElInt(offset) );
   return R_NilValue;
 }
 
 SEXP diagonalScaleTrapezoidDist_d
 ( SEXP side, SEXP uplo, SEXP orientation, SEXP Rptrd, SEXP RptrX, SEXP offset){
-  ElDiagonalScaleTrapezoidDist_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
-                     toDistMatrix_d(Rptrd), toDistMatrix_d(RptrX), toElInt(offset) );
+  ElDiagonalScaleTrapezoidDist_d( parseSide(side), parseUpLo(uplo), 
+                                  parseOrientation(orientation), 
+                                  toDistMatrix_d(Rptrd), toDistMatrix_d(RptrX),
+                                  toElInt(offset) );
   return R_NilValue;
 }
 
@@ -71,15 +75,19 @@ SEXP diagonalSolveDist_d( SEXP side, SEXP orientation, SEXP Rptrd, SEXP RptrX){
 /*
 SEXP diagonalSolveTrapezoid_d
 ( SEXP side, SEXP uplo, SEXP orientation, SEXP Rptrd, SEXP RptrX, SEXP offset){
-  ElDiagonalSolveTrapezoid_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
-                     toMatrix_d(Rptrd), toMatrix_d(RptrX), toElInt(offset) );
+  ElDiagonalSolveTrapezoid_d( parseSide(side), parseUpLo(uplo), 
+                              parseOrientation(orientation),
+                              toMatrix_d(Rptrd), toMatrix_d(RptrX),
+                              toElInt(offset) );
   return R_NilValue;
 }
 
 SEXP diagonalSolveTrapezoidDist_d
 ( SEXP side, SEXP uplo, SEXP orientation, SEXP Rptrd, SEXP RptrX, SEXP offset){
-  ElDiagonalSolveTrapezoidDist_d( parseSide(side), parseUpLo(uplo), parseOrientation(orientation),
-                     toDistMatrix_d(Rptrd), toDistMatrix_d(RptrX), toElInt(offset) );
+  ElDiagonalSolveTrapezoidDist_d( parseSide(side), parseUpLo(uplo), 
+                                  parseOrientation(orientation),
+                                  toDistMatrix_d(Rptrd), toDistMatrix_d(RptrX),
+                                  toElInt(offset) );
   return R_NilValue;
 }
 */
@@ -110,7 +118,10 @@ SEXP dotuDist_d( SEXP RptrA, SEXP RptrB, SEXP prod){
   return ans;
 }
 
-//Figure out how to do for the entry filling, decide if it is worth to do in C or R
+/*
+Figure out how to do for the entry filling, 
+decide if it is worth to do in C or R
+*/
 
 SEXP fill_d(SEXP Rptr, SEXP alpha){
   ElFill_d( toMatrix_d(Rptr), toDouble(alpha) );
@@ -128,7 +139,8 @@ SEXP hadamard_d(SEXP RptrA, SEXP RptrB, SEXP RptrC){
 }
 
 SEXP hadamardDist_d(SEXP RptrA, SEXP RptrB, SEXP RptrC){
-  ElHadamardDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), toDistMatrix_d(RptrC) );
+  ElHadamardDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB),
+                    toDistMatrix_d(RptrC) );
   return R_NilValue;
 }
 
@@ -138,7 +150,8 @@ SEXP hilbertSchmidt_d(SEXP RptrA, SEXP RptrB, SEXP prod){
 }
 
 SEXP hilbertSchmidtDist_d(SEXP RptrA, SEXP RptrB, SEXP prod){
-  ElHilbertSchmidtDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), toDouble_p(prod) );
+  ElHilbertSchmidtDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), 
+                          toDouble_p(prod) );
   return R_NilValue;
 }
 
@@ -172,7 +185,8 @@ SEXP makeTrapezoidal(SEXP uplo, SEXP RptrA, SEXP offset){
 }
 
 SEXP makeTrapezoidalDist(SEXP uplo, SEXP RptrA, SEXP offset){ 
-  ElMakeTrapezoidalDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), toElInt(offset) );
+  ElMakeTrapezoidalDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), 
+                           toElInt(offset) );
   return R_NilValue;
 }
 
@@ -668,8 +682,8 @@ SEXP scaleTrapezoid(SEXP alpha, SEXP uplo, SEXP RptrA, SEXP offset){
 }
 
 SEXP scaleTrapezoidDist(SEXP alpha, SEXP uplo, SEXP RptrA, SEXP offset){
-  ElScaleTrapezoidDist_d( toDouble(alpha), parseUpLo(uplo), toDistMatrix_d(RptrA),
-                          toElInt(offset) );
+  ElScaleTrapezoidDist_d( toDouble(alpha), parseUpLo(uplo), 
+                          toDistMatrix_d(RptrA), toElInt(offset) );
   return R_NilValue;
 }
 
@@ -679,12 +693,14 @@ SEXP setDiagonal_d(SEXP RptrA, SEXP alpha, SEXP offset){
 }
 
 SEXP setDiagonalDist_d(SEXP RptrA, SEXP alpha, SEXP offset){
-  ElSetDiagonalDist_d( toDistMatrix_d(RptrA), toDouble(alpha), toElInt(offset) );
+  ElSetDiagonalDist_d( toDistMatrix_d(RptrA), toDouble(alpha), 
+                       toElInt(offset) );
   return R_NilValue;
 }
 
 SEXP swap_d(SEXP orientation, SEXP RptrX, SEXP RptrY){
-  ElSwap_d( parseOrientation(orientation), toMatrix_d(RptrX), toMatrix_d(RptrY) );
+  ElSwap_d( parseOrientation(orientation), toMatrix_d(RptrX), 
+            toMatrix_d(RptrY) );
   return R_NilValue;
 }
 
@@ -715,12 +731,14 @@ SEXP colSwapDist_d(SEXP RptrA, SEXP to, SEXP from){
 }
 
 SEXP symmetricSwap_d(SEXP uplo, SEXP RptrA, SEXP to, SEXP from){
-  ElSymmetricSwap_d( parseUpLo(uplo), toMatrix_d(RptrA), toElInt(to), toElInt(from) );
+  ElSymmetricSwap_d( parseUpLo(uplo), toMatrix_d(RptrA), toElInt(to), 
+                     toElInt(from) );
   return R_NilValue;
 }
 
 SEXP symmetricSwapDist_d(SEXP uplo, SEXP RptrA, SEXP to, SEXP from){
-  ElSymmetricSwapDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), toElInt(to), toElInt(from) );
+  ElSymmetricSwapDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), toElInt(to), 
+                         toElInt(from) );
   return R_NilValue;
 }
 
@@ -740,7 +758,8 @@ SEXP updateDiagonal(SEXP RptrA, SEXP alpha, SEXP offset){
 }
 
 SEXP updateDiagonalDist(SEXP RptrA, SEXP alpha, SEXP offset){
-  ElUpdateDiagonalDist_d( toDistMatrix_d(RptrA), toDouble(alpha), toElInt(offset) );
+  ElUpdateDiagonalDist_d( toDistMatrix_d(RptrA), toDouble(alpha), 
+                          toElInt(offset) );
   return R_NilValue;
 }
 
