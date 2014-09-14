@@ -2,12 +2,17 @@
 #include "R.h"
 #include "Rdefines.h"
 
+inline ElMatrix_i toMatrix_i(SEXP Rptr);
+inline ElMatrix_i* toMatrix_i_p(SEXP Rptr);
+
 inline ElMatrix_d toMatrix_d(SEXP Rptr);
 inline ElMatrix_d* toMatrix_d_p(SEXP Rptr);
 /*
 inline ElConstMatrix_d toConstMatrix_d(SEXP Rptr);
 */
 
+inline ElDistMatrix_i toDistMatrix_i(SEXP Rptr);
+inline ElDistMatrix_i* toDistMatrix_i_p(SEXP Rptr);
 
 inline ElDistMatrix_d toDistMatrix_d(SEXP Rptr);
 inline ElDistMatrix_d* toDistMatrix_d_p(SEXP Rptr);

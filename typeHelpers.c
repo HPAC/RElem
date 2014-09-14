@@ -1,5 +1,12 @@
 #include "R-El.h"
 
+inline ElMatrix_i toMatrix_i(SEXP Rptr){
+  return *(ElMatrix_i *)R_ExternalPtrAddr(Rptr);
+}
+inline ElMatrix_i* toMatrix_i_p(SEXP Rptr){
+  return (ElMatrix_i *)R_ExternalPtrAddr(Rptr);
+}
+
 inline ElMatrix_d toMatrix_d(SEXP Rptr){
   return *(ElMatrix_d *)R_ExternalPtrAddr(Rptr);
 }
@@ -13,6 +20,13 @@ inline ElConstMatrix_d toConstMatrix_d(SEXP Rptr){
 }
 */
 
+inline ElDistMatrix_i toDistMatrix_i(SEXP Rptr){
+  return *(ElDistMatrix_i *)R_ExternalPtrAddr(Rptr);
+}
+
+inline ElDistMatrix_i* toDistMatrix_i_p(SEXP Rptr){
+  return (ElDistMatrix_i *)R_ExternalPtrAddr(Rptr);
+}
 
 inline ElDistMatrix_d toDistMatrix_d(SEXP Rptr){
   return *(ElDistMatrix_d *)R_ExternalPtrAddr(Rptr);
