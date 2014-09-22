@@ -85,6 +85,11 @@ inline ElConstDistMatrix_d toConstDistMatrix_d(SEXP Rptr){
 inline ElGrid toGrid(SEXP Rgrid){
   return *(ElGrid *)R_ExternalPtrAddr(Rgrid);
 }
+
+inline ElGrid* toGrid_p(SEXP Rgrid){
+  return (ElGrid *)R_ExternalPtrAddr(Rgrid);
+}
+
 /*
 inline ElConstGrid toConstGrid(SEXP Rgrid){
   return *(ElConstGrid *)R_ExternalPtrAddr(Rgrid);
@@ -135,6 +140,7 @@ ElFileFormat parseFormatText(SEXP format){
   char *text=(char*) CHAR( STRING_ELT(format,0) );
   //  printf("The distro is: %s\n",text);
   if (strcmp("AUTO",text)==0) return EL_AUTO;
+  if (strcmp("ASCII",text)==0) return EL_ASCII;
   if (strcmp("ASCII_MATLAB",text)==0) return EL_ASCII_MATLAB;
   if (strcmp("BINARY",text)==0) return EL_BINARY;
   if (strcmp("BINARY_FLAT",text)==0) return EL_BINARY_FLAT;

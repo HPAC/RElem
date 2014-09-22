@@ -31,44 +31,41 @@ SEXP copyDist_d( SEXP A, SEXP B){
   return R_NilValue;
 }
 
-SEXP diagonalScale_d( SEXP side, SEXP orientation, SEXP Rptrd, SEXP RptrX){
-  ElDiagonalScale_d( parseSide(side), parseOrientation(orientation),
-                     toMatrix_d(Rptrd), toMatrix_d(RptrX) );
+SEXP diagonalScale_d( SEXP side, SEXP Rptrd, SEXP RptrX){
+  ElDiagonalScale_d( parseSide(side), toMatrix_d(Rptrd), toMatrix_d(RptrX) );
   return R_NilValue;
 }
 
-SEXP diagonalScaleDist_d( SEXP side, SEXP orientation, SEXP Rptrd, SEXP RptrX){
-  ElDiagonalScaleDist_d( parseSide(side), parseOrientation(orientation),
-                     toDistMatrix_d(Rptrd), toDistMatrix_d(RptrX) );
+SEXP diagonalScaleDist_d( SEXP side,  SEXP Rptrd, SEXP RptrX){
+  ElDiagonalScaleDist_d( parseSide(side), toDistMatrix_d(Rptrd),
+                         toDistMatrix_d(RptrX) );
   return R_NilValue;
 }
 
 SEXP diagonalScaleTrapezoid_d
-( SEXP side, SEXP uplo, SEXP orientation, SEXP Rptrd, SEXP RptrX, SEXP offset){
-  ElDiagonalScaleTrapezoid_d( parseSide(side), parseUpLo(uplo), 
-                              parseOrientation(orientation), toMatrix_d(Rptrd), 
-                              toMatrix_d(RptrX), toElInt(offset) );
+( SEXP side, SEXP uplo, SEXP Rptrd, SEXP RptrX, SEXP offset){
+  ElDiagonalScaleTrapezoid_d( parseSide(side), parseUpLo(uplo),
+                              toMatrix_d(Rptrd), toMatrix_d(RptrX),
+                              toElInt(offset) );
   return R_NilValue;
 }
 
 SEXP diagonalScaleTrapezoidDist_d
-( SEXP side, SEXP uplo, SEXP orientation, SEXP Rptrd, SEXP RptrX, SEXP offset){
+( SEXP side, SEXP uplo, SEXP Rptrd, SEXP RptrX, SEXP offset){
   ElDiagonalScaleTrapezoidDist_d( parseSide(side), parseUpLo(uplo), 
-                                  parseOrientation(orientation), 
                                   toDistMatrix_d(Rptrd), toDistMatrix_d(RptrX),
                                   toElInt(offset) );
   return R_NilValue;
 }
 
-SEXP diagonalSolve_d( SEXP side, SEXP orientation, SEXP Rptrd, SEXP RptrX){
-  ElDiagonalSolve_d( parseSide(side), parseOrientation(orientation),
-                     toMatrix_d(Rptrd), toMatrix_d(RptrX) );
+SEXP diagonalSolve_d( SEXP side, SEXP Rptrd, SEXP RptrX){
+  ElDiagonalSolve_d( parseSide(side), toMatrix_d(Rptrd), toMatrix_d(RptrX) );
   return R_NilValue;
 }
 
-SEXP diagonalSolveDist_d( SEXP side, SEXP orientation, SEXP Rptrd, SEXP RptrX){
-  ElDiagonalSolveDist_d( parseSide(side), parseOrientation(orientation),
-                     toDistMatrix_d(Rptrd), toDistMatrix_d(RptrX) );
+SEXP diagonalSolveDist_d( SEXP side, SEXP Rptrd, SEXP RptrX){
+  ElDiagonalSolveDist_d( parseSide(side), toDistMatrix_d(Rptrd),
+                         toDistMatrix_d(RptrX) );
   return R_NilValue;
 }
 

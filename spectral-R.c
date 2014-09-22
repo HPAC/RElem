@@ -1,12 +1,95 @@
 #include "R-El.h"
 
-ElHermitianEigSubset_d subsetParamsIdx_d(ElInt idxa, ElInt idxb){
+ElHermitianEigSubset_d subsetParamsHermitian_d(SEXP from, SEXP to){
   ElHermitianEigSubset_d subset;
   ElHermitianEigSubsetDefault_d(&subset);
-  subset.indexSubset = true;
-  subset.lowerIndex = idxa;
-  subset.upperIndex = idxb;
+  if ( TYPEOF(from) == TYPEOF(to) && TYPEOF(from) == INTSXP ){ 
+    subset.indexSubset = true;
+    subset.lowerIndex = toElInt(from);
+    subset.upperIndex = toElInt(to);
+  }
+  else{
+    subset.rangeSubset = true;
+    subset.lowerBound = toDouble(from);
+    subset.upperBound = toDouble(to);
+  }
   return subset;
+}
+
+/* Hermitian Tridiagonal
+ */
+
+SEXP hermitianTridiagEig_d(SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP sort){
+  ElHermitianTridiagEig_d( toMatrix_d(Rptrd), toMatrix_d(RptrdSub),
+                           toMatrix_d(Rptrw), parseSort(sort) );
+  return R_NilValue;
+}
+
+SEXP hermitianTridiagEigDist_d
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP sort){
+  ElHermitianTridiagEigDist_d( toDistMatrix_d(Rptrd), toDistMatrix_d(RptrdSub),
+                               toDistMatrix_d(Rptrw), parseSort(sort) );
+  return R_NilValue;
+}
+
+SEXP hermitianTridiagEigPair_d
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ, SEXP sort){
+  ElHermitianTridiagEigPair_d( toMatrix_d(Rptrd), toMatrix_d(RptrdSub),
+                               toMatrix_d(Rptrw), toMatrix_d(RptrZ), 
+                               parseSort(sort) );
+  return R_NilValue;
+}
+
+SEXP hermitianTridiagEigPairDist_d
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ, SEXP sort){
+  ElHermitianTridiagEigPairDist_d( toDistMatrix_d(Rptrd), 
+                                   toDistMatrix_d(RptrdSub),
+                                   toDistMatrix_d(Rptrw), toDistMatrix_d(RptrZ),
+                                   parseSort(sort) );
+  return R_NilValue;
+}
+
+SEXP hermitianTridiagEigPartial_d
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP sort, SEXP idx1, SEXP idx2){
+  ElHermitianEigSubset_d subset =  subsetParamsHermitian_d(idx1, idx2);
+  ElHermitianTridiagEigPartial_d( toMatrix_d(Rptrd), toMatrix_d(RptrdSub),
+                                  toMatrix_d(Rptrw), parseSort(sort),
+                                  subset );
+  return R_NilValue;
+}
+
+SEXP hermitianTridiagEigPartialDist_d
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP sort, SEXP idx1, SEXP idx2){
+  ElHermitianEigSubset_d subset =  subsetParamsHermitian_d(idx1, idx2);
+  ElHermitianTridiagEigPartialDist_d( toDistMatrix_d(Rptrd), 
+                                  toDistMatrix_d(RptrdSub),
+                                  toDistMatrix_d(Rptrw), parseSort(sort),
+                                  subset );
+  return R_NilValue;
+}
+
+SEXP hermitianTridiagEigPairPartial_d
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ, SEXP sort, SEXP idx1,
+  SEXP idx2){
+  ElHermitianEigSubset_d subset =  subsetParamsHermitian_d(idx1, idx2);
+  ElHermitianTridiagEigPairPartial_d( toMatrix_d(Rptrd), toMatrix_d(RptrdSub),
+                                      toMatrix_d(Rptrw), toMatrix_d(RptrZ),
+                                      parseSort(sort),
+                                      subset );
+  return R_NilValue;
+}
+
+SEXP hermitianTridiagEigPairPartialDist_d
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ, SEXP sort, SEXP idx1,
+  SEXP idx2){
+  ElHermitianEigSubset_d subset =  subsetParamsHermitian_d(idx1, idx2);
+  ElHermitianTridiagEigPairPartialDist_d( toDistMatrix_d(Rptrd), 
+                                          toDistMatrix_d(RptrdSub),
+                                          toDistMatrix_d(Rptrw),
+                                          toDistMatrix_d(RptrZ),
+                                          parseSort(sort),
+                                          subset );
+  return R_NilValue;
 }
 
 /* Hermitian
@@ -31,7 +114,7 @@ SEXP hermitianEigPair_d
   return R_NilValue;
 }
 
-SEXP hermitianEigDistPair_d
+SEXP hermitianEigPairDist_d
 (SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ, SEXP sort){
   ElHermitianEigPairDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA),
                             toDistMatrix_d(Rptrw), toDistMatrix_d(RptrZ),
@@ -41,8 +124,7 @@ SEXP hermitianEigDistPair_d
 
 SEXP hermitianEigPartial_d
 ( SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP sort, SEXP idx1, SEXP idx2){
-  ElHermitianEigSubset_d subset;
-  subsetParamsIdx_d( (ElInt)INTEGER(idx1)[0], (ElInt)INTEGER(idx2)[0] );
+  ElHermitianEigSubset_d subset =  subsetParamsHermitian_d(idx1, idx2);
   ElHermitianEigPartial_d( parseUpLo(uplo), toMatrix_d(RptrA), 
                            toMatrix_d(Rptrw), parseSort(sort), subset );
   return R_NilValue;
@@ -51,8 +133,7 @@ SEXP hermitianEigPartial_d
 
 SEXP hermitianEigPartialDist_d
 ( SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP sort, SEXP idx1, SEXP idx2){
-  ElHermitianEigSubset_d subset;
-  subsetParamsIdx_d( (ElInt)INTEGER(idx1)[0], (ElInt)INTEGER(idx2)[0] );
+  ElHermitianEigSubset_d subset =  subsetParamsHermitian_d(idx1, idx2);
   ElHermitianEigPartialDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), 
                                toDistMatrix_d(Rptrw), parseSort(sort), subset );
   return R_NilValue;
@@ -63,8 +144,7 @@ SEXP hermitianEigPartialDist_d
 SEXP hermitianEigPairPartial_d
 ( SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ, SEXP sort, SEXP idx1, 
   SEXP idx2){
-  ElHermitianEigSubset_d subset;
-  subsetParamsIdx_d( (ElInt)INTEGER(idx1)[0], (ElInt)INTEGER(idx2)[0] );
+  ElHermitianEigSubset_d subset =  subsetParamsHermitian_d(idx1, idx2);
   ElHermitianEigPairPartial_d( parseUpLo(uplo), toMatrix_d(RptrA), 
                                    toMatrix_d(Rptrw), toMatrix_d(RptrZ),
                                    parseSort(sort), subset );
@@ -75,8 +155,7 @@ SEXP hermitianEigPairPartial_d
 SEXP hermitianEigPairPartialDist_d
 ( SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ, SEXP sort, SEXP idx1, 
   SEXP idx2){
-  ElHermitianEigSubset_d subset;
-  subsetParamsIdx_d( (ElInt)INTEGER(idx1)[0], (ElInt)INTEGER(idx2)[0] );
+  ElHermitianEigSubset_d subset =  subsetParamsHermitian_d(idx1, idx2);
   ElHermitianEigPairPartialDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), 
                                    toDistMatrix_d(Rptrw), toDistMatrix_d(RptrZ),
                                    parseSort(sort), subset );

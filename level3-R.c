@@ -157,25 +157,24 @@ SEXP syr2kDist_d
   return R_NilValue;
 }
 
-SEXP trdtrmm_d( SEXP uplo, SEXP RptrA, SEXP conjugate){
-  ElTrdtrmm_d( parseUpLo(uplo), toMatrix_d(RptrA), toBool(conjugate) );
+SEXP trdtrmm_d( SEXP uplo, SEXP RptrA){
+  ElTrdtrmm_d( parseUpLo(uplo), toMatrix_d(RptrA) );
   return R_NilValue;
 }
 
-SEXP trdtrmmDist_d( SEXP uplo, SEXP RptrA, SEXP conjugate){
-  ElTrdtrmmDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), toBool(conjugate) );
+SEXP trdtrmmDist_d( SEXP uplo, SEXP RptrA){
+  ElTrdtrmmDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA) );
   return R_NilValue;
 }
 
-SEXP trdtrmmQuasi_d( SEXP uplo, SEXP RptrA, SEXP RptrdOff, SEXP conjugate){
-  ElTrdtrmmQuasi_d( parseUpLo(uplo), toMatrix_d(RptrA), toMatrix_d(RptrdOff),
-                    toBool(conjugate) );
+SEXP trdtrmmQuasi_d( SEXP uplo, SEXP RptrA, SEXP RptrdOff){
+  ElTrdtrmmQuasi_d( parseUpLo(uplo), toMatrix_d(RptrA), toMatrix_d(RptrdOff) );
   return R_NilValue;
 }
 
-SEXP trdtrmmQuasiDist_d( SEXP uplo, SEXP RptrA, SEXP RptrdOff, SEXP conjugate){
+SEXP trdtrmmQuasiDist_d( SEXP uplo, SEXP RptrA, SEXP RptrdOff){
   ElTrdtrmmQuasiDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), 
-                        toDistMatrix_d(RptrdOff), toBool(conjugate) );
+                        toDistMatrix_d(RptrdOff) );
   return R_NilValue;
 }
 
@@ -270,13 +269,13 @@ SEXP trstrmDist_d
   return R_NilValue;
 }
 
-SEXP trtrmm_d( SEXP uplo, SEXP RptrA, SEXP conjugate){
-  ElTrtrmm_d( parseUpLo(uplo), toMatrix_d(RptrA), toBool(conjugate) );
+SEXP trtrmm_d( SEXP uplo, SEXP RptrA){
+  ElTrtrmm_d( parseUpLo(uplo), toMatrix_d(RptrA) );
   return R_NilValue;
 }
 
-SEXP trtrmmDist_d( SEXP uplo, SEXP RptrA, SEXP conjugate){
-  ElTrtrmmDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), toBool(conjugate) );
+SEXP trtrmmDist_d( SEXP uplo, SEXP RptrA){
+  ElTrtrmmDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA) );
   return R_NilValue;
 }
 

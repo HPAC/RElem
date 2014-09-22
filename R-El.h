@@ -34,6 +34,7 @@ inline ElDistMatrix_z* toDistMatrix_z_p(SEXP Rptr);
 inline ElConstDistMatrix_d toConstDistMatrix_d(SEXP Rptr);
 */
 inline ElGrid toGrid(SEXP Rgrid);
+inline ElGrid* toGrid_p(SEXP Rgrid);
 //inline ElConstGrid toConstGrid(SEXP Rgrid);
 
 inline ElInt toElInt(SEXP Rint);

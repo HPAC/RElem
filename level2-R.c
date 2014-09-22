@@ -29,17 +29,6 @@ SEXP gerDist_d( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
   return R_NilValue;
 }
 
-SEXP geru_d( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
-  ElGeru_d( toDouble(alpha), toMatrix_d(Rptrx), toMatrix_d(Rptry),
-            toMatrix_d(RptrA) );
-  return R_NilValue;
-}
-
-SEXP geruDist_d( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
-  ElGeruDist_d( toDouble(alpha), toDistMatrix_d(Rptrx), toDistMatrix_d(Rptry),
-               toDistMatrix_d(RptrA) );
-  return R_NilValue;
-}
 
 /*
 Hemv

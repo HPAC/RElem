@@ -1,26 +1,23 @@
 #include "R-El.h"
 
 //Section: Environment
-SEXP elInitialize(){
+SEXP initialize(){
   int argc = 0;
   char **argv = NULL;
   ElInitialize(&argc,&argv);
   return R_NilValue;
 }
 
-SEXP elFinalize(){
+SEXP finalize(){
   ElFinalize();
   return R_NilValue;
 }
 
-SEXP elInitialized(){
-  bool Cresult;
+SEXP initialized(){
   SEXP Rresult=PROTECT(allocVector(LGLSXP,1));
-  ElInitialized(&Cresult);
-  INTEGER(Rresult)[0]=Cresult;
+  ElInitialized( (bool *)LOGICAL(Rresult) );
   UNPROTECT(1);
   return Rresult;
-
 }
 
 SEXP printVersion(){
@@ -61,13 +58,13 @@ SEXP worldBarrier(){
 
 //Section Matrices  
 
-SEXP uniformMatrix_d(SEXP Rptr, SEXP height, SEXP width){
+SEXP uniform_d(SEXP Rptr, SEXP height, SEXP width){
   ElUniform_d( toMatrix_d(Rptr), toElInt(height), toElInt(width)
                    , 0, 1 );
   return R_NilValue;
 }
 
-SEXP uniformDistMatrix_d(SEXP Rptr, SEXP height, SEXP width){
+SEXP uniformDist_d(SEXP Rptr, SEXP height, SEXP width){
   ElUniformDist_d( toDistMatrix_d(Rptr), toElInt(height), toElInt(width)
                    , 0, 1 );
   return R_NilValue;
