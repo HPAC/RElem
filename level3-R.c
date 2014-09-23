@@ -88,7 +88,7 @@ SEXP multiShiftTrsmDist_d
   return R_NilValue;
 }
 
-SEXP QuasiTrsm_d
+SEXP quasiTrsm_d
 (SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB){
   ElQuasiTrsm_d( parseSide(side), parseUpLo(uplo),
                  parseOrientation(orientation), toDouble(alpha), 
@@ -96,7 +96,7 @@ SEXP QuasiTrsm_d
   return R_NilValue;
 }
 
-SEXP QuasiTrsmDist_d
+SEXP quasiTrsmDist_d
 (SEXP side, SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB){
   ElQuasiTrsmDist_d( parseSide(side), parseUpLo(uplo), 
                      parseOrientation(orientation), toDouble(alpha), 

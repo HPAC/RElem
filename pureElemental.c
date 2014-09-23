@@ -56,16 +56,3 @@ SEXP worldBarrier(){
 }
 
 
-//Section Matrices  
-
-SEXP uniform_d(SEXP Rptr, SEXP height, SEXP width){
-  ElUniform_d( toMatrix_d(Rptr), toElInt(height), toElInt(width)
-                   , 0, 1 );
-  return R_NilValue;
-}
-
-SEXP uniformDist_d(SEXP Rptr, SEXP height, SEXP width){
-  ElUniformDist_d( toDistMatrix_d(Rptr), toElInt(height), toElInt(width)
-                   , 0, 1 );
-  return R_NilValue;
-}

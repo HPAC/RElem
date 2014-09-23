@@ -89,26 +89,26 @@ SEXP diagonalSolveTrapezoidDist_d
 }
 */
 
-SEXP dot_d( SEXP RptrA, SEXP RptrB, SEXP prod){
+SEXP dot_d( SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
   UNPROTECT(1);
   ElDot_d( toMatrix_d(RptrA), toMatrix_d(RptrB), REAL(ans) );
   return ans;
 }
-SEXP dotDist_d( SEXP RptrA, SEXP RptrB, SEXP prod){
+SEXP dotDist_d( SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
   UNPROTECT(1);
   ElDotDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), REAL(ans) );
   return ans;
 }
 
-SEXP dotu_d( SEXP RptrA, SEXP RptrB, SEXP prod){
+SEXP dotu_d( SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
   UNPROTECT(1);
   ElDotu_d( toMatrix_d(RptrA), toMatrix_d(RptrB), REAL(ans) );
   return ans;
 }
-SEXP dotuDist_d( SEXP RptrA, SEXP RptrB, SEXP prod){
+SEXP dotuDist_d( SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
   UNPROTECT(1);
   ElDotuDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), REAL(ans) );
@@ -141,15 +141,19 @@ SEXP hadamardDist_d(SEXP RptrA, SEXP RptrB, SEXP RptrC){
   return R_NilValue;
 }
 
-SEXP hilbertSchmidt_d(SEXP RptrA, SEXP RptrB, SEXP prod){
-  ElHilbertSchmidt_d( toMatrix_d(RptrA), toMatrix_d(RptrB), toDouble_p(prod) );
-  return R_NilValue;
+SEXP hilbertSchmidt_d(SEXP RptrA, SEXP RptrB){
+  SEXP ans = PROTECT( allocVector(REALSXP, 1) );
+  UNPROTECT(1);
+  ElHilbertSchmidt_d( toMatrix_d(RptrA), toMatrix_d(RptrB), REAL(ans) );
+  return ans;
 }
 
-SEXP hilbertSchmidtDist_d(SEXP RptrA, SEXP RptrB, SEXP prod){
+SEXP hilbertSchmidtDist_d(SEXP RptrA, SEXP RptrB){
+  SEXP ans = PROTECT( allocVector(REALSXP, 1) );
+  UNPROTECT(1);
   ElHilbertSchmidtDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), 
-                          toDouble_p(prod) );
-  return R_NilValue;
+                          REAL(ans) );
+  return ans;
 }
 
 /* IndexDependentFill
@@ -176,12 +180,12 @@ SEXP makeSymmetricDist_d(SEXP uplo, SEXP RptrA){
 }
 
 
-SEXP makeTrapezoidal(SEXP uplo, SEXP RptrA, SEXP offset){ 
+SEXP makeTrapezoidal_d(SEXP uplo, SEXP RptrA, SEXP offset){ 
   ElMakeTrapezoidal_d( parseUpLo(uplo), toMatrix_d(RptrA), toElInt(offset) );
   return R_NilValue;
 }
 
-SEXP makeTrapezoidalDist(SEXP uplo, SEXP RptrA, SEXP offset){ 
+SEXP makeTrapezoidalDist_d(SEXP uplo, SEXP RptrA, SEXP offset){ 
   ElMakeTrapezoidalDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), 
                            toElInt(offset) );
   return R_NilValue;
@@ -749,7 +753,7 @@ SEXP transposeDist_d(SEXP RptrA, SEXP RptrB){
   return R_NilValue;
 }
 
-SEXP updateDiagonal(SEXP RptrA, SEXP alpha, SEXP offset){
+SEXP updateDiagonal_d(SEXP RptrA, SEXP alpha, SEXP offset){
   ElUpdateDiagonal_d( toMatrix_d(RptrA), toDouble(alpha), toElInt(offset) );
   return R_NilValue;
 }
