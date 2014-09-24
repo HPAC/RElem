@@ -156,6 +156,8 @@ ElFileFormat parseFormatText(SEXP format){
   return EL_AUTO;
 }
 
+
+
 const char * parseDistEnum(ElDist dist){
   switch(dist){
   case EL_MC: return "MC";
@@ -205,4 +207,19 @@ ElSortType parseSort(SEXP sort){
   if (strcmp("DESCENDING", text) == 0) return EL_DESCENDING;
   if (strcmp("ASCENDING", text) == 0) return EL_ASCENDING;
   return EL_UNSORTED;
+}
+
+ElRidgeAlg parseRidgeAlg(SEXP alg){
+  char *text = (char*)toChar_p(alg);
+  if (strcmp("CHOLESKY", text) == 0) return EL_RIDGE_CHOLESKY;
+  if (strcmp("QR", text) == 0) return EL_RIDGE_QR;
+  if (strcmp("SVD", text) == 0) return EL_RIDGE_SVD;
+  return EL_RIDGE_CHOLESKY;
+}
+
+ElTikhonovAlg parseTikhonovAlg(SEXP alg){
+  char *text = (char*)toChar_p(alg);
+  if (strcmp("CHOLESKY", text) == 0) return EL_TIKHONOV_CHOLESKY;
+  if (strcmp("QR", text) == 0) return EL_TIKHONOV_QR;
+  return EL_TIKHONOV_CHOLESKY;
 }
