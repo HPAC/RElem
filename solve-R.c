@@ -134,14 +134,14 @@ SEXP ridgeDist_d( SEXP RptrA, SEXP RptrB, SEXP alpha, SEXP RptrX, SEXP alg){
 
 SEXP symmetricSolve_d( SEXP uplo, SEXP orientation, SEXP RptrA, SEXP RptrB ){
   ElSymmetricSolve_d( parseUpLo(uplo), parseOrientation(orientation),
-           toMatrix_d(RptrA), toMatrix_d(RptrB) );
+                      toMatrix_d(RptrA), toMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP symmetricSolveDist_d
 ( SEXP uplo, SEXP orientation, SEXP RptrA, SEXP RptrB ){
   ElSymmetricSolveDist_d( parseUpLo(uplo), parseOrientation(orientation),
-               toDistMatrix_d(RptrA), toDistMatrix_d(RptrB) );
+                          toDistMatrix_d(RptrA), toDistMatrix_d(RptrB) );
   return R_NilValue;
 }
 

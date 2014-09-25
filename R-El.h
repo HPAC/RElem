@@ -52,3 +52,5 @@ ElOrientation parseOrientation(SEXP orientation);
 ElLeftOrRight parseSide(SEXP side);
 ElUnitOrNonUnit parseUnit(SEXP unit);
 ElSortType parseSort(SEXP sort);
+ElRidgeAlg parseRidgeAlg(SEXP alg);
+ElTikhonovAlg parseTikhonovAlg(SEXP alg);

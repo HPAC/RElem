@@ -157,7 +157,13 @@ GridVRSize<-function(Grid){
 #--------------------
 
 Matrix<-function(dataType="d"){
-  .Call( paste0("newMatrix_",dataType) )
+  ans<-.Call( paste0("newMatrix_",dataType) )
+  reg.finalizer(ans, MatrixDestroy)
+  ans
+}
+
+MatrixCopy<-function(MatrixFrom, MatrixTo){
+  .Call( paste0("copy", getElement(MatrixFrom)), MatrixFrom, MatrixTo )
 }
 
 
@@ -167,13 +173,19 @@ Matrix<-function(dataType="d"){
 #---------------------
 
 DistMatrix<-function(Grid, dataType="d"){
-  .Call( paste0("newDistMatrix_",dataType), Grid, dataType )
+  ans<-.Call( paste0("newDistMatrix_",dataType), Grid, dataType )
+  reg.finalizer(ans, MatrixDestroy)
+  ans
+
 }
 
 DistMatrixSpecific<-function(ColDist, RowDist, Grid, dataType="d"){
-  .Call( paste0("newDistMatrixSpecific_", dataType), as.character(ColDist),
+  ans<-.Call( paste0("newDistMatrixSpecific_", dataType), as.character(ColDist),
          as.character(RowDist), Grid )
+  reg.finalizer(ans, MatrixDestroy)
+  ans
 }
+
 ShowDistData<-function(DistMatrixA){
   .Call( paste0("showDistData_", getType(DistMatrixA)), DistMatrixA)
 }
@@ -181,6 +193,11 @@ ShowDistData<-function(DistMatrixA){
 #-------------------------
 # Common Matrix Properties
 #-------------------------
+
+MatrixDestroy<-function(MatrixA){
+  .Call( paste0("destroy", getElement(MatrixA)), MatrixA )
+}
+
 
 MatrixGet<-function(MatrixA, i, j){
   .Call( paste0("get", getElement(MatrixA)), MatrixA,
@@ -509,7 +526,7 @@ Symm<-function( side, uplo, alpha, MatrixA, MatrixB, beta, MatrixC){
 }
 
 Syrk<-function( uplo, orientation, alpha, MatrixA, beta, MatrixC){
-  .Call( paste0("symm", getSuffix(MatrixA)), uplo, orientation, alpha, MatrixA,
+  .Call( paste0("syrk", getSuffix(MatrixA)), uplo, orientation, alpha, MatrixA,
          beta, MatrixC )
 }
 
@@ -632,11 +649,11 @@ SVD<-function( MatrixA, Matrixs, MatrixV){
 # Solvers
 #
 
-GaussianElimination<-function( MatrixA, MatrixB){
+GaussianElimination<-function( MatrixA, MatrixB ){
   .Call( paste0("gaussianElimination", getSuffix(MatrixA)), MatrixA, MatrixB )
 }
 
-GLM<-function( MatrixA, MatrixB, MatrixD, MatrixY){
+GLM<-function( MatrixA, MatrixB, MatrixD, MatrixY ){
   .Call( paste0("gLM", getSuffix(MatrixA)), MatrixA, MatrixB, MatrixD, MatrixY )
 }
 
@@ -725,3 +742,4 @@ Uniform(vecX,4,1)
 
 vecY<-Matrix()
 Uniform(vecY,4,1)
+
