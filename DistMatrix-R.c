@@ -359,12 +359,12 @@ SEXP ldimDistMatrix_d(SEXP Rptr){
   return ans;
 }
 
-SEXP matrixDistMatrix(SEXP RptrA, SEXP RptrAM){
+SEXP matrixDistMatrix_d(SEXP RptrA, SEXP RptrAM){
   ElDistMatrixMatrix_d( toDistMatrix_d(RptrA), toMatrix_d_p(RptrAM) );
   return R_NilValue;
 }
 
-SEXP lockedMatrixDistMatrix(SEXP RptrA, SEXP RptrAM){
+SEXP lockedMatrixDistMatrix_d(SEXP RptrA, SEXP RptrAM){
   ElDistMatrixLockedMatrix_d( toDistMatrix_d(RptrA),
                               (ElConstMatrix_d *)toMatrix_d_p(RptrAM) );
   return R_NilValue;

@@ -166,6 +166,16 @@ MatrixCopy<-function(MatrixFrom, MatrixTo){
   .Call( paste0("copy", getElement(MatrixFrom)), MatrixFrom, MatrixTo )
 }
 
+MatrixAttach<-function(MatrixA, height, width, buffer, ldim){
+  .Call( paste0("attach", getElement(MatrixA)), MatrixA, as.integer(height),
+         as.integer(width), buffer, as.integer(ldim) )
+}
+
+MatrixLockedAttach<-function(MatrixA, height, width, buffer, ldim){
+  .Call( paste0("lockedAttach", getElement(MatrixA)), MatrixA, as.integer(height),
+         as.integer(width), buffer, as.integer(ldim) )
+}
+
 
 
 #---------------------
@@ -190,6 +200,45 @@ ShowDistData<-function(DistMatrixA){
   .Call( paste0("showDistData_", getType(DistMatrixA)), DistMatrixA)
 }
 
+DistMatrixSetGrid<-function(DistMatrixA, GridG){
+  .Call( paste0("setGridDistMatrix_", getType(DistMatrixA)), DistMatrixA,
+         GridG )
+}
+
+DistMatrixGrid<-function(DistMatrixA, GridG){
+  .Call( paste0("gridDistMatrix_", getType(DistMatrixA)), DistMatrixA,
+         GridG )
+}
+
+
+
+DistMatrixsetRoot<-function(DistMatrixA, Root){
+  .Call( paste0("setRootDistMatrix_", getType(DistMatrixA)), DistMatrixA,
+         as.integer(Root) )
+}
+
+DistMatrixAttach<-function(DistMatrixA, heigth, width, grid, colAlign, rowAlign,
+                           buffer, ldim, root){
+  .Call( paste0("attachDistMatrix_", getType(DistMatrixA)), DistMatrixA, heigth,
+         width, grid, colAlign, rowAlign, buffer, ldim, root )
+}
+
+DistMatrixLockedAttach<-function(DistMatrixA, heigth, width, grid, colAlign,
+                                 rowAlign, buffer, ldim, root){
+  .Call( paste0("lockedAttachDistMatrix_", getType(DistMatrixA)), DistMatrixA,
+         heigth, width, grid, colAlign, rowAlign, buffer, ldim, root )
+}
+
+DistMatrixToMatrix<-function(DistMatrixA, MatrixA){
+  .Call( paste0("matrixDistMatrix_", getType(DistMatrixA)), DistMatrixA,
+         MatrixA )
+}
+
+DistMatrixToLockedMatrix<-function(DistMatrixA, MatrixA){
+  .Call( paste0("lockedMatrixDistMatrix_", getType(DistMatrixA)), DistMatrixA,
+         MatrixA )
+}
+
 #-------------------------
 # Common Matrix Properties
 #-------------------------
@@ -204,8 +253,13 @@ MatrixGet<-function(MatrixA, i, j){
          as.integer(i),as.integer(j) )
 } 
 
-MatrixSet<-function(MatrixA, i, j){
+MatrixSet<-function(MatrixA, i, j, alpha){
   .Call( paste0("set", getElement(MatrixA)), MatrixA,
+         as.integer(i),as.integer(j),as.double(alpha) )
+} 
+
+MatrixUpdate<-function(MatrixA, i, j, alpha){
+  .Call( paste0("update", getElement(MatrixA)), MatrixA,
          as.integer(i),as.integer(j),as.double(alpha) )
 } 
 
@@ -236,8 +290,68 @@ MatrixResizeLDim<-function(MatrixA, height, width, ldim){
          as.integer(width), as.integer(ldim) )
 }
 
+MatrixDiagonalLength<-function(MatrixA){
+  .Call( paste0("diagonalLength", getElement(MatrixA)), MatrixA )
+}
+
+MatrixViewing<-function(MAtrixA){
+  .Call( paste0("viewing", getElement(MatrixA)), MatrixA )
+}
+
+MatrixLocked<-function(MAtrixA){
+  .Call( paste0("locked", getElement(MatrixA)), MatrixA )
+}
+
+MatrixGetDiagonal<-function(MatrixA, offset, MatrixD){
+  .Call( paste0("getDiagonal", getElement(MatrixA)), MatrixA, as.integer(offset),
+         as.integer(MatrixD) )
+}
+
+MatrixSetDiagonal<-function(MatrixA, MatrixD, offset){
+  .Call( paste0("setDiagonal", getElement(MatrixA)), MatrixA, MatrixD,
+         as.integer(offset) )
+}
+
+
+
 #attach and locked attach are different
 
+
+
+#-------------
+# Matrix Views
+#-------------
+
+#A is a view of B
+View<-function(MatrixA, MatrixB, fromi, toi, fromj, toj){
+    .Call( paste0("view", getSuffix(MatrixA)), MatrixA, MatrixB,
+           as.integer(fromi), as.integer(toi),
+           as.integer(fromj), as.integer(toj) )
+}
+
+LockedView<-function(MatrixA, MatrixB, fromi, toi, fromj, toj){
+    .Call( paste0("lockedView", getSuffix(MatrixA)), MatrixA, MatrixB,
+           as.integer(fromi), as.integer(toi),
+           as.integer(fromj), as.integer(toj) )
+}
+
+ViewOffset<-function(MatrixA, MatrixB, i, j, height, width){
+    .Call( paste0("viewOffset", getSuffix(MatrixA)), MatrixA, MatrixB,
+           as.integer(i), as.integer(j), as.integer(height), as.integer(width) )
+}
+
+LockedViewOffset<-function(MatrixA, MatrixB, i, j, height, width){
+    .Call( paste0("lockedViewOffset", getSuffix(MatrixA)), MatrixA, MatrixB,
+           as.integer(i), as.integer(j), as.integer(height), as.integer(width) )
+}
+
+ViewFull<-function(MatrixA, MatrixB){
+    .Call( paste0("viewFull", getSuffix(MatrixA)), MatrixA, MatrixB )
+}
+
+LockedViewFull<-function(MatrixA, MatrixB){
+    .Call( paste0("lockedViewFull", getSuffix(MatrixA)), MatrixA, MatrixB )
+}
 
 
 #------------------
@@ -743,3 +857,6 @@ Uniform(vecX,4,1)
 vecY<-Matrix()
 Uniform(vecY,4,1)
 
+matR<-runif(10)
+matE<-Matrix()
+MatrixResize(matE,2,5)
