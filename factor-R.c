@@ -130,10 +130,10 @@ SEXP inertiaAfterLDL_d( SEXP Rptrd, SEXP RptrdSub){
   ElInertiaType inertia;
   ElInertiaAfterLDL_d( toMatrix_d(Rptrd), toMatrix_d(RptrdSub), &inertia );
   SEXP ans = PROTECT( allocVector(INTSXP,3) );
-  UNPROTECT(1);
   INTEGER(ans)[0]=(int)inertia.numPositive;
   INTEGER(ans)[1]=(int)inertia.numNegative;
   INTEGER(ans)[2]=(int)inertia.numZero;
+  UNPROTECT(1);
   return ans;
 }
 
@@ -142,10 +142,10 @@ SEXP inertiaAfterLDLDist_d( SEXP Rptrd, SEXP RptrdSub){
   ElInertiaAfterLDLDist_d( toDistMatrix_d(Rptrd), toDistMatrix_d(RptrdSub),
                            &inertia );
   SEXP ans = PROTECT( allocVector(INTSXP,3) );
-  UNPROTECT(1);
   INTEGER(ans)[0]=(int)inertia.numPositive;
   INTEGER(ans)[1]=(int)inertia.numNegative;
   INTEGER(ans)[2]=(int)inertia.numZero;
+  UNPROTECT(1);
   return ans;
 }
 

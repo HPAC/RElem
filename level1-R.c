@@ -91,27 +91,27 @@ SEXP diagonalSolveTrapezoidDist_d
 
 SEXP dot_d( SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
-  UNPROTECT(1);
   ElDot_d( toMatrix_d(RptrA), toMatrix_d(RptrB), REAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 SEXP dotDist_d( SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
-  UNPROTECT(1);
   ElDotDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), REAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP dotu_d( SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
-  UNPROTECT(1);
   ElDotu_d( toMatrix_d(RptrA), toMatrix_d(RptrB), REAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 SEXP dotuDist_d( SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
-  UNPROTECT(1);
   ElDotuDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), REAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
@@ -143,16 +143,16 @@ SEXP hadamardDist_d(SEXP RptrA, SEXP RptrB, SEXP RptrC){
 
 SEXP hilbertSchmidt_d(SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
-  UNPROTECT(1);
   ElHilbertSchmidt_d( toMatrix_d(RptrA), toMatrix_d(RptrB), REAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP hilbertSchmidtDist_d(SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
-  UNPROTECT(1);
   ElHilbertSchmidtDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), 
                           REAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
@@ -207,7 +207,6 @@ SEXP max_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElMax_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -217,6 +216,7 @@ SEXP max_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -226,7 +226,6 @@ SEXP maxDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElMaxDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -236,6 +235,7 @@ SEXP maxDist_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -245,7 +245,6 @@ SEXP symmetricMax_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElSymmetricMax_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -255,6 +254,7 @@ SEXP symmetricMax_d(SEXP uplo, SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -264,7 +264,6 @@ SEXP symmetricMaxDist_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElSymmetricMaxDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -274,6 +273,7 @@ SEXP symmetricMaxDist_d(SEXP uplo, SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -283,7 +283,6 @@ SEXP vectorMax_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElVectorMax_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
@@ -292,6 +291,7 @@ SEXP vectorMax_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -301,7 +301,6 @@ SEXP vectorMaxDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElVectorMaxDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
@@ -310,6 +309,7 @@ SEXP vectorMaxDist_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -319,7 +319,6 @@ SEXP maxAbs_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElMaxAbs_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -329,6 +328,7 @@ SEXP maxAbs_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -338,7 +338,6 @@ SEXP maxAbsDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElMaxAbsDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -348,6 +347,7 @@ SEXP maxAbsDist_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -357,7 +357,6 @@ SEXP symmetricMaxAbs_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElSymmetricMax_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -367,6 +366,7 @@ SEXP symmetricMaxAbs_d(SEXP uplo, SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -376,7 +376,6 @@ SEXP symmetricMaxAbsDist_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElSymmetricMaxDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -386,6 +385,7 @@ SEXP symmetricMaxAbsDist_d(SEXP uplo, SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -395,7 +395,6 @@ SEXP vectorMaxAbs_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElVectorMaxAbs_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
@@ -404,6 +403,7 @@ SEXP vectorMaxAbs_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -413,7 +413,6 @@ SEXP vectorMaxAbsDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElVectorMaxAbsDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
@@ -422,6 +421,7 @@ SEXP vectorMaxAbsDist_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -434,7 +434,6 @@ SEXP min_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElMin_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -444,6 +443,7 @@ SEXP min_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -453,7 +453,6 @@ SEXP minDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElMinDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -463,6 +462,7 @@ SEXP minDist_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -472,7 +472,6 @@ SEXP symmetricMin_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElSymmetricMin_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -482,6 +481,7 @@ SEXP symmetricMin_d(SEXP uplo, SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -491,7 +491,6 @@ SEXP symmetricMinDist_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElSymmetricMinDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -501,6 +500,7 @@ SEXP symmetricMinDist_d(SEXP uplo, SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -510,7 +510,6 @@ SEXP vectorMin_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElVectorMin_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
@@ -519,6 +518,7 @@ SEXP vectorMin_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -528,7 +528,6 @@ SEXP vectorMinDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElVectorMinDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
@@ -537,6 +536,7 @@ SEXP vectorMinDist_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -546,7 +546,6 @@ SEXP minAbs_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElMinAbs_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -556,6 +555,7 @@ SEXP minAbs_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -565,7 +565,6 @@ SEXP minAbsDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElMinAbsDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -575,6 +574,7 @@ SEXP minAbsDist_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -584,7 +584,6 @@ SEXP symmetricMinAbs_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElSymmetricMinAbs_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -594,6 +593,7 @@ SEXP symmetricMinAbs_d(SEXP uplo, SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -603,7 +603,6 @@ SEXP symmetricMinAbsDist_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElSymmetricMinAbsDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.indices[0];
@@ -613,6 +612,7 @@ SEXP symmetricMinAbsDist_d(SEXP uplo, SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -622,7 +622,6 @@ SEXP vectorMinAbs_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElVectorMinAbs_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
@@ -631,6 +630,7 @@ SEXP vectorMinAbs_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
@@ -640,7 +640,6 @@ SEXP vectorMinAbsDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  UNPROTECT(4);
   ElVectorMinAbsDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
@@ -649,20 +648,21 @@ SEXP vectorMinAbsDist_d(SEXP RptrA){
   SET_VECTOR_ELT(ans, 0, val);
   SET_VECTOR_ELT(ans, 1, coords);
   setAttrib(ans, R_NamesSymbol, names);
+  UNPROTECT(4);
   return ans;
 }
 
 SEXP nrm2_d(SEXP RptrA){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
-  UNPROTECT(1);
   ElNrm2_d( toMatrix_d(RptrA), REAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP nrm2Dist_d(SEXP RptrA){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
-  UNPROTECT(1);
   ElNrm2Dist_d( toDistMatrix_d(RptrA), REAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 

@@ -16,9 +16,9 @@ SEXP newMatrix_i(){
   e=ElMatrixCreate_i(pMat);
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
-  UNPROTECT(1);
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_i"));
+  UNPROTECT(1);
   return Rptr;
 }
 SEXP newMatrix_s(){
@@ -27,9 +27,9 @@ SEXP newMatrix_s(){
   e=ElMatrixCreate_s(pMat);
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
-  UNPROTECT(1);
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_s"));
+  UNPROTECT(1);
   return Rptr;
 }
 SEXP newMatrix_d(){
@@ -38,9 +38,9 @@ SEXP newMatrix_d(){
   e=ElMatrixCreate_d(pMat);
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
-  UNPROTECT(1);
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_d"));
+  UNPROTECT(1);
   return Rptr;
 }
 SEXP newMatrix_c(){
@@ -49,9 +49,9 @@ SEXP newMatrix_c(){
   e=ElMatrixCreate_c(pMat);
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
-  UNPROTECT(1);
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_c"));
+  UNPROTECT(1);
   return Rptr;
 }
 SEXP newMatrix_z(){
@@ -60,9 +60,9 @@ SEXP newMatrix_z(){
   e=ElMatrixCreate_z(pMat);
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
-  UNPROTECT(1);
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_z"));
+  UNPROTECT(1);
   return Rptr;
 }
 
@@ -120,36 +120,36 @@ SEXP copyMatrix_d(SEXP RptrA, SEXP RptrB){
 
 SEXP heightMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElMatrixHeight_d( toMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP widthMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElMatrixWidth_d( toMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP ldimMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElMatrixLDim_d( toMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP memorySizeMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElMatrixMemorySize_d( toMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP diagonalLenghtMatrix_d(SEXP Rptr, SEXP offset){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElMatrixDiagonalLength_d( toMatrix_d(Rptr), toElInt(offset), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
@@ -157,8 +157,8 @@ SEXP bufferMatrix_d(SEXP Rptr){
   double *buffer;
   ElMatrixBuffer_d( toMatrix_d(Rptr), &buffer);
   SEXP pBuff = PROTECT(R_MakeExternalPtr(buffer, R_NilValue, R_NilValue));
-  UNPROTECT(1);
   R_RegisterCFinalizerEx(pBuff, _clear, TRUE);
+  UNPROTECT(1);
   return pBuff;
 }
 
@@ -167,8 +167,8 @@ SEXP lockedBufferMatrix_d(SEXP Rptr){
   ElMatrixLockedBuffer_d( toMatrix_d(Rptr), &buffer);
   SEXP pBuff = PROTECT(R_MakeExternalPtr( (void *)buffer, R_NilValue, 
                                           R_NilValue));
-  UNPROTECT(1);
   R_RegisterCFinalizerEx(pBuff, _clear, TRUE);
+  UNPROTECT(1);
   return pBuff;
 }
 
@@ -182,22 +182,22 @@ SEXP viewingMatrix_d(SEXP Rptr){
 
 SEXP fixedsizeMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
-  UNPROTECT(1);
   ElMatrixFixedSize_d( toMatrix_d(Rptr), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP lockedMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
-  UNPROTECT(1);
   ElMatrixLocked_d( toMatrix_d(Rptr), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP getMatrix_d(SEXP Rptr, SEXP i, SEXP j){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
-  UNPROTECT(1);
   ElMatrixGet_d( toMatrix_d(Rptr), toElInt(i), toElInt(j), REAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 

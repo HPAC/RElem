@@ -211,7 +211,6 @@ DistMatrixGrid<-function(DistMatrixA, GridG){
 }
 
 
-
 DistMatrixsetRoot<-function(DistMatrixA, Root){
   .Call( paste0("setRootDistMatrix_", getType(DistMatrixA)), DistMatrixA,
          as.integer(Root) )
@@ -759,9 +758,9 @@ SVD<-function( MatrixA, Matrixs, MatrixV){
   .Call( paste0("sVD", getSuffix(MatrixA)), MatrixA, Matrixs, MatrixV )
 }
 
-#
+#--------
 # Solvers
-#
+#--------
 
 GaussianElimination<-function( MatrixA, MatrixB ){
   .Call( paste0("gaussianElimination", getSuffix(MatrixA)), MatrixA, MatrixB )

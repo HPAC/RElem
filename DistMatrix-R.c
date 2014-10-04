@@ -17,8 +17,8 @@ SEXP newDistMatrix_i(SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr( pDMat, install("DistMatrix"),
                                           R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_i"));
+  UNPROTECT(1);
   return Rptr;
 }
 SEXP newDistMatrix_s(SEXP RptrGrid){
@@ -29,8 +29,8 @@ SEXP newDistMatrix_s(SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                         R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_s"));
+  UNPROTECT(1);
   return Rptr;
 }
 SEXP newDistMatrix_d(SEXP RptrGrid){
@@ -41,8 +41,8 @@ SEXP newDistMatrix_d(SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_d"));
+  UNPROTECT(1);
   return Rptr;
 }
 SEXP newDistMatrix_c(SEXP RptrGrid){
@@ -53,8 +53,8 @@ SEXP newDistMatrix_c(SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_c"));
+  UNPROTECT(1);
   return Rptr;
 }
 SEXP newDistMatrix_z(SEXP RptrGrid){
@@ -65,8 +65,8 @@ SEXP newDistMatrix_z(SEXP RptrGrid){
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                         R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_z"));
+  UNPROTECT(1);
   return Rptr;
 }
 
@@ -83,8 +83,8 @@ SEXP newDistMatrixSpecific_i(SEXP U, SEXP V, SEXP RptrGrid){
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                         R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_i"));
+  UNPROTECT(1);
   return Rptr;
 }
 
@@ -99,8 +99,8 @@ SEXP newDistMatrixSpecific_s(SEXP U, SEXP V, SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_s"));
+  UNPROTECT(1);
   return Rptr;
 }
 
@@ -115,8 +115,8 @@ SEXP newDistMatrixSpecific_d(SEXP U, SEXP V, SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_d"));
+  UNPROTECT(1);
   return Rptr;
 }
 
@@ -131,8 +131,8 @@ SEXP newDistMatrixSpecific_c(SEXP U, SEXP V, SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_c"));
+  UNPROTECT(1);
   return Rptr;
 }
 
@@ -147,8 +147,8 @@ SEXP newDistMatrixSpecific_z(SEXP U, SEXP V, SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  UNPROTECT(1);
   setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_z"));
+  UNPROTECT(1);
   return Rptr;
 }
 
@@ -295,67 +295,67 @@ SEXP lockedAttachDistMatrix_d
 
 SEXP heightDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixHeight_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP widthDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixWidth_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP diagonalLengthDistMatrix_d(SEXP Rptr, SEXP offset){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixDiagonalLength_d( toDistMatrix_d(Rptr), toElInt(offset), 
                                 INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP viewingDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixViewing_d( toDistMatrix_d(Rptr), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 /*
 SEXP fixedsizeDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixFixedSize_d( toDistMatrix_d(Rptr), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 */
 
 SEXP lockedDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixLocked_d( toDistMatrix_d(Rptr), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP localHeightDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixLocalHeight_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP localWidthDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixLocalWidth_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP ldimDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixLDim_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
@@ -373,10 +373,10 @@ SEXP lockedMatrixDistMatrix_d(SEXP RptrA, SEXP RptrAM){
 
 SEXP allocatedMemoryDistMatrix_d(SEXP Rptr){
   size_t mem;
-  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixAllocatedMemory_d( toDistMatrix_d(Rptr), &mem );
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
   INTEGER(ans)[0]=(int)mem;
+  UNPROTECT(1);
   return ans;
 }
 
@@ -385,8 +385,8 @@ SEXP bufferDistMatrix_d(SEXP Rptr){
   double *buffer;
   ElDistMatrixBuffer_d( toDistMatrix_d(Rptr), &buffer);
   SEXP pBuff = PROTECT(R_MakeExternalPtr(buffer, R_NilValue, R_NilValue));
-  UNPROTECT(1);
   R_RegisterCFinalizerEx(pBuff, _clear, TRUE);
+  UNPROTECT(1);
   return pBuff;
 }
 
@@ -395,8 +395,8 @@ SEXP lockedBufferDistMatrix_d(SEXP Rptr){
   ElDistMatrixLockedBuffer_d( toDistMatrix_d(Rptr), &buffer);
   SEXP pBuff = PROTECT( R_MakeExternalPtr((void *)buffer, R_NilValue, 
                                          R_NilValue) );
-  UNPROTECT(1);
   R_RegisterCFinalizerEx(pBuff, _clear, TRUE);
+  UNPROTECT(1);
   return pBuff;
 }
 
@@ -408,127 +408,127 @@ SEXP gridDistMatrix(SEXP RptrA, SEXP RptrGrid){
 
 SEXP colConstrainedDistMatrix_d(SEXP RptrA){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixColConstrained_d( toDistMatrix_d(RptrA), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP rowConstrainedDistMatrix_d(SEXP RptrA){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixRowConstrained_d( toDistMatrix_d(RptrA), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP rootConstrainedDistMatrix_d(SEXP RptrA){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixRootConstrained_d( toDistMatrix_d(RptrA), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP colAlignDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixColAlign_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP rowAlignDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixRowAlign_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP colShiftDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixColShift_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP rowShiftDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixRowShift_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP colRankDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixColRank_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP rowRankDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixRowRank_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP partialColRankDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixPartialColRank_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP partialRowRankDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixPartialRowRank_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP partialUnionColRankDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixPartialUnionColRank_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP partialUnionRowRankDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixPartialUnionRowRank_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP distRankDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixDistRank_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP crossRankDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixCrossRank_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP redundantRankDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixRedundantRank_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP rootDistMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixRoot_d( toDistMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
 SEXP participatingDistMatrix_d(SEXP RptrA){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixParticipating_d( toDistMatrix_d(RptrA), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
@@ -541,8 +541,8 @@ Maaaany funcs
 
 SEXP getDistMatrix_d(SEXP Rptr, SEXP i, SEXP j){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
-  UNPROTECT(1);
   ElDistMatrixGet_d( toDistMatrix_d(Rptr), toElInt(i), toElInt(j), REAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
