@@ -1,13 +1,16 @@
 #R-El
 
 This library does the link between R and linear algebra library
-[Elemental](http://www.libelemental.org), allowing to call the Elemental functions from R
+[Elemental](http://www.libelemental.org), allowing to call the Elemental
+functions from R
 
-It is created on top the C headers provided in the development version of the Elemental library
+It is created on top the C headers provided in the development version of
+the Elemental library
 
-##Functionalities
+##Functionality
 
-By the moment, the following functionalities are implemented in R, most of them only in double precision
+By the moment, the following functions are accessible by R, most of them only
+for double precision matrices.
 
 * Core and MPI routines
 * Sequential Matrices
@@ -33,7 +36,7 @@ By the moment, the following functionalities are implemented in R, most of them 
 
 ## Installation
 
-By the moment this development version should be installed in two steps, since it is not integrated with the Elemental's build system, 
+By the moment this development version should be installed in two steps, since it is not integrated with the Elemental's build system, the steps are the following 
 
 #### 1. Install Elemental
 -  To install this program, it is a prerequisite to [install Elemental](http://libelemental.org/documentation/dev/build.html) as a shared library
@@ -41,6 +44,7 @@ By the moment this development version should be installed in two steps, since i
 #### 2. Download and compile the R-Elemental
 
 1. Clone this git repository
+   `git clone git@bitbucket.org:rocanale/r-elem.git`
 2. Edit the Makefile and add the corresponding paths to the built elemental library and its headers
 3. build the library
 
@@ -52,7 +56,8 @@ By the moment this development version should be installed in two steps, since i
 
 ## Programming Style
 
-Most of the functions involve the Matrices (Distributed and Sequential), and they are represented in R as external pointers.
+Most of the functions involve the Matrices (Distributed and Sequential), 
+and they are represented in R as external pointers.
 
 In the cases where the native elemental function returns a value, we try to mimic the same in R, and instead of passing a pointer (like the C headers do) we allocate space and return the value in an R variable.
 
@@ -72,10 +77,15 @@ R must be called from mpi, using the following command
 
 `mpiexec -n 4 Rscript SimpleDist.R`
 
-Note: it is always necessary to preload the openmpi library (or the one installed in the system) using the `LD_PRELOAD` environment variable
+Note: it is always necessary to preload the openmpi library (or the one installed in the system) using the `LD_PRELOAD` environment variable as follows
+
+`export LD_PRELOAD=/usr/lib/libmpi.so:$LD_PRELOAD`
 
 ### Source
-<pre>
+
+This example shows how to run a Gemm with distributed matrices
+
+```
 # Load the library
 source("functions.R")
 
@@ -105,4 +115,4 @@ Gemm("NORMAL", "TRANSPOSE", alpha, A, B, beta, C)
 Print(C)
 #Finalize El/MPI
 Finalize()
-</pre>
+```
