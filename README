@@ -70,12 +70,12 @@ The names of the functions are the same as in the Native Elemental library, and 
 
 R must be called from mpi, using the following command
 
-mpiexec -n 4 Rscript SimpleDist.R
+`mpiexec -n 4 Rscript SimpleDist.R`
 
-_Note: it is always necessary to preload the openmpi library (or the one installed in the system) using the LD_PRELOAD environment variable_
+Note: it is always necessary to preload the openmpi library (or the one installed in the system) using the `LD_PRELOAD` environment variable
 
 ### Source
-:::R
+<pre>
 # Load the library
 source("functions.R")
 
@@ -105,3 +105,4 @@ Gemm("NORMAL", "TRANSPOSE", alpha, A, B, beta, C)
 Print(C)
 #Finalize El/MPI
 Finalize()
+</pre>
