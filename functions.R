@@ -323,34 +323,178 @@ MatrixSetDiagonal<-function(MatrixA, MatrixD, offset){
 
 #A is a view of B
 View<-function(MatrixA, MatrixB, fromi, toi, fromj, toj){
-    .Call( paste0("view", getSuffix(MatrixA)), MatrixA, MatrixB,
-           as.integer(fromi), as.integer(toi),
-           as.integer(fromj), as.integer(toj) )
+  .Call( paste0("view", getSuffix(MatrixA)), MatrixA, MatrixB,
+         as.integer(fromi), as.integer(toi),
+         as.integer(fromj), as.integer(toj) )
 }
 
 LockedView<-function(MatrixA, MatrixB, fromi, toi, fromj, toj){
-    .Call( paste0("lockedView", getSuffix(MatrixA)), MatrixA, MatrixB,
-           as.integer(fromi), as.integer(toi),
-           as.integer(fromj), as.integer(toj) )
+  .Call( paste0("lockedView", getSuffix(MatrixA)), MatrixA, MatrixB,
+         as.integer(fromi), as.integer(toi),
+         as.integer(fromj), as.integer(toj) )
 }
 
 ViewOffset<-function(MatrixA, MatrixB, i, j, height, width){
-    .Call( paste0("viewOffset", getSuffix(MatrixA)), MatrixA, MatrixB,
-           as.integer(i), as.integer(j), as.integer(height), as.integer(width) )
+  .Call( paste0("viewOffset", getSuffix(MatrixA)), MatrixA, MatrixB,
+         as.integer(i), as.integer(j), as.integer(height), as.integer(width) )
 }
 
 LockedViewOffset<-function(MatrixA, MatrixB, i, j, height, width){
-    .Call( paste0("lockedViewOffset", getSuffix(MatrixA)), MatrixA, MatrixB,
-           as.integer(i), as.integer(j), as.integer(height), as.integer(width) )
+  .Call( paste0("lockedViewOffset", getSuffix(MatrixA)), MatrixA, MatrixB,
+         as.integer(i), as.integer(j), as.integer(height), as.integer(width) )
 }
 
 ViewFull<-function(MatrixA, MatrixB){
-    .Call( paste0("viewFull", getSuffix(MatrixA)), MatrixA, MatrixB )
+  .Call( paste0("viewFull", getSuffix(MatrixA)), MatrixA, MatrixB )
 }
 
 LockedViewFull<-function(MatrixA, MatrixB){
-    .Call( paste0("lockedViewFull", getSuffix(MatrixA)), MatrixA, MatrixB )
+  .Call( paste0("lockedViewFull", getSuffix(MatrixA)), MatrixA, MatrixB )
 }
+
+#-----------
+# Partitions
+#-----------
+
+PartitionDown<-function(MatrixA, MatrixAT, MatrixAB, heightAT){
+  .Call( paste0("partitionDown", getSuffix(MatrixA)), MatrixA, MatrixAT,
+         MatrixAB, as.integer(heightAT) )
+}
+
+LockedPartitionDown<-function(MatrixA, MatrixAT, MatrixAB, heightAT){
+  .Call( paste0("lockedPartitionDown", getSuffix(MatrixA)), MatrixA, MatrixAT,
+         MatrixAB, as.integer(heightAT) )
+}
+
+PartitionUp<-function(MatrixA, MatrixAT, MatrixAB, heightAT){
+  .Call( paste0("partitionUp", getSuffix(MatrixA)), MatrixA, MatrixAT,
+         MatrixAB, as.integer(heightAB) )
+}
+
+LockedPartitionUp<-function(MatrixA, MatrixAT, MatrixAB, heightAT){
+  .Call( paste0("lockedPartitionUp", getSuffix(MatrixA)), MatrixA, MatrixAT,
+         MatrixAB, as.integer(heightAB) )
+}
+
+PartitionLeft<-function(MatrixA, MatrixAL, MatrixAR, widthAR){
+  .Call( paste0("partitionLeft", getSuffix(MatrixA)), MatrixA, MatrixAL,
+         MatrixAR, as.integer(widthAR) )
+}
+
+LockedPartitionLeft<-function(MatrixA, MatrixAL, MatrixAR, widthAR){
+  .Call( paste0("lockedPartitionLeft", getSuffix(MatrixA)), MatrixA, MatrixAL,
+         MatrixAR, as.integer(widthAR) )
+}
+
+PartitionRight<-function(MatrixA, MatrixAL, MatrixAR, widthAL){
+  .Call( paste0("partitionRight", getSuffix(MatrixA)), MatrixA, MatrixAL,
+         MatrixAR, as.integer(widthAL) )
+}
+
+LockedPartitionRight<-function(MatrixA, MatrixAL, MatrixAR, widthAL){
+  .Call( paste0("lockedPartitionRight", getSuffix(MatrixA)), MatrixA, MatrixAL,
+         MatrixAR, as.integer(widthAL) )
+}
+
+PartitionDownDiagonal<-function( MatrixA, MatrixATL, MatrixATR,
+                                 MatrixABL, MatrixABR, diagDist ){
+  .Call( paste0("partitionDownDiagonal", getSuffix(MatrixA)), MatrixA,
+         MatrixATL, MatrixATR, MatrixABL, MatrixABR, as.integer(diagDist) )
+}
+
+LockedPartitionDownDiagonal<-function( MatrixA, MatrixATL, MatrixATR,
+                                       MatrixABL, MatrixABR, diagDist ){
+  .Call( paste0("lockedPartitionDownDiagonal", getSuffix(MatrixA)), MatrixA,
+         MatrixATL, MatrixATR, MatrixABL, MatrixABR, as.integer(diagDist) )
+}
+
+PartitionDownOffsetDiagonal<-function( offset,
+                                       MatrixA, MatrixATL, MatrixATR,
+                                       MatrixABL, MatrixABR, diagDist ){
+  .Call( paste0("partitionDownOffsetDiagonal", getSuffix(MatrixA)), offset,
+         MatrixA, MatrixATL, MatrixATR, MatrixABL, MatrixABR,
+         as.integer(diagDist) )
+}
+
+LockedPartitionDownOffsetDiagonal<-function( offset,
+                                             MatrixA, MatrixATL, MatrixATR,
+                                             MatrixABL, MatrixABR, diagDist ){
+  .Call( paste0("lockedPartitionDownOffsetDiagonal", getSuffix(MatrixA)), offset,
+         MatrixA, MatrixATL, MatrixATR, MatrixABL, MatrixABR,
+         as.integer(diagDist) )
+}
+
+
+PartitionUpDiagonal<-function( MatrixA, MatrixATL, MatrixATR,
+                               MatrixABL, MatrixABR, diagDist ){
+  .Call( paste0("partitionUpDiagonal", getSuffix(MatrixA)), MatrixA,
+         MatrixATL, MatrixATR, MatrixABL, MatrixABR, as.integer(diagDist) )
+}
+
+LockedPartitionUpDiagonal<-function( MatrixA, MatrixATL, MatrixATR,
+                                     MatrixABL, MatrixABR, diagDist ){
+  .Call( paste0("lockedPartitionUpDiagonal", getSuffix(MatrixA)), MatrixA,
+         MatrixATL, MatrixATR, MatrixABL, MatrixABR, as.integer(diagDist) )
+}
+
+PartitionUpOffsetDiagonal<-function( offset,
+                                     MatrixA, MatrixATL, MatrixATR,
+                                     MatrixABL, MatrixABR, diagDist ){
+  .Call( paste0("partitionUpOffsetDiagonal", getSuffix(MatrixA)), offset,
+         MatrixA, MatrixATL, MatrixATR, MatrixABL, MatrixABR,
+         as.integer(diagDist) )
+}
+
+LockedPartitionUpOffsetDiagonal<-function( offset,
+                                           MatrixA, MatrixATL, MatrixATR,
+                                           MatrixABL, MatrixABR, diagDist ){
+  .Call( paste0("lockedPartitionUpOffsetDiagonal", getSuffix(MatrixA)), offset,
+         MatrixA, MatrixATL, MatrixATR, MatrixABL, MatrixABR,
+         as.integer(diagDist) )
+}
+
+#------------
+# Repartition
+#------------
+
+#----------------
+# Slide Partition
+#----------------
+
+#------
+# Merge
+#------
+
+Merge1x2<-function( MatrixA, MatrixBL, MatrixBR){
+  .Call( paste0("merge1x2", getSuffix(MatrixA)), MatrixA,
+         MatrixBL, MatrixBR )
+}
+
+LockedMerge1x2<-function( MatrixA, MatrixBL, MatrixBR){
+  .Call( paste0("lockedMerge1x2", getSuffix(MatrixA)), MatrixA,
+         MatrixBL, MatrixBR )
+}
+
+Merge2x1<-function( MatrixA, MatrixBT, MatrixBB){
+  .Call( paste0("merge2x1", getSuffix(MatrixA)), MatrixA,
+         MatrixBT, MatrixBB )
+}
+
+LockedMerge2x1<-function( MatrixA, MatrixBT, MatrixBB){
+  .Call( paste0("lockedMerge2x1", getSuffix(MatrixA)), MatrixA,
+         MatrixBT, MatrixBB )
+}
+
+Merge2x2<-function( MatrixA, MatrixBTL, MatrixBTR, MatrixBBL, MatrixBBR){
+  .Call( paste0("merge2x1", getSuffix(MatrixA)), MatrixA, MatrixBTL,
+         MatrixBTR, MatrixBBL, MatrixBBR)
+}
+
+LockedMerge2x2<-function( MatrixA, MatrixBTL, MatrixBTR, MatrixBBL, MatrixBBR){
+  .Call( paste0("lockedMerge2x1", getSuffix(MatrixA)), MatrixA, MatrixBTL,
+         MatrixBTR, MatrixBBL, MatrixBBR)
+}
+
 
 
 #------------------
@@ -844,6 +988,9 @@ Write<-function(MatrixA, basename, format, title){
 
 matA<-Matrix()
 Uniform(matA,4,4)
+matAL<-Matrix()
+matAR<-Matrix()
+
 matB<-Matrix()
 Uniform(matB,4,4)
 matC<-Matrix()

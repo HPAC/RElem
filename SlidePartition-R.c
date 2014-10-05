@@ -1,3 +1,4 @@
+/*
 #include "R-El.h"
 
 SEXP slidePartitionDown_d
@@ -19,7 +20,8 @@ SEXP slidePartitionDownDist_d
                               toDistMatrix_d(RptrA2) );
   return R_NilValue;
 }
-
+*/
+/*
 SEXP slideLockedPartitionDown_d
 ( SEXP RptrAT, SEXP RptrA0,
                SEXP RptrA1,
@@ -314,3 +316,4 @@ SEXP slideLockedPartitionUpDiagonalDist_d
                                           toDistMatrix_d(RptrA22) );
   return R_NilValue;
 }
+*/

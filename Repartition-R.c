@@ -1,3 +1,4 @@
+/*
 #include "R-El.h"
 
 SEXP repartitionDown_d
@@ -115,7 +116,6 @@ SEXP lockedRepartitionRightDist_d
                             toDistMatrix_d(RptrA2), toElInt(bsize) );
   return R_NilValue;
 }
-
 
 SEXP repartitionLeft_d
 ( SEXP RptrAL, SEXP RptrAR, 
@@ -331,3 +331,4 @@ SEXP lockedRepartitionUpDiagonalDist_d
                                    toElInt(bsize) );
   return R_NilValue;
 }
+*/

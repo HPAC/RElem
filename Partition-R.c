@@ -12,7 +12,8 @@ SEXP partitionDownDist_d( SEXP RptrA, SEXP RptrAT, SEXP RptrAB, SEXP heightAT){
   return R_NilValue;
 }
  
-SEXP lockedPartitionDown_d( SEXP RptrA, SEXP RptrAT, SEXP RptrAB, SEXP heightAT){
+SEXP lockedPartitionDown_d
+( SEXP RptrA, SEXP RptrAT, SEXP RptrAB, SEXP heightAT){
   ElLockedPartitionDown_d( toMatrix_d(RptrA), toMatrix_d(RptrAT),
                            toMatrix_d(RptrAB), toElInt(heightAT) );
   return R_NilValue;
@@ -50,8 +51,6 @@ SEXP lockedPartitionUpDist_d
                                toDistMatrix_d(RptrAB), toElInt(heightAB) );
   return R_NilValue;
 }
-
-
 
 SEXP partitionLeft_d( SEXP RptrA, SEXP RptrAL, SEXP RptrAR, SEXP widthAR){
   ElPartitionLeft_d( toMatrix_d(RptrA), toMatrix_d(RptrAL),
