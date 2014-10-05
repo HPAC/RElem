@@ -1,0 +1,107 @@
+#R-El
+
+This library does the link between R and linear algebra library
+[Elemental](http://www.libelemental.org), allowing to call the Elemental functions from R
+
+It is created on top the C headers provided in the development version of the Elemental library
+
+##Functionalities
+
+By the moment, the following functionalities are implemented in R, most of them only in double precision
+
+* Core and MPI routines
+* Sequential Matrices
+* Distributed Matrices
+* Grids
+* Blas
+    * Level 1
+    * Level 2
+    * Level 3
+* Lapack Functions
+    * Matrix Factorizations
+    * Spectral Decomposition
+    * Solvers
+* Matrix Generators
+* Flame
+    * Partition
+    * Merge
+    * Repartition (_Not available yet in El_)
+    * Slide Partition (_Not available yet in El_)
+* I/O functions
+  
+
+
+## Installation
+
+By the moment this development version should be installed in two steps, since it is not integrated with the Elemental's build system, 
+
+#### 1. Install Elemental
+-  To install this program, it is a prerequisite to [install Elemental](http://libelemental.org/documentation/dev/build.html) as a shared library
+
+#### 2. Download and compile the R-Elemental
+
+1. Clone this git repository
+2. Edit the Makefile and add the corresponding paths to the built elemental library and its headers
+3. build the library
+
+## Package Structure
+
+*  The C source files in this package contain the C R-callable functions
+
+*  The file functions.R loads the library and initializes the R functions
+
+## Programming Style
+
+Most of the functions involve the Matrices (Distributed and Sequential), and they are represented in R as external pointers.
+
+In the cases where the native elemental function returns a value, we try to mimic the same in R, and instead of passing a pointer (like the C headers do) we allocate space and return the value in an R variable.
+
+### Enum values
+
+The enum values are not defined in R, but they are parsed as text values and transformated into their equivalent in C, making it transparent for the user.
+
+## Naming Conventions
+
+The names of the functions are the same as in the Native Elemental library, and it is not necessary to call different functions when the dataypes are different, which makes it easier to code and takes less time to load the functions into R
+
+## Examples
+
+### Runtime
+
+R must be called from mpi, using the following command
+
+mpiexec -n 4 Rscript SimpleDist.R
+
+_Note: it is always necessary to preload the openmpi library (or the one installed in the system) using the LD_PRELOAD environment variable_
+
+### Source
+:::R
+# Load the library
+source("functions.R")
+
+# Initialize Elemental/MPI
+Initialize()
+
+# Create grid
+g <- Grid()
+
+# Create the Matrices
+A <- DistMatrix(g)
+B <- DistMatrix(g)
+C <- DistMatrix(g)
+
+#Initialize the Matrices
+Uniform(A,6,4)
+Uniform(B,3,4)
+
+MatrixResize(C,4,3)
+
+alpha <- 1.0
+beta <- 0.0
+
+#Execute Gemm
+Gemm("NORMAL", "TRANSPOSE", alpha, A, B, beta, C)
+
+Print(C)
+#Finalize El/MPI
+Finalize()
