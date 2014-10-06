@@ -501,9 +501,22 @@ LockedMerge2x2<-function( MatrixA, MatrixBTL, MatrixBTR, MatrixBBL, MatrixBBR){
 # Matrix generators
 #------------------
 
+Demmel<-function(MatrixA, n){
+  .Call( paste0("demmel", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
 Diagonal<-function(MatrixA, dSize, buffer){
   .Call( paste0("diagonal", getSuffix(MatrixA)), MatrixA, as.integer(dSize),
          buffer )
+}
+
+HermitianUniformSpectrum<-function(MatrixA, n, lower, upper){
+  .Call( paste0("hermitianUniformSpectrum", getSuffix(MatrixA)), MatrixA,
+         as.integer(n), lower, upper)
+}
+
+Hilbert<-function(MatrixA, n){
+  .Call( paste0("hilbert", getSuffix(MatrixA)), MatrixA, as.integer(n) )
 }
 
 Uniform<-function(MatrixA, rows, cols, center=0.0, radius=1.0){
@@ -514,6 +527,117 @@ Uniform<-function(MatrixA, rows, cols, center=0.0, radius=1.0){
 Identity<-function(MatrixA, rows, cols){
   .Call( paste0("identity", getSuffix(MatrixA)), MatrixA, as.integer(rows),
          as.integer(cols))
+}
+
+Jordan<-function(MatrixA, n, lambda){
+  .Call( paste0("jordan", getSuffix(MatrixA)), MatrixA, as.integer(n), lambda )
+}
+
+Kahan<-function(MatrixA, n, phi){
+  .Call( paste0("kahan", getSuffix(MatrixA)), MatrixA, as.integer(n), phi )
+}
+
+KMS<-function(MatrixA, n, rho){
+  .Call( paste0("kahan", getSuffix(MatrixA)), MatrixA, as.integer(n), rho )
+}
+
+Laplacian1D<-function(MatrixA, nx){
+  .Call( paste0("laplacian1D", getSuffix(MatrixA)), MatrixA, as.integer(nx) )
+}
+
+Laplacian2D<-function(MatrixA, nx, ny){
+  .Call( paste0("laplacian2D", getSuffix(MatrixA)), MatrixA, as.integer(nx),
+         as.integer(ny) )
+}
+
+Laplacian3D<-function(MatrixA, nx, ny, nz){
+  .Call( paste0("laplacian3D", getSuffix(MatrixA)), MatrixA, as.integer(nx),
+         as.integer(ny), as.integer(nz) )
+}
+
+Lauchli<-function(MatrixA, n, mu){
+  .Call( paste0("lauchli", getSuffix(MatrixA)), MatrixA, as.integer(n), mu )
+}
+
+Legendre<-function(MatrixA, n){
+  .Call( paste0("legendre", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+Lehmer<-function(MatrixA, n){
+  .Call( paste0("lehmer", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+Lotkin<-function(MatrixA, n){
+  .Call( paste0("lotkin", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+MinIJ<-function(MatrixA, n){
+  .Call( paste0("minIJ", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+Ones<-function(MatrixA, rows, cols){
+  .Call( paste0("ones", getSuffix(MatrixA)), MatrixA, as.integer(rows),
+         as.integer(cols))
+}
+
+OneTwoOne<-function(MatrixA, n){
+  .Call( paste0("oneTwoOne", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+Parter<-function(MatrixA, n){
+  .Call( paste0("parter", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+Pei<-function(MatrixA, n, alpha){
+  .Call( paste0("pei", getSuffix(MatrixA)), MatrixA, as.integer(n), alpha )
+}
+
+Parter<-function(MatrixA, n){
+  .Call( paste0("parter", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+Riffle<-function(MatrixA, n){
+  .Call( paste0("riffle", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+RiffleStationary<-function(MatrixA, n){
+  .Call( paste0("riffleStationary", getSuffix(MatrixA)), MatrixA,
+         as.integer(n) )
+}
+
+RiffleDecay<-function(MatrixA, n){
+  .Call( paste0("riffleDecay", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+Ris<-function(MatrixA, n){
+  .Call( paste0("ris", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+Triangle<-function(MatrixA, n){
+  .Call( paste0("triangle", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+TriW<-function(MatrixA, n, alpha, k){
+  .Call( paste0("triW", getSuffix(MatrixA)), MatrixA, as.integer(n), alpha,
+         as.integer(k) )
+}
+
+Walsh<-function(MatrixA, n, binary){
+  .Call( paste0("walsh", getSuffix(MatrixA)), MatrixA, as.integer(n),
+         as.logical(binary) )
+}
+
+Whale<-function(MatrixA, n){
+  .Call( paste0("whale", getSuffix(MatrixA)), MatrixA, as.integer(n) )
+}
+
+Wigner<-function(MatrixA, n, mean, stddev){
+  .Call( paste0("wigner", getSuffix(MatrixA)), MatrixA, as.integer(n), mean,
+         stddev)
+}
+
+Wilkinson<-function(MatrixA, k){
+  .Call( paste0("wilkinson", getSuffix(MatrixA)), MatrixA, as.integer(k) )
 }
 
 Zeros<-function(MatrixA, rows, cols){
