@@ -971,6 +971,10 @@ TwoSidedTrsm<-function( uplo, diagUnit, MatrixA, MatrixB ){
 # Lapack
 #----------
 
+#---------
+# Spectral
+#---------
+
 HermitianEig<-function(Uplo, MatrixA, EigenValues, Sort){
   .Call( paste0("hermitianEig", getSuffix(MatrixA)), Uplo, MatrixA,
         EigenValues, Sort )
@@ -1077,6 +1081,215 @@ SymmetricSolve<-function( uplo, orientation, MatrixA, MatrixB ){
 Tikhonov<-function( MatrixA, MatrixB, gamma, MatrixX, algorithm){
   .Call( paste0("tikhonov", getSuffix(MatrixA)), MatrixA, MatrixB, gamma,
          MatrixX, algorithm )
+}
+
+#----------------------
+# Matrix Factorizations
+#----------------------
+
+Cholesky<-function(uplo, MatrixA){
+  .Call( paste0("cholesky", getSuffix(MatrixA)), uplo, MatrixA )
+}
+
+SolveAfterCholesky<-function(uplo, orientation, MatrixA, MatrixB){
+  .Call( paste0("solveAfterCholesky", getSuffix(MatrixA)), uplo, orientation,
+         MatrixA, MatrixB )
+}
+
+ReverseCholesky<-function(uplo, MatrixA){
+  .Call( paste0("reverseCholesky", getSuffix(MatrixA)), uplo, MatrixA )
+}
+
+CholeskyPiv<-function(uplo, MatrixA, MatrixP){
+  .Call( paste0("choleskyPiv", getSuffix(MatrixA)), uplo, MatrixA, MatrixP )
+}
+
+SolveAfterCholeskyFullPiv<-function(uplo, orientation, MatrixA, MatrixP,
+                                    MatrixB){
+  .Call( paste0("solveAfterCholeskyFullPiv", getSuffix(MatrixA)), uplo,
+         orientation, MatrixA, MatrixP, MatrixB )
+}
+
+CholeskyMod<-function(uplo, MatrixT, alpha, MatrixV){
+  .Call( paste0("choleskyMod", getSuffix(MatrixT)), uplo, MatrixT, alpha, MatrixV )
+}
+
+HPSDCholesky<-function(uplo, MatrixA){
+  .Call( paste0("hPSDCholesky", getSuffix(MatrixA)), uplo, MatrixA )
+}
+
+LDL<-function(MatrixA){
+  .Call( paste0("lDL", getSuffix(MatrixA)), MatrixA )
+}
+
+LDLPiv<-function(MatrixA, MatrixdSub, Matrixp, pivotType){
+  .Call( paste0("lDLPiv", getSuffix(MatrixA)), MatrixA, MatrixdSub, Matrixp,
+         pivotType )
+}
+
+InertiaAfterLDL<-function(Matrixd, MatrixdSub){
+  .Call( paste0("inertiaAfterLDL", getSuffix(Matrixd)), Matrixd, MatrixdSub )
+}
+
+SolveAfterLDL<-function(MatrixA, MatrixB){
+  .Call( paste0("solveAfterLDL", getSuffix(MatrixA)), MatrixA, MatrixB )
+}
+
+SolveAfterLDLPiv<-function(MatrixA, MatrixdSub, Matrixp,MatrixB){
+  .Call( paste0("solveAfterLDLPiv", getSuffix(MatrixA)), MatrixA, MatrixdSub,
+         Matrixp, MatrixB )
+}
+
+SolveAfterLDL<-function(MatrixA, MatrixB){
+  .Call( paste0("solveAfterLDL", getSuffix(MatrixA)), MatrixA, MatrixB )
+}
+
+MultiplyAfterLDL<-function(MatrixA, MatrixB){
+  .Call( paste0("multiplyAfterLDL", getSuffix(MatrixA)), MatrixA, MatrixB )
+}
+
+MultiplyAfterLDLPiv<-function(MatrixA, MatrixdSub, Matrixp,MatrixB){
+  .Call( paste0("multiplyAfterLDLPiv", getSuffix(MatrixA)), MatrixA, MatrixdSub,
+         Matrixp, MatrixB )
+}
+
+LU<-function(MatrixA){
+  .Call( paste0("lU", getSuffix(MatrixA)), MatrixA )
+}
+
+SolveAfterLU<-function(orientation, MatrixA, MatrixB){
+  .Call( paste0("solveAfterLU", getSuffix(MatrixA)), orientation, MatrixA,
+         MatrixB )
+}
+
+
+LUPartialPiv<-function( MatrixA,  Matrixp){
+  .Call( paste0("lUPartialPiv", getSuffix(MatrixA)), MatrixA, Matrixp )
+}
+
+SolveAfterLUPartialPiv<-function(orientation, MatrixA, Matrixp, MatrixB){
+  .Call( paste0("solveAfterLUPartialPiv", getSuffix(MatrixA)), orientation,
+         MatrixA, Matrixp, MatrixB )
+}
+
+LUFullPiv<-function( MatrixA,  Matrixp, Matrixq){
+  .Call( paste0("luFullPiv", getSuffix(MatrixA)), MatrixA, Matrixp, Matrixq )
+}
+
+SolveAfterLUFullPiv<-function(orientation, MatrixA, Matrixp, Matrixq, MatrixB){
+  .Call( paste0("solveAfterLUPartialPiv", getSuffix(MatrixA)), orientation,
+         MatrixA, Matrixp, Matrixq, MatrixB )
+}
+
+LUMod<-function(MatrixA, Matrixp, Matrixu, Matrixv, tau){
+  .Call( paste0("luPartialPiv", getSuffix(MatrixA)), MatrixA, Matrixp,
+         Matrixu, Matrixv, tau )
+}
+
+LQ<-function(MatrixA, Matrixt, Matrixd){
+  .Call( paste0("lQ", getSuffix(MatrixA)), MatrixA, Matrixt, Matrixd )
+}
+
+LQExplicit<-function(MatrixL, MatrixA){
+  .Call( paste0("lQExplicit", getSuffix(MatrixA)), MatrixL, MatrixA )
+}
+
+LQExplicitTriang<-function( MatrixA ){
+  .Call( paste0("lQExplicitTriang", getSuffix(MatrixA)), MatrixA )
+}
+
+LQExplicitUnitary<-function( MatrixA ){
+  .Call( paste0("lQExplicitUnitary", getSuffix(MatrixA)), MatrixA )
+}
+
+ApplyQAfterLQ<-function( side, orientation, MatrixA, Matrixt, Matrixd,
+                         MatrixB ){
+  .Call( paste0("applyQAfterLQ", getSuffix(MatrixA)), side, orientation,
+         MatrixA, Matrixt, Matrixd, MatrixB )
+}
+
+SolveQAfterLQ<-function( orientation, MatrixA, Matrixt, Matrixd, MatrixB,
+                         MatrixX ){
+  .Call( paste0("applyQAfterLQ", getSuffix(MatrixA)), orientation, MatrixA,
+         Matrixt, Matrixd, MatrixB, MatrixX )
+}
+
+QR<-function( MatrixA, Matrixt, Matrixd ){
+  .Call( paste0("qR", getSuffix(MatrixA)), MatrixA, Matrixt, Matrixd )
+}
+
+QRColPiv<-function( MatrixA, Matrixt, Matrixd, Matrixp ){
+  .Call( paste0("qRColPiv", getSuffix(MatrixA)), MatrixA, Matrixt, Matrixd,
+         Matrixp )
+}
+
+QRExplicitTriang<-function( MatrixA ){
+  .Call( paste0("qRExplicitTriang", getSuffix(MatrixA)), MatrixA )
+}
+
+QRExplicitUnitary<-function( MatrixA ){
+  .Call( paste0("qRExplicitUnitary", getSuffix(MatrixA)), MatrixA )
+}
+
+QRColPivExplicit<-function( MatrixA, MatrixR, Matrixp ){
+  .Call( paste0("qRColPivExplicit", getSuffix(MatrixA)), MatrixA, MatrixR,
+         Matrixp )
+}
+
+CholeskyQR<-function( MatrixA, MatrixR ){
+  .Call( paste0("choleskyQR", getSuffix(MatrixA)), MatrixA, MatrixR )
+}
+
+ApplyQAfterQR<-function( side, orientation, MatrixA, Matrixt, Matrixd,
+                         MatrixB ){
+  .Call( paste0("ApplyQAfterQR", getSuffix(MatrixA)), side, orientation,
+         MatrixA, Matrixt, Matrixd, MatrixB)
+}
+
+SolveQAfterQR<-function( orientation, MatrixA, Matrixt, Matrixd, MatrixB,
+                        MatrixX ){
+  .Call( paste0("solveQAfterQR", getSuffix(MatrixA)), orientation, MatrixA,
+         Matrixt, Matrixd, MatrixB, MatrixX )
+}
+
+
+
+RQ<-function( MatrixA, Matrixt, Matrixd ){
+  .Call( paste0("rQ", getSuffix(MatrixA)), MatrixA, Matrixt, Matrixd )
+}
+
+RQExplicitTriang<-function( MatrixA ){
+  .Call( paste0("rQExplicitTriang", getSuffix(MatrixA)), MatrixA )
+}
+
+ApplyQAfterRQ<-function( side, orientation, MatrixA, Matrixt, Matrixd,
+                         MatrixB ){
+  .Call( paste0("ApplyQAfterRQ", getSuffix(MatrixA)), side, orientation,
+         MatrixA, Matrixt, Matrixd, MatrixB)
+}
+
+SolveQAfterRQ<-function( orientation, MatrixA, Matrixt, Matrixd, MatrixB,
+                        MatrixX ){
+  .Call( paste0("solveQAfterRQ", getSuffix(MatrixA)), orientation, MatrixA,
+         Matrixt, Matrixd, MatrixB, MatrixX )
+}
+
+GQR<-function( MatrixA, MatrixtA, MatrixB, Matrixtb, MatrixdB){
+  .Call( paste0("gQR", getSuffix(MatrixA)), MatrixA, MatrixtA, MatrixB,
+         Matrixtb, MatrixdB )
+}
+
+GQRExplicitTriang<-function( MatrixA, MatrixB){
+  .Call( paste0("gQRExplicitTriang", getSuffix(MatrixA)), MatrixA, MatrixB )
+}
+
+GRQ<-function( MatrixA, MatrixtA, MatrixB, Matrixtb, MatrixdB){
+  .Call( paste0("gRQ", getSuffix(MatrixA)), MatrixA, MatrixtA, MatrixB,
+         Matrixtb, MatrixdB )
+}
+
+GRQExplicitTriang<-function( MatrixA, MatrixB){
+  .Call( paste0("gRQExplicitTriang", getSuffix(MatrixA)), MatrixA, MatrixB )
 }
 
 
