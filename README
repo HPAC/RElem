@@ -9,8 +9,8 @@ the Elemental library
 
 ##Functionality
 
-By the moment, the following functions are accessible by R, most of them only
-for double precision matrices.
+By the moment, the following functions are accessible by R, most of them *only
+for double precision matrices*.
 
 * Core and MPI routines
 * Sequential Matrices
@@ -44,30 +44,44 @@ By the moment this development version should be installed in two steps, since i
 #### 2. Download and compile the R-Elemental
 
 1. Clone this git repository
-   `git clone git@bitbucket.org:rocanale/r-elem.git`
-2. Edit the Makefile and add the corresponding paths to the built elemental library and its headers
+   `git clone https://github.com/rocanale/R-Elemental.git`
+2. Edit the Makefile and add the corresponding paths to the built elemental library and to the R headers
 3. build the library
 
 ## Package Structure
 
 *  The C source files in this package contain the C R-callable functions
 
-*  The file functions.R loads the library and initializes the R functions
+*  The file functionsObj.R loads the library and initializes the R functions
 
-## Programming Style
+## Programming Approach
 
-Most of the functions involve the Matrices (Distributed and Sequential), 
-and they are represented in R as external pointers.
+This library has two layers
+
+  * Compiled C source, that contains functions that receive and return SEXP objects(the R native datatype), and calls the C Elemental functions.
+  * An R script that creates the wrappers for those functions and adds extra functionality, like classes, shorthands, etc.
+
+### Pointers
+
+Most of the functions involve Matrices (Distributed and Sequential) or Grids, and they are represented in R as external pointers. In the C layer is possible to cast them to the specific pointer type to call Elemental.
+
+### Return Values
 
 In the cases where the native elemental function returns a value, we try to mimic the same in R, and instead of passing a pointer (like the C headers do) we allocate space and return the value in an R variable.
 
 ### Enum values
 
-The enum values are not defined in R, but they are parsed as text values and transformated into their equivalent in C, making it transparent for the user.
+The enum values are not defined in R, but they are parsed as text values and transformed into their equivalent in C, making it transparent for the user, the names are the same as the original Elemental library, dropping the 'EL_' prefix
 
-## Naming Conventions
+### Naming Conventions
 
-The names of the functions are the same as in the Native Elemental library, and it is not necessary to call different functions when the dataypes are different, which makes it easier to code and takes less time to load the functions into R
+The names of the functions are the same as in the Native Elemental library, and it is not necessary to call different functions when the dataypes are different, which makes it easier to code and takes less time to load the functions into R, every time a Matrix is created a class is attached to it, which contains the matrix type and the datatype
+
+### Extra Features
+
+  * Defining clases allows to create accessor methods in R, like A$Width() making more intuitive the use of the interface## Programming Style.
+  * Since R has garbage collection, it was configured, that every time a matrix is overwritten or not used anymore, R must call the destroy method, freeing the memory.
+  * In the on-going python interface was shown the idea to return a view of the matrix when was accessed using indices, this was also implemented in the R interface.
 
 ## Examples
 
