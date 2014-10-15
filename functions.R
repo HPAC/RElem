@@ -1,4 +1,4 @@
-libraryName ="pureElemental.so"
+libraryName ="RElemental.so"
 
 #-----------------
 #Load the library
