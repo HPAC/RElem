@@ -162,10 +162,15 @@ SEXP showDistData_d(SEXP Rptr){
 
 
 SEXP destroyDistMatrix_d(SEXP Rptr){
+  if ( isDestroyed(Rptr) ){
+    /* printf("Destroyed from before\n"); */
+    return R_NilValue;
+  }
   ElDistMatrixDestroy_d( toDistMatrix_d(Rptr) );
-  // TODO: Clean the pointer in R
+  setAttrib(Rptr, install("destroyed"), mkString("Y"));
   return R_NilValue;
 }
+
 
 SEXP emptyDistMatrix_d(SEXP Rptr){
   ElDistMatrixEmpty_d( toDistMatrix_d(Rptr) );
@@ -229,8 +234,9 @@ SEXP freeAlignments_d(SEXP Rptr){
   return R_NilValue;
 }
 
-SEXP setRootDistMatrix_d(SEXP Rptr, SEXP root){
-  ElDistMatrixSetRoot_d( toDistMatrix_d(Rptr), toElInt(root) );
+SEXP setRootDistMatrix_d(SEXP Rptr, SEXP root, SEXP constrain){
+  ElDistMatrixSetRoot_d( toDistMatrix_d(Rptr), toElInt(root),
+                         toBool(constrain) );
   return R_NilValue;
 }
 /* Check 
@@ -560,33 +566,33 @@ SEXP updateDistMatrix_d(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
 /*
 other bunch
  */
-SEXP getDiagonalDistMatrix(SEXP Rptr, SEXP offset, SEXP Rptr_d){
-  ElDistMatrixGetDiagonal_d( toDistMatrix_d(Rptr), toElInt(offset),
-                         toDistMatrix_d_p(Rptr_d) );
+SEXP getDiagonalDistMatrix(SEXP Rptr, SEXP Rptr_d, SEXP offset){
+  ElDistMatrixGetDiagonal_d( toDistMatrix_d(Rptr), toDistMatrix_d(Rptr_d),
+                             toElInt(offset) );
   return R_NilValue;
 }
   
-/*
-//Apparently they are not implemented here
+
+
 SEXP setDiagonalDistMatrix(SEXP Rptr, SEXP Rptr_d, SEXP offset){
   ElDistMatrixSetDiagonal_d( toDistMatrix_d(Rptr), toDistMatrix_d(Rptr_d), 
-                         toElInt(offset) );
+                             toElInt(offset) );
   return R_NilValue;
 }
 
-SEXP updateDiagonalDistMatrix(SEXP Rptr, SEXP Rptr_d, SEXP offset){
-  ElDistMatrixUpdateDiagonal_d( toDistMatrix_d(Rptr), toDistMatrix_d(Rptr_d), 
-                         toElInt(offset) );
+SEXP updateDiagonalDistMatrix(SEXP Rptr, SEXP alpha, SEXP Rptr_d, SEXP offset){
+  ElDistMatrixUpdateDiagonal_d( toDistMatrix_d(Rptr), toDouble(alpha), 
+                                toDistMatrix_d(Rptr_d), toElInt(offset) );
   return R_NilValue;
 }
 
-*/
+
 
 //Think if it is better to return a matrix instead.
 SEXP getSubmatrixDistMatrix(SEXP Rptr, SEXP rowInds, SEXP colInds, SEXP Rsub){
   ElDistMatrixGetSubmatrix_d( toDistMatrix_d(Rptr), 
-                          length(rowInds), toElInt_p(rowInds), 
-                          length(colInds), toElInt_p(colInds), 
-                          toDistMatrix_d_p(Rsub) );
+                              length(rowInds), toElInt_p(rowInds), 
+                              length(colInds), toElInt_p(colInds), 
+                              toDistMatrix_d(Rsub) );
   return R_NilValue;
 }

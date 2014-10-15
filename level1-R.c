@@ -101,7 +101,7 @@ SEXP dotDist_d( SEXP RptrA, SEXP RptrB){
   UNPROTECT(1);
   return ans;
 }
-
+/* just for complex:
 SEXP dotu_d( SEXP RptrA, SEXP RptrB){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
   ElDotu_d( toMatrix_d(RptrA), toMatrix_d(RptrB), REAL(ans) );
@@ -114,6 +114,7 @@ SEXP dotuDist_d( SEXP RptrA, SEXP RptrB){
   UNPROTECT(1);
   return ans;
 }
+*/
 
 /*
 Figure out how to do for the entry filling, 

@@ -221,13 +221,13 @@ Trr2k not yet implemented for sequential
 
 SEXP trr2kDist_d
 ( SEXP uplo, SEXP orientationA, SEXP orientationB, SEXP orientationC,
-  SEXP orientationD, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP RptrC, SEXP RptrD,
-  SEXP beta, SEXP RptrE ){
+  SEXP orientationD, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta, SEXP RptrC,
+  SEXP RptrD, SEXP gamma, SEXP RptrE ){
   ElTrr2kDist_d( parseUpLo(uplo), parseOrientation(orientationA), 
                  parseOrientation(orientationB), parseOrientation(orientationC),
                  parseOrientation(orientationD), toDouble(alpha), 
-                 toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), 
-                 toDistMatrix_d(RptrC), toDistMatrix_d(RptrD), toDouble(beta), 
+                 toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), toDouble(beta),
+                 toDistMatrix_d(RptrC), toDistMatrix_d(RptrD), toDouble(gamma), 
                  toDistMatrix_d(RptrE) );
   return R_NilValue;
 }

@@ -66,14 +66,58 @@ SEXP newMatrix_z(){
   return Rptr;
 }
 
-
 //ElMatrixDestroy:
-
-SEXP destroyMatrix_d(SEXP Rptr){
-  ElMatrixDestroy_d( toMatrix_d(Rptr) );
-  // TODO: Clean the pointer in R
+SEXP destroyMatrix_i(SEXP Rptr){
+  if ( isDestroyed(Rptr) ){
+    /* printf("Destroyed from before\n"); */
+    return R_NilValue;
+  }
+  ElMatrixDestroy_i( toMatrix_i(Rptr) );
+  setAttrib(Rptr, install("destroyed"), mkString("Y"));      
   return R_NilValue;
 }
+
+SEXP destroyMatrix_s(SEXP Rptr){
+  if ( isDestroyed(Rptr) ){
+    /* printf("Destroyed from before\n"); */
+    return R_NilValue;
+  }
+  ElMatrixDestroy_s( toMatrix_s(Rptr) );
+  setAttrib(Rptr, install("destroyed"), mkString("Y"));      
+  return R_NilValue;
+}
+
+SEXP destroyMatrix_d(SEXP Rptr){
+  if ( isDestroyed(Rptr) ){
+    /* printf("Destroyed from before\n"); */
+    return R_NilValue;
+  }
+  ElMatrixDestroy_d( toMatrix_d(Rptr) );
+  setAttrib(Rptr, install("destroyed"), mkString("Y"));      
+  return R_NilValue;
+}
+
+SEXP destroyMatrix_c(SEXP Rptr){
+  if ( isDestroyed(Rptr) ){
+    /* printf("Destroyed from before\n"); */
+    return R_NilValue;
+  }
+  ElMatrixDestroy_c( toMatrix_c(Rptr) );
+  setAttrib(Rptr, install("destroyed"), mkString("Y"));      
+  return R_NilValue;
+}
+
+SEXP destroyMatrix_z(SEXP Rptr){
+  if ( isDestroyed(Rptr) ){
+    /* printf("Destroyed from before\n"); */
+    return R_NilValue;
+  }
+  ElMatrixDestroy_z( toMatrix_z(Rptr) );
+  setAttrib(Rptr, install("destroyed"), mkString("Y"));      
+  return R_NilValue;
+}
+
+
 
 SEXP emptyMatrix_d(SEXP Rptr){
   ElMatrixEmpty_d( toMatrix_d(Rptr) );
@@ -113,11 +157,12 @@ SEXP controlMatrix_d
 }
 
 // B<-A
+/* only in blas now
 SEXP copyMatrix_d(SEXP RptrA, SEXP RptrB){
   ElMatrixCopy_d( toMatrix_d(RptrA), toMatrix_d(RptrB) );
   return R_NilValue;
 }
-
+*/
 SEXP heightMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
   ElMatrixHeight_d( toMatrix_d(Rptr), INTEGER(ans) );
@@ -212,9 +257,9 @@ SEXP updateMatrix_d(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
   return R_NilValue;
 }
 
-SEXP getDiagonalMatrix(SEXP Rptr, SEXP offset, SEXP Rptr_d){
-  ElMatrixGetDiagonal_d( toMatrix_d(Rptr), toElInt(offset),
-                         toMatrix_d_p(Rptr_d) );
+SEXP getDiagonalMatrix(SEXP Rptr, SEXP Rptr_d,SEXP offset){
+  ElMatrixGetDiagonal_d( toMatrix_d(Rptr), toMatrix_d(Rptr_d),
+                         toElInt(offset) );
   return R_NilValue;
 }
   
@@ -235,7 +280,7 @@ SEXP getSubmatrixMatrix_d(SEXP Rptr, SEXP rowInds, SEXP colInds, SEXP Rsub){
   ElMatrixGetSubmatrix_d( toMatrix_d(Rptr), 
                           length(rowInds), toElInt_p(rowInds), 
                           length(colInds), toElInt_p(colInds), 
-                          toMatrix_d_p(Rsub) );
+                          toMatrix_d(Rsub) );
   return R_NilValue;
 }
 /*

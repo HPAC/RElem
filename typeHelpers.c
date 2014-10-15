@@ -51,7 +51,9 @@ const char * parseDistEnum(ElDist dist){
 
 ElUpperOrLower parseUpLo(SEXP uplo){
   char *text = (char*)toChar_p(uplo);
+  if (strcmp("L", text) == 0) return EL_LOWER;
   if (strcmp("LOWER", text) == 0) return EL_LOWER;
+  if (strcmp("U", text) == 0) return EL_UPPER;
   if (strcmp("UPPER", text) == 0) return EL_UPPER;
   printf("wrong value: using LOWER as default");
   return EL_LOWER;
@@ -59,30 +61,40 @@ ElUpperOrLower parseUpLo(SEXP uplo){
 
 ElOrientation parseOrientation(SEXP orientation){
   char *text = (char*)toChar_p(orientation);
+  if (strcmp("N", text) == 0) return EL_NORMAL;
   if (strcmp("NORMAL", text) == 0) return EL_NORMAL;
+  if (strcmp("T", text) == 0) return EL_TRANSPOSE;
   if (strcmp("TRANSPOSE", text) == 0) return EL_TRANSPOSE;
+  if (strcmp("A", text) == 0) return EL_ADJOINT;
   if (strcmp("ADJOINT", text) == 0) return EL_ADJOINT;
   return EL_NORMAL;
 }
 
 ElLeftOrRight parseSide(SEXP side){
   char *text = (char*)toChar_p(side);
+  if (strcmp("L", text) == 0) return EL_LEFT;
   if (strcmp("LEFT", text) == 0) return EL_LEFT;
+  if (strcmp("R", text) == 0) return EL_RIGHT;
   if (strcmp("RIGHT", text) == 0) return EL_RIGHT;
   return EL_LEFT;
 }
 
 ElUnitOrNonUnit parseUnit(SEXP unit){
   char *text = (char*)toChar_p(unit);
+  if (strcmp("N", text) == 0) return EL_NON_UNIT;
   if (strcmp("NON_UNIT", text) == 0) return EL_NON_UNIT;
+  if (strcmp("U", text) == 0) return EL_UNIT;
   if (strcmp("UNIT", text) == 0) return EL_UNIT;
   return EL_NON_UNIT;
 }
 
 ElSortType parseSort(SEXP sort){
   char *text = (char*)toChar_p(sort);
+  if (strcmp("U", text) == 0) return EL_UNSORTED;
   if (strcmp("UNSORTED", text) == 0) return EL_UNSORTED;
+  if (strcmp("D", text) == 0) return EL_DESCENDING;
   if (strcmp("DESCENDING", text) == 0) return EL_DESCENDING;
+  if (strcmp("A", text) == 0) return EL_ASCENDING;
   if (strcmp("ASCENDING", text) == 0) return EL_ASCENDING;
   return EL_UNSORTED;
 }
@@ -107,4 +119,9 @@ ElRange_i parseRange_i(SEXP beg, SEXP end){
   range.beg = toElInt(beg);
   range.end = toElInt(end);
   return range;
+}
+
+
+bool isDestroyed(SEXP Rptr){
+  return !isNull(getAttrib(Rptr, install("destroyed") ));
 }

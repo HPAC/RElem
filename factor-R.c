@@ -60,17 +60,17 @@ SEXP choleskyPivDist_d( SEXP uplo, SEXP RptrA, SEXP Rptrp){
   return R_NilValue;
 }
 
-SEXP solveAfterCholeskyFullPiv_d
+SEXP solveAfterCholeskyPiv_d
 ( SEXP uplo, SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP RptrB){
-  ElSolveAfterCholeskyFullPiv_d( parseUpLo(uplo), parseOrientation(orientation),
+  ElSolveAfterCholeskyPiv_d( parseUpLo(uplo), parseOrientation(orientation),
                                  toMatrix_d(RptrA), toMatrix_i(Rptrp),
                                  toMatrix_d(RptrB) );
   return R_NilValue;
 }
 
-SEXP solveAfterCholeskyFullPivDist_d
+SEXP solveAfterCholeskyPivDist_d
 ( SEXP uplo, SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP RptrB){
-  ElSolveAfterCholeskyFullPivDist_d( parseUpLo(uplo), 
+  ElSolveAfterCholeskyPivDist_d( parseUpLo(uplo), 
                                      parseOrientation(orientation),
                                      toDistMatrix_d(RptrA), 
                                      toDistMatrix_i(Rptrp),
