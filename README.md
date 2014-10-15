@@ -9,8 +9,8 @@ the Elemental library
 
 ##Functionality
 
-By the moment, the following functions are accessible by R, most of them *only
-for double precision matrices*.
+By the moment, the following functions are accessible by R, most of them **only
+for double precision matrices**.
 
 * Core and MPI routines
 * Sequential Matrices
@@ -79,7 +79,7 @@ The names of the functions are the same as in the Native Elemental library, and 
 
 ### Extra Features
 
-  * Defining clases allows to create accessor methods in R, like A$Width() making more intuitive the use of the interface## Programming Style.
+  * Defining clases allows to create accessor methods in R, like A$Width() making more intuitive the use of the interface.
   * Since R has garbage collection, it was configured, that every time a matrix is overwritten or not used anymore, R must call the destroy method, freeing the memory.
   * In the on-going python interface was shown the idea to return a view of the matrix when was accessed using indices, this was also implemented in the R interface.
 
