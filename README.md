@@ -28,8 +28,8 @@ for double precision matrices*.
 * Flame
     * Partition
     * Merge
-    * Repartition (_Not available yet in El_)
-    * Slide Partition (_Not available yet in El_)
+    * Repartition (_Not yet active in El headers_)
+    * Slide Partition (_Not yet active in El headers_)
 * I/O functions
   
 
@@ -89,7 +89,7 @@ The names of the functions are the same as in the Native Elemental library, and 
 
 R must be called from mpi, using the following command
 
-`mpiexec -n 4 Rscript SimpleDist.R`
+`mpiexec -n 4 R --no-readline --slave --quiet --vanilla -f SimpleDist.R`
 
 Note: it is always necessary to preload the openmpi library (or the one installed in the system) using the `LD_PRELOAD` environment variable as follows
 
