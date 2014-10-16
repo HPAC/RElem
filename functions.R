@@ -125,6 +125,20 @@ PrintVersion <-function(){
   .Call("printVersion")
 }
 
+PrintConfig <-function(){
+  .Call("printConfig")
+}
+
+PrintCCompilerInfo <-function(){
+  .Call("printCCompilerInfo")
+}
+
+PrintCxxCompilerInfo <-function(){
+  .Call("printCxxCompilerInfo")
+}
+
+
+
 #------
 # Grids
 #------

@@ -25,6 +25,21 @@ SEXP printVersion(){
   return R_NilValue;
 }
 
+SEXP printConfig(){
+  ElPrintConfig(stdout);
+  return R_NilValue;
+}
+
+SEXP printCCompilerInfo(){
+  ElPrintCCompilerInfo(stdout);
+  return R_NilValue;
+}
+
+SEXP printCxxCompilerInfo(){
+  ElPrintCxxCompilerInfo(stdout);
+  return R_NilValue;
+}
+
 SEXP getWorldRank(){
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
