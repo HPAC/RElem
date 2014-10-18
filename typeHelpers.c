@@ -114,12 +114,21 @@ ElTikhonovAlg parseTikhonovAlg(SEXP alg){
   return EL_TIKHONOV_CHOLESKY;
 }
 
+ElRegularization parseRegularization(SEXP pen){
+  char *text = (char*)toChar_p(pen);
+  if (strcmp("NO_PENALTY", text) == 0) return EL_NO_PENALTY;
+  if (strcmp("L1_PENALTY", text) == 0) return EL_L1_PENALTY;
+  if (strcmp("L2_PENALTY", text) == 0) return EL_L1_PENALTY;
+  return EL_NO_PENALTY;
+}
+
 ElRange_i parseRange_i(SEXP beg, SEXP end){
   ElRange_i range;
   range.beg = toElInt(beg);
   range.end = toElInt(end);
   return range;
 }
+
 
 
 bool isDestroyed(SEXP Rptr){

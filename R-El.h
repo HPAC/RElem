@@ -135,6 +135,6 @@ ElSortType parseSort(SEXP sort);
 ElRidgeAlg parseRidgeAlg(SEXP alg);
 ElTikhonovAlg parseTikhonovAlg(SEXP alg);
 ElRange_i parseRange_i(SEXP beg, SEXP end);
-
+ElRegularization parseRegularization(SEXP pen);
 
 bool isDestroyed(SEXP Rptr);
