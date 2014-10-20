@@ -138,3 +138,14 @@ ElRange_i parseRange_i(SEXP beg, SEXP end);
 ElRegularization parseRegularization(SEXP pen);
 
 bool isDestroyed(SEXP Rptr);
+
+MPI_Datatype parseMPIDatatype(SEXP type);
+MPI_Op parseMPIOp(SEXP Op);
+
+inline MPI_Comm toComm(SEXP Rcomm){
+  return *(MPI_Comm *)R_ExternalPtrAddr(Rcomm);
+}
+
+inline MPI_Comm *toComm_p(SEXP Rcomm){
+  return (MPI_Comm *)R_ExternalPtrAddr(Rcomm);
+}

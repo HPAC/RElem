@@ -137,6 +137,17 @@ PrintCxxCompilerInfo <-function(){
   .Call("printCxxCompilerInfo")
 }
 
+MPIComm<-function(){
+  .Call("newMPIComm")
+}
+
+AllReduce<-function(var, count, datatype, op, comm){
+  if (datatype=="INTEGER"){
+    .Call("allReduce", as.integer(var), as.integer(count), datatype, op, comm)
+  }else{
+    .Call("allReduce", var, as.integer(count), datatype, op, comm)
+  }
+}
 
 
 #------
@@ -257,6 +268,11 @@ ShowDistData<-function(DistMatrixA){
   .Call( paste0("showDistData_", getType(DistMatrixA)), DistMatrixA@ptr)
 }
 
+DistMatrixDistComm<-function(DistMatrixA, Comm){
+  .Call( paste0("distCommDistMatrix_", getType(DistMatrixA)), DistMatrixA@ptr,
+         Comm)
+}
+
 DistMatrixSetGrid<-function(DistMatrixA, GridG){
   .Call( paste0("setGridDistMatrix_", getType(DistMatrixA)), DistMatrixA@ptr,
          GridG@ptr )
@@ -294,6 +310,27 @@ DistMatrixToLockedMatrix<-function(DistMatrixA, MatrixA){
   .Call( paste0("lockedMatrixDistMatrix_", getType(DistMatrixA)), DistMatrixA@ptr,
          MatrixA@ptr )
 }
+
+DistMatrixLocalHeight<-function(DistMatrixA){
+  .Call( paste0("localHeightDistMatrix_", getType(DistMatrixA)),
+         DistMatrixA@ptr );
+}
+
+DistMatrixLocalWidth<-function(DistMatrixA){
+  .Call( paste0("localWidthDistMatrix_", getType(DistMatrixA)),
+         DistMatrixA@ptr );
+}
+
+DistMatrixGetLocal<-function(DistMatrixA, i, j){
+  .Call( paste0("getLocalDistMatrix_", getType(DistMatrixA)), DistMatrixA@ptr,
+         as.integer(i), as.integer(j) )
+} 
+
+DistMatrixSetLocal<-function(DistMatrixA, i, j, alpha){
+  .Call( paste0("setLocalDistMatrix_", getType(DistMatrixA)), DistMatrixA@ptr,
+         as.integer(i), as.integer(j), as.double(alpha) )
+} 
+
 
 #-------------------------
 # Common Matrix Properties
@@ -414,6 +451,8 @@ ViewFull<-function(MatrixA, MatrixB){
 LockedViewFull<-function(MatrixA, MatrixB){
   .Call( paste0("lockedViewFull", getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
+
+
 
 #-----------
 # Partitions
@@ -1374,6 +1413,33 @@ GRQExplicitTriang<-function( MatrixA, MatrixB){
          MatrixB@ptr )
 }
 
+#-----------
+# Properties
+#-----------
+
+FrobeniusNorm<-function(MatrixA){
+  .Call( paste0("frobeniusNorm", getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+SymmetricFrobeniusNorm<-function(uplo, MatrixA){
+  .Call( paste0("symmetricFrobeniusNorm", getSuffix(MatrixA)), uplo,
+         MatrixA@ptr)
+}
+
+InfinityNorm<-function(MatrixA){
+  .Call( paste0("infinityNorm", getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+SymmetricInfinityNorm<-function(uplo, MatrixA){
+  .Call( paste0("symmetricInfinityNorm", getSuffix(MatrixA)), uplo,
+         MatrixA@ptr)
+}
+
+MaxNorm<-function(MatrixA){
+  .Call( paste0("maxNorm", getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+
 #-------------
 # Optimization
 #-------------
@@ -1602,7 +1668,11 @@ DistMatrixFunctions=list(
   'LockedAttach'   = DistMatrixLockedAttach,
   'ToMatrix'       = DistMatrixToMatrix,
   'ToLockedMatrix' = DistMatrixToLockedMatrix,
-    
+  'LocalWidth'     = DistMatrixLocalWidth,
+  'LocalHeight'    = DistMatrixLocalHeight,
+  'SetLocal'       = DistMatrixSetLocal,
+  'GetLocal'       = DistMatrixGetLocal,
+  'DistComm'       = DistMatrixDistComm,  
   'Print' = Print
   )
 

@@ -160,6 +160,11 @@ SEXP showDistData_d(SEXP Rptr){
   return R_NilValue;
 }
 
+SEXP distCommDistMatrix_d(SEXP RptrA, SEXP Rptrc){
+  ElDistMatrixDistComm_d( toDistMatrix_d(RptrA), toComm_p(Rptrc) );
+  return R_NilValue;
+}
+
 
 SEXP destroyDistMatrix_d(SEXP Rptr){
   if ( isDestroyed(Rptr) ){
@@ -566,7 +571,7 @@ SEXP updateDistMatrix_d(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
 /*
 other bunch
  */
-SEXP getDiagonalDistMatrix(SEXP Rptr, SEXP Rptr_d, SEXP offset){
+SEXP getDiagonalDistMatrix_d(SEXP Rptr, SEXP Rptr_d, SEXP offset){
   ElDistMatrixGetDiagonal_d( toDistMatrix_d(Rptr), toDistMatrix_d(Rptr_d),
                              toElInt(offset) );
   return R_NilValue;
@@ -574,13 +579,13 @@ SEXP getDiagonalDistMatrix(SEXP Rptr, SEXP Rptr_d, SEXP offset){
   
 
 
-SEXP setDiagonalDistMatrix(SEXP Rptr, SEXP Rptr_d, SEXP offset){
+SEXP setDiagonalDistMatrix_d(SEXP Rptr, SEXP Rptr_d, SEXP offset){
   ElDistMatrixSetDiagonal_d( toDistMatrix_d(Rptr), toDistMatrix_d(Rptr_d), 
                              toElInt(offset) );
   return R_NilValue;
 }
 
-SEXP updateDiagonalDistMatrix(SEXP Rptr, SEXP alpha, SEXP Rptr_d, SEXP offset){
+SEXP updateDiagonalDistMatrix_d(SEXP Rptr, SEXP alpha, SEXP Rptr_d, SEXP offset){
   ElDistMatrixUpdateDiagonal_d( toDistMatrix_d(Rptr), toDouble(alpha), 
                                 toDistMatrix_d(Rptr_d), toElInt(offset) );
   return R_NilValue;
@@ -589,10 +594,24 @@ SEXP updateDiagonalDistMatrix(SEXP Rptr, SEXP alpha, SEXP Rptr_d, SEXP offset){
 
 
 //Think if it is better to return a matrix instead.
-SEXP getSubmatrixDistMatrix(SEXP Rptr, SEXP rowInds, SEXP colInds, SEXP Rsub){
+SEXP getSubmatrixDistMatrix_d(SEXP Rptr, SEXP rowInds, SEXP colInds, SEXP Rsub){
   ElDistMatrixGetSubmatrix_d( toDistMatrix_d(Rptr), 
                               length(rowInds), toElInt_p(rowInds), 
                               length(colInds), toElInt_p(colInds), 
                               toDistMatrix_d(Rsub) );
+  return R_NilValue;
+}
+
+SEXP getLocalDistMatrix_d(SEXP RptrA, SEXP iLoc, SEXP jLoc){
+  SEXP ans=PROTECT( allocVector(REALSXP,1) );
+  ElDistMatrixGetLocal_d( toDistMatrix_d(RptrA), toElInt(iLoc), toElInt(jLoc),
+                          REAL(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
+SEXP setLocalDistMatrix_d(SEXP RptrA, SEXP iLoc, SEXP jLoc, SEXP val){
+  ElDistMatrixSetLocal_d( toDistMatrix_d(RptrA), toElInt(iLoc), toElInt(jLoc),
+                          toDouble(val) );
   return R_NilValue;
 }

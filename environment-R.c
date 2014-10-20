@@ -2,6 +2,7 @@
 
 //Section: Environment
 SEXP initialize(){
+  //Thinking about passing the R arguments
   int argc = 0;
   char **argv = NULL;
   ElInitialize(&argc,&argv);
@@ -39,35 +40,3 @@ SEXP printCxxCompilerInfo(){
   ElPrintCxxCompilerInfo(stdout);
   return R_NilValue;
 }
-
-SEXP getWorldRank(){
-  int rank;
-  MPI_Comm_rank(MPI_COMM_WORLD,&rank);
-  SEXP Rank = PROTECT( allocVector(INTSXP,1));
-  INTEGER(Rank)[0]=rank;
-  UNPROTECT(1);
-  return Rank;
-}
-
-SEXP getWorldSize(){
-  int size;
-  MPI_Comm_size(MPI_COMM_WORLD, &size);
-  SEXP Size = PROTECT( allocVector(INTSXP,1));
-  INTEGER(Size)[0]=size;
-  UNPROTECT(1);
-  return Size;
-}
-
-SEXP wTime(){
-  SEXP WTime = PROTECT( allocVector(REALSXP,1));
-  REAL(WTime)[0]=MPI_Wtime();
-  UNPROTECT(1);
-  return WTime;
-}
-
-SEXP worldBarrier(){
-  MPI_Barrier(MPI_COMM_WORLD);
-  return R_NilValue;
-}
-
-
