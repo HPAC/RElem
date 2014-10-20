@@ -1374,6 +1374,97 @@ GRQExplicitTriang<-function( MatrixA, MatrixB){
          MatrixB@ptr )
 }
 
+#-------------
+# Optimization
+#-------------
+
+BasisPursuit<-function(MatrixA, Matrixb, Matrixx){
+  .Call( paste0("basisPursuit", getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+         Matrixx@ptr)
+}
+
+Lasso<-function(MatrixA, Matrixb, lambda, Matrixz){
+  .Call( paste0("lasso", getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr, lambda,
+         Matrixz@ptr)
+}
+
+LinearProgram<-function(MatrixA, Matrixb, Matrixc, Matrixz){
+  .Call( paste0("linearProgram", getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
+         Matrixc@ptr, Matrixz@ptr)
+}
+
+LogisticRegression<-function(MatrixA, Matrixq, Matrixz, gamma, penalty){
+  .Call( paste0("logisticRegression", getSuffix(MatrixA)), MatrixA@ptr,
+         Matrixq@ptr, Matrixz@ptr, gamma, penalty)
+}
+
+NFM<-function(MatrixA, MatrixX, MatrixY){
+  .Call( paste0("nFM", getSuffix(MatrixA)), MatrixA@ptr, MatrixX@ptr,
+         MatrixY@ptr)
+}
+
+NonNegativeLeastSquares<-function(MatrixA, MatrixY, MatrixZ){
+  .Call( paste0("nonNegativeLeastSquares", getSuffix(MatrixA)), MatrixA@ptr,
+         MatrixY@ptr, MatrixZ@ptr)
+}
+
+RPCA<-function(MatrixA, MatrixL, MatrixS){
+  .Call( paste0("rPCA", getSuffix(MatrixA)), MatrixA@ptr, MatrixL@ptr,
+         MatrixS@ptr)
+}
+
+SVM<-function(MatrixG, Matrixq, Matrixz, gamma){
+  .Call( paste0("sVM", getSuffix(MatrixG)), MatrixG@ptr, Matrixq@ptr,
+         Matrixz@ptr, gamma)
+}
+
+LowerClip<-function(MatrixX, lowerbound){
+  .Call( paste0("lowerClip", getSuffix(MatrixX)), MatrixX@ptr, lowerbound)
+}
+
+UpperClip<-function(MatrixX, upperbound){
+  .Call( paste0("upperClip", getSuffix(MatrixX)), MatrixX@ptr, upperbound)
+}
+
+Clip<-function(MatrixX, lowerbound, upperbound){
+  .Call( paste0("clip", getSuffix(MatrixX)), MatrixX@ptr, lowerbound,
+         upperbound)
+}
+
+Coherence<-function(MatrixA){
+  .Call( paste0("coherence", getSuffix(MatrixA)), MatrixA@ptr )
+}
+
+Covariance<-function(MatrixD, MatrixS){
+  .Call( paste0("covariance", getSuffix(MatrixD)), MatrixD@ptr, MatrixS@ptr )
+}
+
+FrobeniusProx<-function(MatrixA, rho){
+  .Call( paste0("frobeniusProx", getSuffix(MatrixA)), MatrixA@ptr, rho )
+}
+
+LogBarrier<-function(uplo, MatrixA){
+  .Call( paste0("logBarrier", getSuffix(MatrixA)), uplo, MatrixA@ptr )
+}
+
+LogGetDiv<-function(uplo, MatrixA, MatrixB){
+  .Call( paste0("logGetDiv", getSuffix(MatrixA)), uplo, MatrixA, MatrixB )
+}
+
+LogisticProx<-function(MatrixA, rho){
+  .Call( paste0("logisticProx", getSuffix(MatrixA)), MatrixA@ptr, rho )
+}
+
+SVT<-function(MatrixA, rho, relative){
+  .Call( paste0("sVT", getSuffix(MatrixA)), MatrixA@ptr, rho, as.logical(relative) )
+}
+
+SoftThreshold<-function(MatrixA, rho, relative){
+  .Call( paste0("softThreshold", getSuffix(MatrixA)), MatrixA@ptr, rho,
+         as.logical(relative) )
+}
+
+
 
 #--------------------
 # I/O functions
@@ -1556,27 +1647,3 @@ for (dt in DataTypes){
              }
            })
 }
-
-
-#Debug Matrices:
-
-matA<-Matrix()
-Uniform(matA,4,4)
-matAL<-Matrix()
-matAR<-Matrix()
-
-matB<-Matrix()
-Uniform(matB,4,4)
-matC<-Matrix()
-Uniform(matC,4,4)
-
-
-vecX<-Matrix()
-Uniform(vecX,4,1)
-
-vecY<-Matrix()
-Uniform(vecY,4,1)
-
-matR<-runif(10)
-matE<-Matrix()
-MatrixResize(matE,2,5)
