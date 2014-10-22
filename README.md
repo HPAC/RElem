@@ -40,7 +40,7 @@ By the moment this development version should be installed in two steps, since i
 
 #### 1. Install Elemental
 -  To install this program, it is a prerequisite to [install Elemental](http://libelemental.org/documentation/dev/build.html) as a shared library
--  Try to install in the default path "/usr/local" so the library can be built
+-  Try to install in one of the default paths "/usr/local", $HOME/local, $HOME/.local, so the library can be installed easily.
 
 #### 2. Install R-Elemental
 
@@ -50,6 +50,11 @@ We still don't have the package in CRAN, but you can try this development versio
 install.packages("devtools")
 library(devtools)
 install_github('R-Elemental','rocanale')
+```
+
+In case you installed elemental in other folder, the path must be specified
+```s
+install_github('R-Elemental','rocanale', configure.args="--with-ElPrefix=/your/prefix")
 ```
 
 ## Package Structure
