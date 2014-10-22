@@ -49,12 +49,13 @@ We still don't have the package in CRAN, but you can try this development versio
 ```s
 install.packages("devtools")
 library(devtools)
-install_github('R-Elemental','rocanale')
+install_github('rocanale/R-Elemental')
 ```
 
 In case you installed elemental in other folder, the path must be specified
 ```s
-install_github('R-Elemental','rocanale', configure.args="--with-ElPrefix=/your/prefix")
+options(devtools.install.args='--configure-args=--with-ElPrefix=/YOUR/PREFIX')
+install_github('rocanale/R-Elemental')
 ```
 
 ## Package Structure
