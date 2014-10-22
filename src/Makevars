@@ -1,7 +1,6 @@
 ELEM_LIB_PATH = /usr/local/lib
 ELEM_INC_PATH = /usr/local/include
 
-MPI_COMPILE = $(shell mpicc -show:compile) 
 include /usr/local/conf/ElVars
 
 CC_FLAGS = -std=c99 -O3
