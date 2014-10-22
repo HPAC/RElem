@@ -1,5 +1,5 @@
 # Load the library
-source("functions.R")
+library(RElem)
 
 # Initialize Elemental/MPI
 Initialize()

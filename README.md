@@ -40,19 +40,23 @@ By the moment this development version should be installed in two steps, since i
 
 #### 1. Install Elemental
 -  To install this program, it is a prerequisite to [install Elemental](http://libelemental.org/documentation/dev/build.html) as a shared library
+-  Try to install in the default path "/usr/local" so the library can be built
 
-#### 2. Download and compile the R-Elemental
+#### 2. Install R-Elemental
 
-1. Clone this git repository
-   `git clone https://github.com/rocanale/R-Elemental.git`
-2. Edit the Makefile and add the corresponding paths to the built elemental library and to the R headers
-3. build the library
+We still don't have the package in CRAN, but you can try this development version doing the following **as super user**:
+
+```s
+install.packages("devtools")
+library(devtools)
+install_github('R-Elemental','rocanale')
+```
 
 ## Package Structure
 
-*  The C source files in this package contain the C R-callable functions
+*  The C source files in this package (src folder) contain the C R-callable functions
 
-*  The file functionsObj.R loads the library and initializes the R functions
+*  The file RElem.R in the R/ folder, defines all the R functions
 
 ## Programming Approach
 
@@ -99,9 +103,9 @@ Note: it is always necessary to preload the openmpi library (or the one installe
 
 This example shows how to run a Gemm with distributed matrices
 
-```
+```s
 # Load the library
-source("functions.R")
+library(RElem)
 
 # Initialize Elemental/MPI
 Initialize()
