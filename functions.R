@@ -1238,9 +1238,9 @@ LDL<-function(MatrixA){
   .Call( paste0("lDL", getSuffix(MatrixA)), MatrixA@ptr )
 }
 
-LDLPiv<-function(MatrixA, MatrixdSub, Matrixp, pivotType){
+LDLPiv<-function(MatrixA, MatrixdSub, Matrixp){
   .Call( paste0("lDLPiv", getSuffix(MatrixA)), MatrixA@ptr, MatrixdSub@ptr,
-         Matrixp@ptr, pivotType )
+         Matrixp@ptr)
 }
 
 InertiaAfterLDL<-function(Matrixd, MatrixdSub){

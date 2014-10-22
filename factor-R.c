@@ -112,15 +112,14 @@ SEXP lDLDist_d( SEXP RptrA ){
   return R_NilValue;
 }
 
-SEXP lDLPiv_d( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP pivotType){
-  ElLDLPiv_d( toMatrix_d(RptrA), toMatrix_d(RptrdSub), toMatrix_i(Rptrp),
-              parsePivotType(pivotType) );
+SEXP lDLPiv_d( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp){
+  ElLDLPiv_d( toMatrix_d(RptrA), toMatrix_d(RptrdSub), toMatrix_i(Rptrp) );
   return R_NilValue;
 }
 
-SEXP lDLPivDist_d( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP pivotType){
+SEXP lDLPivDist_d( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp){
   ElLDLPivDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrdSub), 
-                  toDistMatrix_i(Rptrp), parsePivotType(pivotType) );
+                  toDistMatrix_i(Rptrp) );
   return R_NilValue;
 }
 
