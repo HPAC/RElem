@@ -1,13 +1,3 @@
-libraryName ="RElemental.so"
-
-#-----------------
-#Load the library
-#-----------------
-
-if ( is.loaded(libraryName) )
-  dyn.unload(libraryName)
-dyn.load(libraryName)
-
 #------------------
 # Class Definitions
 #------------------

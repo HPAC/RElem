@@ -1,0 +1,9 @@
+Package: RElem
+Type: Package
+Title: Wrappers to use Elemental library www.elemental.org 
+Version: 0.01.85
+Date: 2014-10-22
+Author: Rodrigo Canales
+Maintainer: Rodrigo Canales <rodrigo.canales@rwth-aachen.de>
+Description: Wrappers to use Elemental library
+License: MIT
