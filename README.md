@@ -1,26 +1,23 @@
 #R-El
 
-This library does the link between R and linear algebra library
-[Elemental](http://www.libelemental.org), allowing to call the Elemental
-functions from R
-
-It is created on top the C headers provided in the development version of
-the Elemental library
+This library links R and the dense linear algebra library
+[Elemental](http://www.libelemental.org), providing Elemental functionality in
+R.  It is based on the C-interface of the Elemental 0.85-dev.
 
 ##Functionality
 
-By the moment, the following functions are accessible by R, most of them **only
-for double precision matrices**.
+At the moment the coverage of the interface is mostly limited to **double
+precision matrices only**.  Covered are:
 
 * Core and MPI routines
 * Sequential Matrices
 * Distributed Matrices
 * Grids
-* Blas
+* BLAS-like
     * Level 1
     * Level 2
     * Level 3
-* Lapack Functions
+* LAPACK-like
     * Matrix Factorizations
     * Spectral Decomposition
     * Solvers
@@ -30,21 +27,21 @@ for double precision matrices**.
     * Merge
     * Repartition (_Not yet active in El headers_)
     * Slide Partition (_Not yet active in El headers_)
-* I/O functions
+* I/O routines
   
 
 
 ## Installation
 
-By the moment this development version should be installed in two steps, since it is not integrated with the Elemental's build system, the steps are the following 
+The installation of the R-El interface requires two steps:
 
 #### 1. Install Elemental
--  To install this program, it is a prerequisite to [install Elemental](http://libelemental.org/documentation/dev/build.html) as a shared library
--  Try to install in one of the default paths "/usr/local", $HOME/local, $HOME/.local, so the library can be installed easily.
+- [Install Elemental](http://libelemental.org/documentation/dev/build.html) as a shared library
+- Ideally, Elemental is installed in one of the default paths `/usr/local`, `$HOME/local`, `$HOME/.local`
 
 #### 2. Install R-Elemental
-
-We still don't have the package in CRAN, but you can try this development version doing the following **as super user**:
+We have plans to make R-El available in R's package manager CRAN.  So far, **a
+superuser** can install the interface from R as follows:
 
 ```s
 install.packages("devtools")
@@ -52,62 +49,66 @@ library(devtools)
 install_github('rocanale/R-Elemental')
 ```
 
-In case you installed elemental in other folder, the path must be specified
+In case Elemental is in a custom installation path, it needs to be provided as follows:
 ```s
 options(devtools.install.args='--configure-args=--with-ElPrefix=/YOUR/PREFIX')
 install_github('rocanale/R-Elemental')
 ```
 
-## Package Structure
-
-*  The C source files in this package (src folder) contain the C R-callable functions
-
-*  The file RElem.R in the R/ folder, defines all the R functions
 
 ## Programming Approach
 
-This library has two layers
+R-El consists of two layers:
 
-  * Compiled C source, that contains functions that receive and return SEXP objects(the R native datatype), and calls the C Elemental functions.
-  * An R script that creates the wrappers for those functions and adds extra functionality, like classes, shorthands, etc.
+* A C-layer (`src` folder) that wraps Elemental's C-layer in R-friendly
+functions in terms of `SEXP` objects (native R data-type), and
+* An R-layer (`R/RElem.R`) that provides the user-interface in R, including
+functions classes, etc.
 
 ### Pointers
 
-Most of the functions involve Matrices (Distributed and Sequential) or Grids, and they are represented in R as external pointers. In the C layer is possible to cast them to the specific pointer type to call Elemental.
+Pointers to Elemental objects (such as `Matrix`, `DistMatriz`, or `Grid`) are
+treated as R external pointers and are cast to the appropriate pointer type in
+the C-layer.  This type-cast was not possible in a pure R-implementation.
 
 ### Return Values
 
-In the cases where the native elemental function returns a value, we try to mimic the same in R, and instead of passing a pointer (like the C headers do) we allocate space and return the value in an R variable.
+For Elemental functions with return values, instead of passing a pointer to R,
+the C-layer creates a corresponding R-object.
 
 ### Enum values
 
-The enum values are not defined in R, but they are parsed as text values and transformed into their equivalent in C, making it transparent for the user, the names are the same as the original Elemental library, dropping the 'EL_' prefix
+Enum types are replaced by strings and mapped to the corresponding Elemental
+enums in the C-layer.  The passed strings take the same values as the Elemental
+enum constants, while the `EL_` prefix is dropped.
 
 ### Naming Conventions
 
-The names of the functions are the same as in the Native Elemental library, and it is not necessary to call different functions when the dataypes are different, which makes it easier to code and takes less time to load the functions into R, every time a Matrix is created a class is attached to it, which contains the matrix type and the datatype
+In contrast to the C-interface, R-El's functions are datatype-independent, like
+Elemental's C++ interface.  Mapping to the corresponding C-interface functions
+is based on the class-names of the passed R objects.
 
 ### Extra Features
 
-  * Defining clases allows to create accessor methods in R, like A$Width() making more intuitive the use of the interface.
-  * Since R has garbage collection, it was configured, that every time a matrix is overwritten or not used anymore, R must call the destroy method, freeing the memory.
-  * In the on-going python interface was shown the idea to return a view of the matrix when was accessed using indices, this was also implemented in the R interface.
+* We recreate C++-like class methods through accessor methods in R.  These methods are for example invoked like `A$Width()`, replacing C++'s `.` with `$`.
+* To make use of R's garbage collection, every time a matrix is overwritten or not used anymore, R will call the corresponding destructor, freeing the memory.
+* As in the current python-interface, Matrix accesses by indices return matrix `View`s.
 
 ## Examples
 
 ### Runtime
 
-R must be called from mpi, using the following command
+For distributed computations, R needs to be invoked by MPI as follows:
 
 `mpiexec -n 4 R --no-readline --slave --quiet --vanilla -f SimpleDist.R`
 
-Note: it is always necessary to preload the openmpi library (or the one installed in the system) using the `LD_PRELOAD` environment variable as follows
+Note: The openmpi library (or the one installed in the system) must be preloaded using the `LD_PRELOAD` environment variable:
 
 `export LD_PRELOAD=/usr/lib/libmpi.so:$LD_PRELOAD`
 
 ### Source
 
-This example shows how to run a Gemm with distributed matrices
+The following example invokes Gemm with distributed matrices
 
 ```s
 # Load the library
