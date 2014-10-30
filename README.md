@@ -67,7 +67,7 @@ functions classes, etc.
 
 ### Pointers
 
-Pointers to Elemental objects (such as `Matrix`, `DistMatriz`, or `Grid`) are
+Pointers to Elemental objects (such as `Matrix`, `DistMatrix`, or `Grid`) are
 treated as R external pointers and are cast to the appropriate pointer type in
 the C-layer.  This type-cast was not possible in a pure R-implementation.
 
