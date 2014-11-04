@@ -749,10 +749,15 @@ Axpy<-function(alpha, MatrixX, MatrixY){
   .Call( paste0("axpy", .getSuffix(MatrixX)), alpha, MatrixX@ptr, MatrixY@ptr)
 }
 
-AxpyTriangle<-function(uplo, alpha, MatrixX, MatrixY){
-  .Call( paste0("axpyTriangle", .getSuffix(MatrixX)), uplo, alpha, MatrixX@ptr,
-         MatrixY@ptr)
+AxpyTrapezoid<-function(uplo, alpha, MatrixX, MatrixY, offset){
+  .Call( paste0("axpyTrapezoid", .getSuffix(MatrixX)), uplo, alpha, MatrixX@ptr,
+         MatrixY@ptr, as.integer(offset) )
 }
+
+AxpyTriangle<-function(uplo, alpha, MatrixX, MatrixY){
+    AxpyTrapezoid(uplo, alpha, MatrixX, MatrixY, 0)
+}
+
 
 Copy<-function(MatrixA, MatrixB){
   .Call( paste0("copy", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
@@ -799,7 +804,7 @@ MakeTrapezoidal<-function(uplo, MatrixA, offset){
 }
 
 MakeTriangular<-function(uplo, MatrixA){
-  .Call( paste0("makeTriangular", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
+    MakeTrapezoidal(uplo, MatrixA, 0)
 }
 
 Max<-function(MatrixA){

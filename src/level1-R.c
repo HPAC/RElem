@@ -9,15 +9,18 @@ SEXP axpyDist_d( SEXP alpha, SEXP RptrX, SEXP RptrY){
   return R_NilValue;
 }
 
-SEXP axpyTriangle_d( SEXP uplo, SEXP alpha, SEXP RptrX, SEXP RptrY){
-  ElAxpyTriangle_d( parseUpLo(uplo), toDouble(alpha), toMatrix_d(RptrX), 
-                    toMatrix_d(RptrY) );
+SEXP axpyTrapezoid_d
+( SEXP uplo, SEXP alpha, SEXP RptrX, SEXP RptrY, SEXP offset){
+  ElAxpyTrapezoid_d( parseUpLo(uplo), toDouble(alpha), toMatrix_d(RptrX), 
+                     toMatrix_d(RptrY), toElInt(offset) );
   return R_NilValue;
 }
 
-SEXP axpyTriangleDist_d( SEXP uplo, SEXP alpha, SEXP RptrX, SEXP RptrY){
-  ElAxpyTriangleDist_d( parseUpLo(uplo), toDouble(alpha),
-                        toDistMatrix_d(RptrX), toDistMatrix_d(RptrY) );
+SEXP axpyTrapezoidDist_d
+( SEXP uplo, SEXP alpha, SEXP RptrX, SEXP RptrY, SEXP offset){
+  ElAxpyTrapezoidDist_d( parseUpLo(uplo), toDouble(alpha),
+                         toDistMatrix_d(RptrX), toDistMatrix_d(RptrY),
+                         toElInt(offset) );
   return R_NilValue;
 }
 
@@ -191,7 +194,7 @@ SEXP makeTrapezoidalDist_d(SEXP uplo, SEXP RptrA, SEXP offset){
                            toElInt(offset) );
   return R_NilValue;
 }
-
+/*
 SEXP makeTriangular_d(SEXP uplo, SEXP RptrA){
   ElMakeTriangular_d( parseUpLo(uplo), toMatrix_d(RptrA) );
   return R_NilValue;
@@ -201,7 +204,7 @@ SEXP makeTriangularDist_d(SEXP uplo, SEXP RptrA){
   ElMakeTriangularDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA) );
   return R_NilValue;
 }
-
+*/
 SEXP max_d(SEXP RptrA){
   ElValueIntPair_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
