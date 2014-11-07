@@ -194,17 +194,7 @@ SEXP makeTrapezoidalDist_d(SEXP uplo, SEXP RptrA, SEXP offset){
                            toElInt(offset) );
   return R_NilValue;
 }
-/*
-SEXP makeTriangular_d(SEXP uplo, SEXP RptrA){
-  ElMakeTriangular_d( parseUpLo(uplo), toMatrix_d(RptrA) );
-  return R_NilValue;
-}
 
-SEXP makeTriangularDist_d(SEXP uplo, SEXP RptrA){
-  ElMakeTriangularDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA) );
-  return R_NilValue;
-}
-*/
 SEXP max_d(SEXP RptrA){
   ElValueIntPair_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );

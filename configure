@@ -1662,25 +1662,26 @@ fi
 if test -n "${UsrPrefix}"; then
     if test -f "${UsrPrefix}/conf/ElVars" ; then
         EL_PREFIX="${UsrPrefix}"
+        echo "Found Elemental in ${UsrPrefix}"
     else
         as_fn_error $? "Wrong path, ElVars not found in $UsrPrefix " "$LINENO" 5
     fi
-fi
-HIDLOC="/.local"
-
-#Checking the common folders
-for pr in /usr/local "$HOME/local" "$HOME$HIDLOC"; do
-	echo ${pr}
+else
+  #Checking the common folders
+  HIDLOC="/.local"
+  for pr in /usr/local "$HOME/local" "$HOME$HIDLOC"; do
     if test -f "${pr}/conf/ElVars"; then
-        echo "Found Elemental in $pr"
-        EL_PREFIX="${pr}"
-        break
+      EL_PREFIX="${pr}"
+      echo "Found Elemental in ${pr}"
+      break
     fi
+  done
+fi
 
-done
 if test ! -n "${EL_PREFIX}" ; then
    as_fn_error $? "Elemental not found, please specify the prefix of its installation using the flag --with-ElPrefix=/THE/PREFIX" "$LINENO" 5
 fi
+
 
 ac_config_files="$ac_config_files src/Makevars"
 
