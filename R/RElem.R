@@ -88,9 +88,27 @@ Initialized<-function(){
   .Call("initialized")
 }
 
+##' Initialize
+##'
+##' Initializes MPI allowing to use Distributed Matrices
+##'
+##' @examples
+##' Initialize()
+##' A<-DistMatrix()
+##' Uniform(A,2,2)
+##' Print(A)
+##' Finalize()
+
 Initialize<-function(){
   .Call("initialize")
 }
+
+##' Finalize
+##'
+##' Finalizes MPI
+##'
+##' This function must be called at the end of the script (at least at the end
+##' of the distributed part).
 Finalize<-function(){
   if( Initialized() )
     .Call("finalize")
