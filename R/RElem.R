@@ -1721,13 +1721,13 @@ for (dt in DataTypes){
 }
 
 ##Check how to fix this, since is overwriting the matrix
-for (dt in DataTypes){
-  setMethod("[<-",paste0("ObjElMatrix_",dt),
-            function(x, i, j ,value){
-             if (length(i)==1 && length(j)==1){
-               MatrixSet(x,i,j,value)
-             }else{
-               cat("Not possible to set submatrix yet");
-             }
-           })
-}
+#for (dt in DataTypes){
+#  setMethod("[<-",paste0("ObjElMatrix_",dt),
+#            function(x, i, j ,value){
+#             if (length(i)==1 && length(j)==1){
+#               MatrixSet(x,i,j,value)
+#             }else{
+#               cat("Not possible to set submatrix yet");
+#             }
+#           })
+#}
