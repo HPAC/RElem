@@ -1720,6 +1720,22 @@ for (dt in DataTypes){
            })
 }
 
+for (dt in DataTypes){
+  setMethod("[",paste0("ObjElDistMatrix_",dt),
+            function(x, i, j ,...){
+             if (length(i)==1 && length(j)==1){
+               MatrixGet(x,i,j)
+             }else{
+               g<-Grid()
+               #DistMatrixGrid(x,g)
+               V<-DistMatrix(g,.getType(x));
+               LockedView(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
+               V
+             }
+           })
+}
+
+
 ##Check how to fix this, since is overwriting the matrix
 #for (dt in DataTypes){
 #  setMethod("[<-",paste0("ObjElMatrix_",dt),
