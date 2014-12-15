@@ -1468,8 +1468,24 @@ Lasso<-function(MatrixA, Matrixb, lambda, Matrixz){
          Matrixz@ptr)
 }
 
-LinearProgram<-function(MatrixA, Matrixb, Matrixc, Matrixz){
-  .Call( paste0("linearProgram", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
+LPPrimal<-function(MatrixA, Matrixb, Matrixc, Matrixx){
+  .Call( paste0("lPPrimal", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
+         Matrixc@ptr, Matrixx@ptr)
+}
+
+LPPrimalIPF<-function(MatrixA, Matrixb, Matrixc, Matrixx, Matrixy, Matrixz){
+  .Call( paste0("lPPrimalIPF", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
+         Matrixc@ptr, Matrixx@ptr, Matrixy@ptr, Matrixz@ptr)
+}
+
+LPPrimalMehrotra<-function(MatrixA, Matrixb, Matrixc, Matrixx, Matrixy, Matrixz){
+  .Call( paste0("lPPrimalMehrotra", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
+         Matrixc@ptr, Matrixx@ptr, Matrixy@ptr, Matrixz@ptr)
+}
+
+
+LPPrimalADMM<-function(MatrixA, Matrixb, Matrixc, Matrixz){
+  .Call( paste0("lPPrimalADMM", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
          Matrixc@ptr, Matrixz@ptr)
 }
 

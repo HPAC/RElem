@@ -32,25 +32,79 @@ SEXP lassoDist_d( SEXP MatrixA, SEXP Matrixb, SEXP lambda, SEXP Matrixz){
   return numIts;
 }
 
-SEXP linearProgram_d
+/* Linear Programs
+ */
+
+SEXP lPPrimal_d
+( SEXP MatrixA, SEXP Matrixb, SEXP Matrixc, SEXP Matrixx){
+  ElLPPrimal_d(toMatrix_d(MatrixA), toMatrix_d(Matrixb),
+               toMatrix_d(Matrixc), toMatrix_d(Matrixx) );
+  return R_NilValue;
+} 
+
+SEXP lPPrimalDist_d
+( SEXP MatrixA, SEXP Matrixb, SEXP Matrixc, SEXP Matrixx){
+  ElLPPrimalDist_d(toDistMatrix_d(MatrixA), toDistMatrix_d(Matrixb),
+                   toDistMatrix_d(Matrixc), toDistMatrix_d(Matrixx) );
+  return R_NilValue;
+} 
+
+SEXP lPPrimalIPF_d
+( SEXP MatrixA, SEXP Matrixb, SEXP Matrixc, SEXP Matrixx, SEXP Matrixy,
+  SEXP Matrixz){
+  ElLPPrimalIPF_d(toMatrix_d(MatrixA), toMatrix_d(Matrixb),
+                  toMatrix_d(Matrixc), toMatrix_d(Matrixx),
+                  toMatrix_d(Matrixy), toMatrix_d(Matrixz));
+  return R_NilValue;
+} 
+
+SEXP lPPrimalIPFDist_d
+( SEXP MatrixA, SEXP Matrixb, SEXP Matrixc, SEXP Matrixx, SEXP Matrixy,
+  SEXP Matrixz){
+  ElLPPrimalIPFDist_d(toDistMatrix_d(MatrixA), toDistMatrix_d(Matrixb),
+                      toDistMatrix_d(Matrixc), toDistMatrix_d(Matrixx),
+                      toDistMatrix_d(Matrixy), toDistMatrix_d(Matrixz));
+  return R_NilValue;
+} 
+
+SEXP lPPrimalMehrotra_d
+( SEXP MatrixA, SEXP Matrixb, SEXP Matrixc, SEXP Matrixx, SEXP Matrixy,
+  SEXP Matrixz){
+  ElLPPrimalMehrotra_d(toMatrix_d(MatrixA), toMatrix_d(Matrixb),
+                       toMatrix_d(Matrixc), toMatrix_d(Matrixx),
+                       toMatrix_d(Matrixy), toMatrix_d(Matrixz));
+  return R_NilValue;
+} 
+
+SEXP lPPrimalMehrotraDist_d
+( SEXP MatrixA, SEXP Matrixb, SEXP Matrixc, SEXP Matrixx, SEXP Matrixy,
+  SEXP Matrixz){
+  ElLPPrimalMehrotraDist_d(toDistMatrix_d(MatrixA), toDistMatrix_d(Matrixb),
+                           toDistMatrix_d(Matrixc), toDistMatrix_d(Matrixx),
+                           toDistMatrix_d(Matrixy), toDistMatrix_d(Matrixz));
+  return R_NilValue;
+} 
+
+SEXP lPPrimalADMM_d
 ( SEXP MatrixA, SEXP Matrixb, SEXP Matrixc, SEXP Matrixz){
   SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElLinearProgram_d(toMatrix_d(MatrixA), toMatrix_d(Matrixb),
-                    toMatrix_d(Matrixc), toMatrix_d(Matrixz),
-                    INTEGER(numIts) );
- UNPROTECT(1);
+  ElLPPrimalADMM_d(toMatrix_d(MatrixA), toMatrix_d(Matrixb),
+                   toMatrix_d(Matrixc), toMatrix_d(Matrixz),
+                   INTEGER(numIts) );
+  UNPROTECT(1);
   return numIts;
 } 
 
-SEXP linearProgramDist_d
+SEXP lPPrimalADMMDist_d
 ( SEXP MatrixA, SEXP Matrixb, SEXP Matrixc, SEXP Matrixz){
   SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElLinearProgramDist_d(toDistMatrix_d(MatrixA), toDistMatrix_d(Matrixb),
-                        toDistMatrix_d(Matrixc), toDistMatrix_d(Matrixz),
-                        INTEGER(numIts) );
+  ElLPPrimalADMMDist_d(toDistMatrix_d(MatrixA), toDistMatrix_d(Matrixb),
+                         toDistMatrix_d(Matrixc), toDistMatrix_d(Matrixz),
+                         INTEGER(numIts) );
   UNPROTECT(1);
   return numIts;
-}
+} 
+
 
 SEXP logisticRegression_d
 ( SEXP MatrixA, SEXP Matrixq, SEXP Matrixz, SEXP gamma, SEXP penalty){
