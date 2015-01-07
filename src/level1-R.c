@@ -134,6 +134,18 @@ SEXP fillDist_d(SEXP Rptr, SEXP alpha){
   return R_NilValue;
 }
 
+SEXP fillDiagonal_d(SEXP RptrA, SEXP alpha, SEXP offset){
+  ElFillDiagonal_d( toMatrix_d(RptrA), toDouble(alpha),
+		    toElInt(offset) );
+  return R_NilValue;
+}
+
+SEXP fillDiagonalDist_d(SEXP RptrA, SEXP alpha, SEXP offset){
+  ElFillDiagonalDist_d( toDistMatrix_d(RptrA), toDouble(alpha),
+			toElInt(offset) );
+  return R_NilValue;
+}
+
 SEXP hadamard_d(SEXP RptrA, SEXP RptrB, SEXP RptrC){
   ElHadamard_d( toMatrix_d(RptrA), toMatrix_d(RptrB), toMatrix_d(RptrC) );
   return R_NilValue;
@@ -682,16 +694,18 @@ SEXP scaleTrapezoidDist(SEXP alpha, SEXP uplo, SEXP RptrA, SEXP offset){
   return R_NilValue;
 }
 
-SEXP setDiagonal_d(SEXP RptrA, SEXP alpha, SEXP offset){
-  ElSetDiagonal_d( toMatrix_d(RptrA), toDouble(alpha), toElInt(offset) );
+/* Shift Diagonal */
+SEXP shiftDiagonal_d(SEXP RptrA, SEXP alpha, SEXP offset){
+  ElShiftDiagonal_d( toMatrix_d(RptrA), toDouble(alpha), toElInt(offset) );
   return R_NilValue;
 }
 
-SEXP setDiagonalDist_d(SEXP RptrA, SEXP alpha, SEXP offset){
-  ElSetDiagonalDist_d( toDistMatrix_d(RptrA), toDouble(alpha), 
+SEXP shiftDiagonalDist_d(SEXP RptrA, SEXP alpha, SEXP offset){
+  ElShiftDiagonalDist_d( toDistMatrix_d(RptrA), toDouble(alpha), 
                        toElInt(offset) );
   return R_NilValue;
 }
+
 
 SEXP swap_d(SEXP orientation, SEXP RptrX, SEXP RptrY){
   ElSwap_d( parseOrientation(orientation), toMatrix_d(RptrX), 
@@ -747,16 +761,6 @@ SEXP transposeDist_d(SEXP RptrA, SEXP RptrB){
   return R_NilValue;
 }
 
-SEXP updateDiagonal_d(SEXP RptrA, SEXP alpha, SEXP offset){
-  ElUpdateDiagonal_d( toMatrix_d(RptrA), toDouble(alpha), toElInt(offset) );
-  return R_NilValue;
-}
-
-SEXP updateDiagonalDist(SEXP RptrA, SEXP alpha, SEXP offset){
-  ElUpdateDiagonalDist_d( toDistMatrix_d(RptrA), toDouble(alpha), 
-                          toElInt(offset) );
-  return R_NilValue;
-}
 
 SEXP zero_d(SEXP RptrA){
   ElZero_d( toMatrix_d(RptrA) );

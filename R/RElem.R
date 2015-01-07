@@ -409,17 +409,6 @@ MatrixLocked<-function(MAtrixA){
   .Call( paste0("locked", .getElement(MatrixA)), MatrixA@ptr )
 }
 
-MatrixGetDiagonal<-function(MatrixA, MatrixD, offset){
-  .Call( paste0("getDiagonal", .getElement(MatrixA)), MatrixA@ptr,
-         MatrixD@ptr, as.integer(offset) )
-}
-
-MatrixSetDiagonal<-function(MatrixA, MatrixD, offset){
-  .Call( paste0("setDiagonal", .getElement(MatrixA)), MatrixA@ptr, MatrixD@ptr,
-         as.integer(offset) )
-}
-
-
 
 #attach and locked attach are different
 
@@ -803,6 +792,11 @@ Fill<-function(MatrixA, alpha){
   .Call( paste0("fill", .getSuffix(MatrixA)), MatrixA@ptr, alpha )
 }
 
+FillDiagonal<-function(MatrixA, alpha, offset=0){
+  .Call( paste0("fillDiagonal", .getSuffix(MatrixA)), MatrixA@ptr, alpha,
+         as.integer(offset) )
+}
+
 Hadamard<-function(MatrixA, MatrixB, MatrixC){
   .Call( paste0("hadamard", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr,
         MatrixC@ptr )
@@ -902,8 +896,8 @@ ScaleTrapezoid<-function(alpha, uplo, MatrixA, offset){
          as.integer(offset) )
 }
 
-SetDiagonal<-function(MatrixA, alpha, offset){
-  .Call( paste0("setDiagonal", .getSuffix(MatrixA)), MatrixA@ptr, alpha,
+ShiftDiagonal<-function(MatrixA, alpha, offset=0){
+  .Call( paste0("shiftDiagonal", .getSuffix(MatrixA)), MatrixA@ptr, alpha,
          as.integer(offset) )
 }
 
@@ -931,10 +925,6 @@ Transpose<-function(MatrixA, MatrixB){
   .Call( paste0("transpose", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
 
-UpdateDiagonal<-function(MatrixA, alpha, offset){
-  .Call( paste0("updateDiagonal", .getSuffix(MatrixA)), MatrixA@ptr, alpha,
-         as.integer(offset) )
-}
 
 #-------------
 # Blas Level 2
@@ -1648,8 +1638,6 @@ MatrixFunctions=list(
   'DiagonalLength' = MatrixDiagonalLength,
   'Viewing'        = MatrixViewing,
   'Locked'         = MatrixLocked,
-  'GetDiagonal'    = MatrixGetDiagonal,
-  'SetDiagonal'    = MatrixSetDiagonal,
 
   'Attach'         = MatrixAttach,
   'LockedAttach'   = MatrixLockedAttach,
@@ -1688,8 +1676,6 @@ DistMatrixFunctions=list(
   'DiagonalLength' = MatrixDiagonalLength,
   'Viewing'        = MatrixViewing,
   'Locked'         = MatrixLocked,
-  'GetDiagonal'    = MatrixGetDiagonal,
-  'SetDiagonal'    = MatrixSetDiagonal,
 
   'SetGrid'        = DistMatrixSetGrid,
   'Grid'           = DistMatrixGrid, 

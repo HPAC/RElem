@@ -256,33 +256,6 @@ SEXP updateMatrix_d(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
                     toDouble(alpha) );
   return R_NilValue;
 }
-
-SEXP getDiagonalMatrix(SEXP Rptr, SEXP Rptr_d,SEXP offset){
-  ElMatrixGetDiagonal_d( toMatrix_d(Rptr), toMatrix_d(Rptr_d),
-                         toElInt(offset) );
-  return R_NilValue;
-}
-  
-
-SEXP setDiagonalMatrix_d(SEXP Rptr, SEXP Rptr_d, SEXP offset){
-  ElMatrixSetDiagonal_d( toMatrix_d(Rptr), toMatrix_d(Rptr_d), 
-                         toElInt(offset) );
-  return R_NilValue;
-}
-
-SEXP updateDiagonalMatrix_d(SEXP Rptr, SEXP alpha, SEXP Rptr_d, SEXP offset){
-  ElMatrixUpdateDiagonal_d( toMatrix_d(Rptr), toDouble(alpha),
-                            toMatrix_d(Rptr_d), toElInt(offset) );
-  return R_NilValue;
-}
-//Think if it is better to return a matrix instead.
-SEXP getSubmatrixMatrix_d(SEXP Rptr, SEXP rowInds, SEXP colInds, SEXP Rsub){
-  ElMatrixGetSubmatrix_d( toMatrix_d(Rptr), 
-                          length(rowInds), toElInt_p(rowInds), 
-                          length(colInds), toElInt_p(colInds), 
-                          toMatrix_d(Rsub) );
-  return R_NilValue;
-}
 /*
 SEXP updateSubmatrixMatrix
 (SEXP Rptr, SEXP rowInds, SEXP colInds, SEXP alpha, SEXP Rsub){
