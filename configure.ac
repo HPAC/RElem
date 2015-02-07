@@ -15,7 +15,7 @@ if test -n "${UsrPrefix}"; then
 else
   #Checking the common folders
   HIDLOC="/.local"
-  for pr in /usr/local "$HOME/local" "$HOME$HIDLOC"; do
+  for pr in /usr/local "$HOME/local" "$HOME/local/El" "$HOME$HIDLOC"; do
     if test -f "${pr}/conf/ElVars"; then
       EL_PREFIX="${pr}"
       echo "Found Elemental in ${pr}"
