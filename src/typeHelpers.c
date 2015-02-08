@@ -122,6 +122,29 @@ ElRegularization parseRegularization(SEXP pen){
   return EL_NO_PENALTY;
 }
 
+ElLPApproach parseLPApproach(SEXP app){
+  char *text = (char*)toChar_p(app);
+  if (strcmp("LP_ADMM", text) == 0) return EL_LP_ADMM;
+  if (strcmp("LP_IPF", text) == 0) return EL_LP_IPF;
+  if (strcmp("LP_IPF_SELFDUAL", text) == 0) return EL_LP_IPF_SELFDUAL;
+  if (strcmp("LP_MEHROTRA", text) == 0) return EL_LP_MEHROTRA;
+  if (strcmp("LP_MEHROTRA_SELFDUAL", text) == 0) return EL_LP_MEHROTRA_SELFDUAL;
+  return EL_LP_ADMM;
+}
+
+
+ElLPIPFLineSearchCtrl_d parseLPIPFCtrl
+(SEXP gamma, SEXP beta, SEXP psi, SEXP stepRatio, SEXP print){
+  ElLPIPFLineSearchCtrl_d ctrl;
+  ElLPIPFLineSearchCtrlDefault_d(&ctrl); // Optional
+  ctrl.gamma = toDouble(gamma);
+  ctrl.beta = toDouble(beta);
+  ctrl.psi = toDouble(psi);
+  ctrl.stepRatio = toDouble(stepRatio);
+  ctrl.print = toBool(print);
+}
+
+
 ElRange_i parseRange_i(SEXP beg, SEXP end){
   ElRange_i range;
   range.beg = toElInt(beg);

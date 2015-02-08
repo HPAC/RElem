@@ -1152,9 +1152,14 @@ SVD<-function( MatrixA, Matrixs, MatrixV){
 # Solvers
 #--------
 
-GaussianElimination<-function( MatrixA, MatrixB ){
-  .Call( paste0("gaussianElimination", .getSuffix(MatrixA)), MatrixA@ptr,
+LinearSolve<-function( MatrixA, MatrixB ){
+  .Call( paste0("linearSolve", .getSuffix(MatrixA)), MatrixA@ptr,
          MatrixB@ptr )
+}
+
+SymmetricSolve<-function( uplo, orientation, MatrixA, MatrixB ){
+  .Call( paste0("symmetricSolve", .getSuffix(MatrixA)), uplo, orientation,
+         MatrixA@ptr, MatrixB@ptr )
 }
 
 GLM<-function( MatrixA, MatrixB, MatrixD, MatrixY ){
@@ -1193,10 +1198,6 @@ Ridge<-function( MatrixA, MatrixB, alpha, MatrixX, algorithm){
          MatrixX@ptr, algorithm )
 }
 
-SymmetricSolve<-function( uplo, orientation, MatrixA, MatrixB ){
-  .Call( paste0("symmetricSolve", .getSuffix(MatrixA)), uplo, orientation,
-         MatrixA@ptr, MatrixB@ptr )
-}
 
 Tikhonov<-function( MatrixA, MatrixB, gamma, MatrixX, algorithm){
   .Call( paste0("tikhonov", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr,
@@ -1444,14 +1445,95 @@ MaxNorm<-function(MatrixA){
 }
 
 
-#-------------
-# Optimization
-#-------------
+#----------------------
+# Optimization Routines
+#----------------------
 
-BasisPursuit<-function(MatrixA, Matrixb, Matrixx){
-  .Call( paste0("basisPursuit", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+#--------------------
+# Optimization: Solve
+#--------------------
+
+BP<-function(MatrixA, Matrixb, Matrixx){
+  .Call( paste0("bP", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
          Matrixx@ptr)
 }
+
+BPADMM<-function(MatrixA, Matrixb, Matrixz){
+  .Call( paste0("bP", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+         Matrixz@ptr)
+}
+
+CP<-function(MatrixA, Matrixb, Matrixx){
+  .Call( paste0("cP", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+         Matrixx@ptr)
+}
+
+DS<-function(MatrixA, Matrixb, lambda, Matrixx){
+  .Call( paste0("dS", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+         lambda, Matrixx@ptr)
+}
+
+LAV<-function(MatrixA, Matrixb, Matrixx){
+  .Call( paste0("lAV", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+         Matrixx@ptr)
+}
+
+LogisticRegression<-function(MatrixA, Matrixq, Matrixz, gamma, penalty){
+  .Call( paste0("logisticRegression", .getSuffix(MatrixA)), MatrixA@ptr,
+         Matrixq@ptr, Matrixz@ptr, gamma, penalty)
+}
+
+NMF<-function(MatrixA, MatrixX, MatrixY){
+  .Call( paste0("nMF", .getSuffix(MatrixA)), MatrixA@ptr, MatrixX@ptr,
+         MatrixY@ptr)
+}
+
+NNLS<-function(MatrixA, MatrixY, MatrixZ){
+  .Call( paste0("nNLS", .getSuffix(MatrixA)), MatrixA@ptr, MatrixY@ptr,
+         MatrixZ@ptr)
+}
+
+NNLSADMM<-function(MatrixA, MatrixY, MatrixZ){
+  .Call( paste0("nNLSADMM", .getSuffix(MatrixA)), MatrixA@ptr, MatrixY@ptr,
+         MatrixZ@ptr)
+}
+
+BPDN<-function(MatrixA, Matrixb, lambda, Matrixx){
+  .Call( paste0("bPDN", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+         lambda, Matrixx@ptr)
+}
+
+BPDNADMM<-function(MatrixA, Matrixb, lambda, Matrixx){
+  .Call( paste0("bPDNADMM", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+         lambda, Matrixx@ptr)
+}
+
+EN<-function(MatrixA, Matrixb, lambda1, lambda2, Matrixx){
+  .Call( paste0("eN", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+         lambda1, lambda2, Matrixx@ptr)
+}
+
+RPCA<-function(MatrixA, MatrixL, MatrixS){
+  .Call( paste0("rPCA", .getSuffix(MatrixA)), MatrixA@ptr, MatrixL@ptr,
+         MatrixS@ptr)
+}
+
+SVM<-function(MatrixG, Matrixq, gamma, Matrixz){
+  .Call( paste0("sVM", .getSuffix(MatrixG)), MatrixG@ptr, Matrixq@ptr,
+         gamma, Matrixz@ptr)
+}
+
+SVMADMM<-function(MatrixG, Matrixq, gamma, Matrixz){
+  .Call( paste0("sVMADMM", .getSuffix(MatrixG)), MatrixG@ptr, Matrixq@ptr,
+         gamma, Matrixz@ptr)
+}
+
+TV<-function(Matrixb, lambda, Matrixx){
+  .Call( paste0("tV", .getSuffix(Matrixb)), Matrixb@ptr, lambda, Matrixx@ptr)
+}
+
+# end optimodels
+
 
 Lasso<-function(MatrixA, Matrixb, lambda, Matrixz){
   .Call( paste0("lasso", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr, lambda,
@@ -1479,30 +1561,7 @@ LPPrimalADMM<-function(MatrixA, Matrixb, Matrixc, Matrixz){
          Matrixc@ptr, Matrixz@ptr)
 }
 
-LogisticRegression<-function(MatrixA, Matrixq, Matrixz, gamma, penalty){
-  .Call( paste0("logisticRegression", .getSuffix(MatrixA)), MatrixA@ptr,
-         Matrixq@ptr, Matrixz@ptr, gamma, penalty)
-}
 
-NFM<-function(MatrixA, MatrixX, MatrixY){
-  .Call( paste0("nFM", .getSuffix(MatrixA)), MatrixA@ptr, MatrixX@ptr,
-         MatrixY@ptr)
-}
-
-NonNegativeLeastSquares<-function(MatrixA, MatrixY, MatrixZ){
-  .Call( paste0("nonNegativeLeastSquares", .getSuffix(MatrixA)), MatrixA@ptr,
-         MatrixY@ptr, MatrixZ@ptr)
-}
-
-RPCA<-function(MatrixA, MatrixL, MatrixS){
-  .Call( paste0("rPCA", .getSuffix(MatrixA)), MatrixA@ptr, MatrixL@ptr,
-         MatrixS@ptr)
-}
-
-SVM<-function(MatrixG, Matrixq, Matrixz, gamma){
-  .Call( paste0("sVM", .getSuffix(MatrixG)), MatrixG@ptr, Matrixq@ptr,
-         Matrixz@ptr, gamma)
-}
 
 LowerClip<-function(MatrixX, lowerbound){
   .Call( paste0("lowerClip", .getSuffix(MatrixX)), MatrixX@ptr, lowerbound)
