@@ -1449,9 +1449,9 @@ MaxNorm<-function(MatrixA){
 # Optimization Routines
 #----------------------
 
-#--------------------
-# Optimization: Solve
-#--------------------
+#---------------------
+# Optimization: Models
+#---------------------
 
 BP<-function(MatrixA, Matrixb, Matrixx){
   .Call( paste0("bP", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
@@ -1534,34 +1534,59 @@ TV<-function(Matrixb, lambda, Matrixx){
 
 # end optimodels
 
+#---------------------
+# Optimization Solvers
+#---------------------
 
-Lasso<-function(MatrixA, Matrixb, lambda, Matrixz){
-  .Call( paste0("lasso", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr, lambda,
-         Matrixz@ptr)
+
+LPDirect<-function(MatrixA, Matrixb, Matrixc, Matrixx){
+  .Call( paste0("lPDirect", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
+         Matrixz@ptr, Matrixx@ptr)
 }
 
-LPPrimal<-function(MatrixA, Matrixb, Matrixc, Matrixx){
-  .Call( paste0("lPPrimal", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
-         Matrixc@ptr, Matrixx@ptr)
+LPAffine<-function(MatrixA, MatrixG, Matrixb, Matrixc, Matrixh, Matrixx,
+                   Matrixy, Matrixz, Matrixs){
+  .Call( paste0("lPAffine", .getSuffix(MatrixA)), MatrixA@ptr, MatrixG@ptr,
+         Matrixb@ptr, Matrixc@ptr, Matrixh@ptr, Matrixx@ptr, Matrixy@ptr,
+         Matrixz@ptr, Matrixs@ptr)
 }
 
-LPPrimalIPF<-function(MatrixA, Matrixb, Matrixc, Matrixx, Matrixy, Matrixz){
-  .Call( paste0("lPPrimalIPF", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
-         Matrixc@ptr, Matrixx@ptr, Matrixy@ptr, Matrixz@ptr)
+QPDirect<-function(MatrixQ, MatrixA, Matrixb, Matrixc, Matrixx, Matrixy,
+                   Matrixz){
+  .Call( paste0("qPDirect", .getSuffix(MatrixA)), MatrixQ@ptr, MatrixA@ptr,
+         Matrixb@ptr, Matrixc@ptr, Matrixx@ptr, Matrixy@ptr, Matrixz@ptr)
 }
 
-LPPrimalMehrotra<-function(MatrixA, Matrixb, Matrixc, Matrixx, Matrixy, Matrixz){
-  .Call( paste0("lPPrimalMehrotra", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
-         Matrixc@ptr, Matrixx@ptr, Matrixy@ptr, Matrixz@ptr)
+QPAffine<-function(MatrixQ, MatrixA, MatrixG, Matrixb, Matrixc, Matrixh,
+                   Matrixx, Matrixy, Matrixz, Matrixs){
+  .Call( paste0("qPAffine", .getSuffix(MatrixA)), MatrixQ@ptr, MatrixA@ptr,
+         MatrixG@ptr, Matrixb@ptr, Matrixc@ptr, Matrixh@ptr, Matrixx@ptr,
+         Matrixy@ptr, Matrixz@ptr, Matrixs@ptr)
 }
 
+#------------------
+# Optimization Util
+#------------------
 
-LPPrimalADMM<-function(MatrixA, Matrixb, Matrixc, Matrixz){
-  .Call( paste0("lPPrimalADMM", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
-         Matrixc@ptr, Matrixz@ptr)
+Coherence<-function(MatrixA){
+  .Call( paste0("coherence", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+Covariance<-function(MatrixD, MatrixS){
+  .Call( paste0("covariance", .getSuffix(MatrixD)), MatrixD@ptr, MatrixS@ptr )
+}
 
+LogBarrier<-function(uplo, MatrixA){
+  .Call( paste0("logBarrier", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
+}
+
+LogGetDiv<-function(uplo, MatrixA, MatrixB){
+  .Call( paste0("logGetDiv", .getSuffix(MatrixA)), uplo, MatrixA, MatrixB )
+}
+
+#------------------
+# Optimization prox
+#------------------
 
 LowerClip<-function(MatrixX, lowerbound){
   .Call( paste0("lowerClip", .getSuffix(MatrixX)), MatrixX@ptr, lowerbound)
@@ -1576,24 +1601,12 @@ Clip<-function(MatrixX, lowerbound, upperbound){
          upperbound)
 }
 
-Coherence<-function(MatrixA){
-  .Call( paste0("coherence", .getSuffix(MatrixA)), MatrixA@ptr )
-}
-
-Covariance<-function(MatrixD, MatrixS){
-  .Call( paste0("covariance", .getSuffix(MatrixD)), MatrixD@ptr, MatrixS@ptr )
-}
-
 FrobeniusProx<-function(MatrixA, rho){
   .Call( paste0("frobeniusProx", .getSuffix(MatrixA)), MatrixA@ptr, rho )
 }
 
-LogBarrier<-function(uplo, MatrixA){
-  .Call( paste0("logBarrier", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
-}
-
-LogGetDiv<-function(uplo, MatrixA, MatrixB){
-  .Call( paste0("logGetDiv", .getSuffix(MatrixA)), uplo, MatrixA, MatrixB )
+HingeLossProx<-function(MatrixA, rho){
+  .Call( paste0("hingeLossProx", .getSuffix(MatrixA)), MatrixA@ptr, rho )
 }
 
 LogisticProx<-function(MatrixA, rho){
@@ -1608,7 +1621,6 @@ SoftThreshold<-function(MatrixA, rho, relative){
   .Call( paste0("softThreshold", .getSuffix(MatrixA)), MatrixA@ptr, rho,
          as.logical(relative) )
 }
-
 
 
 #--------------------
