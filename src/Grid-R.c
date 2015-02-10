@@ -13,18 +13,16 @@ SEXP newGrid(){
   ElDefaultGrid(pGrid);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pGrid, install("Grid"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElGrid") );
   UNPROTECT(1);
   return Rptr;
 }
 
-//  *Check if it really necessary
+//  *Check if it is really necessary
 SEXP newGridC(){
   ElGrid *pGrid = malloc(sizeof(ElGrid));
   ElGridCreate(MPI_COMM_WORLD, EL_COLUMN_MAJOR, pGrid);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pGrid, install("Grid"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElGrid") );
   UNPROTECT(1);
   return Rptr;
 }

@@ -2,8 +2,8 @@
 # Class Definitions
 #------------------
 
-setClass("ElGrid", contains="externalptr")
-setClass("ObjElGrid", representation(ptr="ElGrid") )
+setClass("ElGrid", representation(ptr="externalptr") )
+
 
  #The following code replicates, for the different datatypes
  #
@@ -163,7 +163,7 @@ AllReduce<-function(var, count, datatype, op, comm){
 #------
 Grid<-function(){
   if ( Initialized() ){
-    new("ObjElGrid", ptr=.Call("newGrid") )
+    new("ElGrid", ptr=.Call("newGrid") )
   }
   else{
     cat("To use grids, MPI/Elemental must be Initialized\n")
@@ -1682,7 +1682,7 @@ GridFunctions=list(
   'VRSize'= GridVRSize
   )
 
-setMethod("$", "ObjElGrid",
+setMethod("$", "ElGrid",
           function(x, name){
             id <- pmatch(name, names(GridFunctions))
             if (is.na(id) ){
