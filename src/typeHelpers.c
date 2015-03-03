@@ -133,10 +133,10 @@ ElLPApproach parseLPApproach(SEXP app){
 }
 
 
-ElLPIPFLineSearchCtrl_d parseLPIPFCtrl
+ElIPFLineSearchCtrl_d parseIPFCtrl
 (SEXP gamma, SEXP beta, SEXP psi, SEXP stepRatio, SEXP print){
-  ElLPIPFLineSearchCtrl_d ctrl;
-  ElLPIPFLineSearchCtrlDefault_d(&ctrl); // Optional
+  ElIPFLineSearchCtrl_d ctrl;
+  ElIPFLineSearchCtrlDefault_d(&ctrl); // Optional
   ctrl.gamma = toDouble(gamma);
   ctrl.beta = toDouble(beta);
   ctrl.psi = toDouble(psi);
