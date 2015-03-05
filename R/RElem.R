@@ -1,174 +1,16 @@
-#------------------
-# Class Definitions
-#------------------
-
-setClass("ElGrid", representation(ptr="externalptr") )
-
-
- #The following code replicates, for the different datatypes
- #
- #setClass("ElMatrix_d", contains="externalptr")
- #setClass("ObjElMatrix_d, representation(ptr="ElMatrix_d")
-
-DataTypes=c("i","s","d","c","z")
-MTypes=c("ElDistMatrix_","ElMatrix_")
-
-for (mt in MTypes){
-  for (dt in DataTypes){
-    setClass(paste0(mt,dt), contains="externalptr")
-    setClass(paste0("Obj",mt,dt), representation(ptr=paste0(mt,dt)) )
-  }
-}
-
-
 #--------------
 # Aux functions
 #--------------
-
-.getSuffix<-function(element){
-  parts<-strsplit(class(element),"_")
-  ifelse (parts[[1]][1]=="ObjElDistMatrix",
-          paste0("Dist_",parts[[1]][2]),
-          ifelse (parts[[1]][1]=="ObjElMatrix",
-                  paste0("_",parts[[1]][2]),
-                  paste0("Function_Not_Defined_For_This_Arg")
-                  )
-          )
-}
-
-.getSuffixPtr<-function(element){
-  parts<-strsplit(class(element),"_")
-  ifelse (parts[[1]][1]=="ElDistMatrix",
-          paste0("Dist_",parts[[1]][2]),
-          ifelse (parts[[1]][1]=="ElMatrix",
-                  paste0("_",parts[[1]][2]),
-                  paste0("Function_Not_Defined_For_This_Arg")
-                  )
-          )
-}
-
-
-.getElement<-function(element){
-  parts<-strsplit(class(element),"_")
-  ifelse (parts[[1]][1]=="ObjElDistMatrix",
-          paste0("DistMatrix_",parts[[1]][2]),
-          ifelse (parts[[1]][1]=="ObjElMatrix",
-                  paste0("Matrix_",parts[[1]][2]),
-                  paste0("Function_Not_Defined_For_This_Arg")
-                  )
-          )
-}
-
-.getElementPtr<-function(element){
-  parts<-strsplit(class(element),"_")
-  ifelse (parts[[1]][1]=="ElDistMatrix",
-          paste0("DistMatrix_",parts[[1]][2]),
-          ifelse (parts[[1]][1]=="ElMatrix",
-                  paste0("Matrix_",parts[[1]][2]),
-                  paste0("Function_Not_Defined_For_This_Arg")
-                  )
-          )
-}
-
-
-.getType<-function(MatrixA){
-  parts<-strsplit(class(MatrixA),"_")
-  parts[[1]][2]
-}
 
 .isDistMatrix<-function(MatrixA){
   parts<-strsplit(class(MatrixA),"_")
   ifelse (parts[[1]][1]=="ObjElDistMatrix",TRUE,FALSE)
 }
 
-#----------------------------
-# MPI & Environment Functions
-#----------------------------
-Initialized<-function(){
-  .Call("initialized")
-}
-
-##' Initialize
-##'
-##' Initializes MPI allowing to use Distributed Matrices
-##'
-##' @examples
-##' Initialize()
-##' A<-DistMatrix()
-##' Uniform(A,2,2)
-##' Print(A)
-##' Finalize()
-
-Initialize<-function(){
-  .Call("initialize")
-}
-
-##' Finalize
-##'
-##' Finalizes MPI
-##'
-##' This function must be called at the end of the script (at least at the end
-##' of the distributed part).
-Finalize<-function(){
-  if( Initialized() )
-    .Call("finalize")
-  else
-    cat("Not initialized\n");
-}
-
-WorldRank<-function(){
-  .Call("getWorldRank")
-}
-WorldSize<-function(){
-  .Call("getWorldSize")
-}
-WTime<-function(){
-  .Call("wTime")
-}
-WorldBarrier<-function(){
-  .Call("worldBarrier")
-}
-
-PrintVersion <-function(){
-  .Call("printVersion")
-}
-
-PrintConfig <-function(){
-  .Call("printConfig")
-}
-
-PrintCCompilerInfo <-function(){
-  .Call("printCCompilerInfo")
-}
-
-PrintCxxCompilerInfo <-function(){
-  .Call("printCxxCompilerInfo")
-}
-
-MPIComm<-function(){
-  .Call("newMPIComm")
-}
-
-AllReduce<-function(var, count, datatype, op, comm){
-  if (datatype=="INTEGER"){
-    .Call("allReduce", as.integer(var), as.integer(count), datatype, op, comm)
-  }else{
-    .Call("allReduce", var, as.integer(count), datatype, op, comm)
-  }
-}
-
-
 #------
 # Grids
 #------
-Grid<-function(){
-  if ( Initialized() ){
-    new("ElGrid", ptr=.Call("newGrid") )
-  }
-  else{
-    cat("To use grids, MPI/Elemental must be Initialized\n")
-  }
-}
+
 
 GridRow<-function(Grid){
   .Call("gridRow", Grid@ptr)
@@ -233,12 +75,7 @@ GridVRSize<-function(Grid){
 # Sequential Matrices
 #--------------------
 
-Matrix<-function(dataType="d"){
-  ans<-new(paste0("ObjElMatrix_",dataType),
-           ptr=.Call( paste0("newMatrix_",dataType) ))
-  reg.finalizer(ans@ptr, MatrixDestroy)
-  ans
-}
+
 MatrixAttach<-function(MatrixA, height, width, buffer, ldim){
   .Call( paste0("attach", .getElement(MatrixA)), MatrixA@ptr, as.integer(height),
          as.integer(width), buffer, as.integer(ldim) )
@@ -255,12 +92,6 @@ MatrixLockedAttach<-function(MatrixA, height, width, buffer, ldim){
 # Distributed Matrices
 #---------------------
 
-DistMatrix<-function(Grid, dataType="d"){
-  ans<-new(paste0("ObjElDistMatrix_",dataType),
-           ptr=.Call( paste0("newDistMatrix_",dataType), Grid@ptr ) )
-  reg.finalizer(ans@ptr, MatrixDestroy)
-  ans
-}
 
 DistMatrixSpecific<-function(ColDist, RowDist, Grid, dataType="d"){
   ans<-new(paste0("ObjElDistMatrix_",dataType),
@@ -273,69 +104,69 @@ DistMatrixSpecific<-function(ColDist, RowDist, Grid, dataType="d"){
 
 #TODO: think in a better way to use this function
 ShowDistData<-function(DistMatrixA){
-  .Call( paste0("showDistData_", .getType(DistMatrixA)), DistMatrixA@ptr)
+  .Call( paste0("showDistData_", DistMatrixA@datatype), DistMatrixA@ptr)
 }
 
 DistMatrixDistComm<-function(DistMatrixA, Comm){
-  .Call( paste0("distCommDistMatrix_", .getType(DistMatrixA)), DistMatrixA@ptr,
+  .Call( paste0("distCommDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          Comm)
 }
 
 DistMatrixSetGrid<-function(DistMatrixA, GridG){
-  .Call( paste0("setGridDistMatrix_", .getType(DistMatrixA)), DistMatrixA@ptr,
+  .Call( paste0("setGridDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          GridG@ptr )
 }
 
 DistMatrixGrid<-function(DistMatrixA, GridG){
-  .Call( paste0("gridDistMatrix_", .getType(DistMatrixA)), DistMatrixA@ptr,
+  .Call( paste0("gridDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          GridG@ptr )
 }
 
 
 DistMatrixSetRoot<-function(DistMatrixA, Root, constrain){
-  .Call( paste0("setRootDistMatrix_", .getType(DistMatrixA)), DistMatrixA@ptr,
+  .Call( paste0("setRootDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          as.integer(Root), as.logical(constrain) )
 }
 
 DistMatrixAttach<-function(DistMatrixA, heigth, width, grid, colAlign, rowAlign,
                            buffer, ldim, root){
-  .Call( paste0("attachDistMatrix_", .getType(DistMatrixA)), DistMatrixA@ptr,
+  .Call( paste0("attachDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          heigth, width, grid@ptr, colAlign, rowAlign, buffer, ldim, root )
 }
 
 DistMatrixLockedAttach<-function(DistMatrixA, heigth, width, grid, colAlign,
                                  rowAlign, buffer, ldim, root){
-  .Call( paste0("lockedAttachDistMatrix_", .getType(DistMatrixA)), DistMatrixA@ptr,
+  .Call( paste0("lockedAttachDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          heigth, width, grid@ptr, colAlign, rowAlign, buffer, ldim, root )
 }
 
 DistMatrixToMatrix<-function(DistMatrixA, MatrixA){
-  .Call( paste0("matrixDistMatrix_", .getType(DistMatrixA)), DistMatrixA@ptr,
+  .Call( paste0("matrixDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          MatrixA@ptr )
 }
 
 DistMatrixToLockedMatrix<-function(DistMatrixA, MatrixA){
-  .Call( paste0("lockedMatrixDistMatrix_", .getType(DistMatrixA)), DistMatrixA@ptr,
+  .Call( paste0("lockedMatrixDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          MatrixA@ptr )
 }
 
 DistMatrixLocalHeight<-function(DistMatrixA){
-  .Call( paste0("localHeightDistMatrix_", .getType(DistMatrixA)),
+  .Call( paste0("localHeightDistMatrix_", DistMatrixA@datatype),
          DistMatrixA@ptr );
 }
 
 DistMatrixLocalWidth<-function(DistMatrixA){
-  .Call( paste0("localWidthDistMatrix_", .getType(DistMatrixA)),
+  .Call( paste0("localWidthDistMatrix_", DistMatrixA@datatype),
          DistMatrixA@ptr );
 }
 
 DistMatrixGetLocal<-function(DistMatrixA, i, j){
-  .Call( paste0("getLocalDistMatrix_", .getType(DistMatrixA)), DistMatrixA@ptr,
+  .Call( paste0("getLocalDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          as.integer(i), as.integer(j) )
 } 
 
 DistMatrixSetLocal<-function(DistMatrixA, i, j, alpha){
-  .Call( paste0("setLocalDistMatrix_", .getType(DistMatrixA)), DistMatrixA@ptr,
+  .Call( paste0("setLocalDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          as.integer(i), as.integer(j), as.double(alpha) )
 } 
 
@@ -345,13 +176,7 @@ DistMatrixSetLocal<-function(DistMatrixA, i, j, alpha){
 #-------------------------
 
 MatrixDestroy<-function(MatrixA){
-  if ( .hasSlot(MatrixA, "ptr")){
-    #cat("Please use assign a null value") 
-    #MatrixA@ptr<-NULL
-    .Call( paste0("destroy", .getElement(MatrixA) ), MatrixA@ptr )
-  }else{
-    .Call( paste0("destroy", .getElementPtr(MatrixA) ), MatrixA )
-  }     
+  .Call( paste0("destroy", .getElement(MatrixA) ), MatrixA@ptr )
 }
 
 
@@ -1718,8 +1543,7 @@ MatrixFunctions=list(
   'ToR' = ToR
   )
 
-for (dt in DataTypes){
-  setMethod("$",paste0("ObjElMatrix_",dt),
+  setMethod("$","ElMatrix",
             function(x, name){
               id <- pmatch(name, names(MatrixFunctions))
               if (is.na(id) ){
@@ -1731,7 +1555,7 @@ for (dt in DataTypes){
                 }
               }
             })
-}
+
 
 DistMatrixFunctions=list(
   'Destroy' = MatrixDestroy,
@@ -1763,55 +1587,53 @@ DistMatrixFunctions=list(
   'Print' = Print
   )
 
-for (dt in DataTypes){
-  setMethod("$",paste0("ObjElDistMatrix_",dt),
-            function(x, name){
-              id <- pmatch(name, names(DistMatrixFunctions))
-              if (is.na(id) ){
-                cat(paste("function",name,"not found\n") )
-              }else{
-                routine <- DistMatrixFunctions[[id]]
-                function(...){
-                  routine(x, ...)
-                }
+setMethod("$","ElDistMatrix",
+          function(x, name){
+            id <- pmatch(name, names(DistMatrixFunctions))
+            if (is.na(id) ){
+              cat(paste("function",name,"not found\n") )
+            }
+            else{
+              routine <- DistMatrixFunctions[[id]]
+              function(...){
+                routine(x, ...)
               }
-            })
-}
+            }
+          })
 
 
-for (dt in DataTypes){
-  setMethod("[",paste0("ObjElMatrix_",dt),
+
+
+  setMethod("[","ElMatrix",
             function(x, i, j ,...){
              if (length(i)==1 && length(j)==1){
                MatrixGet(x,i,j)
              }else{
-               V<-Matrix(.getType(x));
+               V<-Matrix(x@datatype);
                LockedView(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
                V
              }
 
            })
-}
 
-for (dt in DataTypes){
-  setMethod("[",paste0("ObjElDistMatrix_",dt),
+
+  setMethod("[","ElDistMatrix",
             function(x, i, j ,...){
              if (length(i)==1 && length(j)==1){
                MatrixGet(x,i,j)
              }else{
                g<-Grid()
                #DistMatrixGrid(x,g)
-               V<-DistMatrix(g,.getType(x));
+               V<-DistMatrix(g, x@datatype);
                LockedView(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
                V
              }
            })
-}
+
 
 
 ##Check how to fix this, since is overwriting the matrix
-#for (dt in DataTypes){
-#  setMethod("[<-",paste0("ObjElMatrix_",dt),
+#  setMethod("[<-","ElMatrix"),
 #            function(x, i, j ,value){
 #             if (length(i)==1 && length(j)==1){
 #               MatrixSet(x,i,j,value)
@@ -1819,4 +1641,4 @@ for (dt in DataTypes){
 #               cat("Not possible to set submatrix yet");
 #             }
 #           })
-#}
+

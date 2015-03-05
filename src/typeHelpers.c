@@ -155,5 +155,14 @@ ElRange_i parseRange_i(SEXP beg, SEXP end){
 
 
 bool isDestroyed(SEXP Rptr){
-  return !isNull(getAttrib(Rptr, install("destroyed") ));
+  return !isNull(getAttrib(Rptr, install("destroyed")));
 }
+
+
+SEXP checkDestroyed(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(LGLSXP,1) );
+  LOGICAL(ans)[0] = isDestroyed(Rptr);
+  UNPROTECT(1);
+  return ans;
+}
+

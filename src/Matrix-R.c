@@ -17,7 +17,7 @@ SEXP newMatrix_i(){
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_i"));
+  //setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_i"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -28,7 +28,7 @@ SEXP newMatrix_s(){
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_s"));
+  //setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_s"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -39,7 +39,7 @@ SEXP newMatrix_d(){
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_d"));
+  //setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_d"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -50,7 +50,7 @@ SEXP newMatrix_c(){
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_c"));
+  //setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_c"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -61,7 +61,7 @@ SEXP newMatrix_z(){
   EL_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_z"));
+  //setAttrib(Rptr, R_ClassSymbol, mkString("ElMatrix_z"));
   UNPROTECT(1);
   return Rptr;
 }
