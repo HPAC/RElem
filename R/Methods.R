@@ -1582,49 +1582,18 @@ DistMatrixFunctions=list(
   'Print' = Print
   )
 
-setMethod("$","ElDistMatrix",
+setMethod("$",signature(x="ElDistMatrix"),
           function(x, name){
             id <- pmatch(name, names(DistMatrixFunctions))
             if (is.na(id) ){
-              cat(paste("function",name,"not found\n") )
+              stop(paste("function",name,"not found\n") )
             }
-            else{
-              routine <- DistMatrixFunctions[[id]]
-              function(...){
-                routine(x, ...)
-              }
+            
+            routine <- DistMatrixFunctions[[id]]
+            function(...){
+              routine(x, ...)
             }
           })
-
-
-
-
-  setMethod("[","ElMatrix",
-            function(x, i, j ,...){
-             if (length(i)==1 && length(j)==1){
-               MatrixGet(x,i,j)
-             }else{
-               V<-Matrix(x@datatype);
-               LockedView(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
-               V
-             }
-
-           })
-
-
-  setMethod("[","ElDistMatrix",
-            function(x, i, j ,...){
-             if (length(i)==1 && length(j)==1){
-               MatrixGet(x,i,j)
-             }else{
-               g<-Grid()
-               #DistMatrixGrid(x,g)
-               V<-DistMatrix(g, x@datatype);
-               LockedView(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
-               V
-             }
-           })
-
 
 
 ##Check how to fix this, since is overwriting the matrix
