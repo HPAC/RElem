@@ -10,5 +10,6 @@ License: MIT
 Collate:
   Environment.R
   Classes.R
-  RElem.R
+  Methods.R
+  Operators.R
   pkgname.R
