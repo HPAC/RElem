@@ -119,9 +119,13 @@ inline const char* toChar_p(SEXP Rtext){
 }
 
 inline bool toBool(SEXP Rlog){
-  return (bool)LOGICAL(Rlog);
+  return (bool)LOGICAL(Rlog)[0];
 }
 
+inline complex_double toDComplex(SEXP Rcplex){
+  return (complex_double)(COMPLEX(Rcplex)[0].r + \
+			  COMPLEX(Rcplex)[0].i * _Complex_I);
+}
 
 
 ElDist parseDistText(SEXP dist);

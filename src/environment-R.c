@@ -15,10 +15,12 @@ SEXP finalize(){
 }
 
 SEXP initialized(){
-  SEXP Rresult=PROTECT(allocVector(LGLSXP,1));
-  ElInitialized( (bool *)LOGICAL(Rresult) );
+  SEXP ans=PROTECT(allocVector(LGLSXP,1));
+  bool status;
+  ElInitialized( &status);
+  LOGICAL(ans)[0]=status;
   UNPROTECT(1);
-  return Rresult;
+  return ans;
 }
 
 SEXP printVersion(){

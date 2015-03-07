@@ -1,22 +1,37 @@
-
-
 ###################
 #Destructor Closure
 ###################
 
 .ElDestroy <- function(tag, func){
-  function(obj){
-    .Call(paste0(func,"_",tag),obj@ptr)
+  function(ptr){
+    .Call(paste0(func,"_",tag),ptr)
   }
 }
-  
+
+#possibleDatatypes = c('d','z','i')
+#
+#validMatrix <- function(object){
+#  errors <- character()
+#  if ( is.na(match(object@datatype, possibleDatatypes)))
+#    errors <- c(errors,paste("Unknown datatype:",object@datatype))
+#  if ( !object@active )
+#    errors <- c(errors,paste("Not initialized"))
+#  if (length(errors)==0){
+#    TRUE
+#  }
+#  else{
+#    errors
+#  }
+#}
+
+
 #' Class to represent the Grid
 #'
 #' @slot ptr A pointer to the grid (C++)
 #' @slot active a boolean value that indicates whether the grid is
 #'       still alive or not.
 ElGrid <- setClass("ElGrid", representation(ptr="externalptr",
-                                          active="logical"))
+                                            active="logical"))
 
 setMethod("initialize",
           signature(.Object = "ElGrid"),
@@ -82,6 +97,16 @@ setMethod("initialize",
             return(.Object)
           })
 
+
+#####################
+# Adding some aliases
+#####################
+
+Matrix <- ElMatrix
+DistMatrix <- ElDistMatrix
+Grid <- ElGrid
+
+
 #############################################
 # Auxiliary Functions to extract the datatype
 #############################################
@@ -112,3 +137,4 @@ setMethod(".getElement", signature(.Object = "ElDistMatrix"),
           function(.Object){
             paste0("DistMatrix_",.Object@datatype)
           })
+

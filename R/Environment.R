@@ -7,7 +7,7 @@ Initialized<-function(){
 
 ##' Initialize
 ##'
-##' Initializes MPI allowing to use Distributed Matrices
+##' Initializes MPI allowing the use of Distributed Matrices
 ##'
 ##' @examples
 ##' Initialize()

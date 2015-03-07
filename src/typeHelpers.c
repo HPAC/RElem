@@ -142,6 +142,7 @@ ElIPFLineSearchCtrl_d parseIPFCtrl
   ctrl.psi = toDouble(psi);
   ctrl.stepRatio = toDouble(stepRatio);
   ctrl.print = toBool(print);
+  return ctrl;
 }
 
 
@@ -166,3 +167,16 @@ SEXP checkDestroyed(SEXP Rptr){
   return ans;
 }
 
+SEXP extractComplex(SEXP cmp){
+  printf("The number is %lf + %lfi\n", COMPLEX(cmp)[0].r, COMPLEX(cmp)[0].i);
+  return R_NilValue;
+}
+
+SEXP isNullPointer(SEXP ptr){
+  SEXP ans = PROTECT( allocVector(LGLSXP,1) );
+  LOGICAL(ans)[0] = 0;
+  if ((void *)R_ExternalPtrAddr(ptr) == NULL)
+    LOGICAL(ans)[0] = 1;
+  UNPROTECT(1);
+  return ans;
+}

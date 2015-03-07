@@ -93,15 +93,6 @@ MatrixLockedAttach<-function(MatrixA, height, width, buffer, ldim){
 #---------------------
 
 
-DistMatrixSpecific<-function(ColDist, RowDist, Grid, dataType="d"){
-  ans<-new(paste0("ObjElDistMatrix_",dataType),
-           ptr=.Call( paste0("newDistMatrixSpecific_", dataType),
-                      as.character(ColDist),
-                      as.character(RowDist), Grid@ptr ) )
-  reg.finalizer(ans@ptr, MatrixDestroy)
-  ans
-}
-
 #TODO: think in a better way to use this function
 ShowDistData<-function(DistMatrixA){
   .Call( paste0("showDistData_", DistMatrixA@datatype), DistMatrixA@ptr)
@@ -546,6 +537,10 @@ TriW<-function(MatrixA, n, alpha, k){
 }
 
 Uniform<-function(MatrixA, rows, cols, center=0.0, radius=1.0){
+  if (MatrixA@datatype=="z"){
+    center <- as.complex(center)
+    radius <- as.complex(radius)
+  }
   .Call( paste0("uniform", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(rows),
          as.integer(cols), center, radius )
 }
