@@ -124,13 +124,29 @@ SEXP emptyMatrix_d(SEXP Rptr){
   return R_NilValue;
 }
 
+SEXP emptyMatrix_z(SEXP Rptr){
+  ElMatrixEmpty_z( toMatrix_z(Rptr) );
+  return R_NilValue;
+}
+
 SEXP resizeMatrix_d(SEXP Rptr, SEXP height, SEXP width){
   ElMatrixResize_d( toMatrix_d(Rptr), toElInt(height), toElInt(width) );
   return R_NilValue;
 }
 
+SEXP resizeMatrix_z(SEXP Rptr, SEXP height, SEXP width){
+  ElMatrixResize_z( toMatrix_z(Rptr), toElInt(height), toElInt(width) );
+  return R_NilValue;
+}
+
 SEXP resizeLDimMatrix_d(SEXP Rptr, SEXP height, SEXP width, SEXP ldim){
   ElMatrixResizeWithLDim_d( toMatrix_d(Rptr), toElInt(height),
+                            toElInt(width), toElInt(ldim) );
+  return R_NilValue;
+}
+
+SEXP resizeLDimMatrix_z(SEXP Rptr, SEXP height, SEXP width, SEXP ldim){
+  ElMatrixResizeWithLDim_z( toMatrix_z(Rptr), toElInt(height),
                             toElInt(width), toElInt(ldim) );
   return R_NilValue;
 }
@@ -156,16 +172,16 @@ SEXP controlMatrix_d
   return R_NilValue;
 }
 
-// B<-A
-/* only in blas now
-SEXP copyMatrix_d(SEXP RptrA, SEXP RptrB){
-  ElMatrixCopy_d( toMatrix_d(RptrA), toMatrix_d(RptrB) );
-  return R_NilValue;
-}
-*/
 SEXP heightMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
   ElMatrixHeight_d( toMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
+SEXP heightMatrix_z(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixHeight_z( toMatrix_z(Rptr), INTEGER(ans) );
   UNPROTECT(1);
   return ans;
 }
@@ -177,9 +193,23 @@ SEXP widthMatrix_d(SEXP Rptr){
   return ans;
 }
 
+SEXP widthMatrix_z(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixWidth_z( toMatrix_z(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
 SEXP ldimMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
   ElMatrixLDim_d( toMatrix_d(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
+SEXP ldimMatrix_z(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixLDim_z( toMatrix_z(Rptr), INTEGER(ans) );
   UNPROTECT(1);
   return ans;
 }
@@ -191,9 +221,23 @@ SEXP memorySizeMatrix_d(SEXP Rptr){
   return ans;
 }
 
+SEXP memorySizeMatrix_z(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixMemorySize_z( toMatrix_z(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
 SEXP diagonalLenghtMatrix_d(SEXP Rptr, SEXP offset){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
   ElMatrixDiagonalLength_d( toMatrix_d(Rptr), toElInt(offset), INTEGER(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
+SEXP diagonalLenghtMatrix_z(SEXP Rptr, SEXP offset){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixDiagonalLength_z( toMatrix_z(Rptr), toElInt(offset), INTEGER(ans) );
   UNPROTECT(1);
   return ans;
 }
@@ -224,10 +268,23 @@ SEXP viewingMatrix_d(SEXP Rptr){
   return ans;
 }
 
+SEXP viewingMatrix_z(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
+  UNPROTECT(1);
+  ElMatrixViewing_z( toMatrix_z(Rptr), (bool *)LOGICAL(ans) );
+  return ans;
+}
 
 SEXP fixedsizeMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
   ElMatrixFixedSize_d( toMatrix_d(Rptr), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
+SEXP fixedsizeMatrix_z(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
+  ElMatrixFixedSize_z( toMatrix_z(Rptr), (bool *)LOGICAL(ans) );
   UNPROTECT(1);
   return ans;
 }
@@ -239,9 +296,26 @@ SEXP lockedMatrix_d(SEXP Rptr){
   return ans;
 }
 
+SEXP lockedMatrix_z(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
+  ElMatrixLocked_z( toMatrix_z(Rptr), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
 SEXP getMatrix_d(SEXP Rptr, SEXP i, SEXP j){
   SEXP ans = PROTECT( allocVector(REALSXP, 1) );
   ElMatrixGet_d( toMatrix_d(Rptr), toElInt(i), toElInt(j), REAL(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
+SEXP getMatrix_z(SEXP Rptr, SEXP i, SEXP j){
+  complex_double result;
+  ElMatrixGet_z( toMatrix_z(Rptr), toElInt(i), toElInt(j), &result);
+  SEXP ans = PROTECT( allocVector(CPLXSXP, 1) );
+  COMPLEX(ans)[0].r = creal(result);
+  COMPLEX(ans)[0].i = cimag(result);
   UNPROTECT(1);
   return ans;
 }
@@ -251,11 +325,23 @@ SEXP setMatrix_d(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
   return R_NilValue;
 }
 
+SEXP setMatrix_z(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
+  ElMatrixSet_z( toMatrix_z(Rptr), toElInt(i), toElInt(j), toDouble(alpha) );
+  return R_NilValue;
+}
+
 SEXP updateMatrix_d(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
   ElMatrixUpdate_d( toMatrix_d(Rptr), toElInt(i), toElInt(j),
                     toDouble(alpha) );
   return R_NilValue;
 }
+
+SEXP updateMatrix_z(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
+  ElMatrixUpdate_z( toMatrix_z(Rptr), toElInt(i), toElInt(j),
+                    toDComplex(alpha) );
+  return R_NilValue;
+}
+
 /*
 SEXP updateSubmatrixMatrix
 (SEXP Rptr, SEXP rowInds, SEXP colInds, SEXP alpha, SEXP Rsub){
