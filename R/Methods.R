@@ -430,8 +430,13 @@ Diagonal<-function(MatrixA, dSize, buffer){
 }
 
 HermitianUniformSpectrum<-function(MatrixA, n, lower, upper){
+  if (MatrixA@datatype=="z"){
+    lower <- as.complex(lower)
+    upper <- as.complex(upper)
+  }
   .Call( paste0("hermitianUniformSpectrum", .getSuffix(MatrixA)), MatrixA@ptr,
          as.integer(n), lower, upper)
+
 }
 
 Hilbert<-function(MatrixA, n){
@@ -444,14 +449,20 @@ Identity<-function(MatrixA, rows, cols){
 }
 
 Jordan<-function(MatrixA, n, lambda){
+  if (MatrixA@datatype=="z")
+    lambda <- as.complex(lambda)
   .Call( paste0("jordan", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n), lambda )
 }
 
 Kahan<-function(MatrixA, n, phi){
+  if (MatrixA@datatype=="z")
+    phi <- as.complex(phi)
   .Call( paste0("kahan", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n), phi )
 }
 
 KMS<-function(MatrixA, n, rho){
+  if (MatrixA@datatype=="z")
+    rho <- as.complex(rho)
   .Call( paste0("kahan", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n), rho )
 }
 
@@ -470,6 +481,8 @@ Laplacian3D<-function(MatrixA, nx, ny, nz){
 }
 
 Lauchli<-function(MatrixA, n, mu){
+  if (MatrixA@datatype=="z")
+    mu <- as.complex(mu)
   .Call( paste0("lauchli", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n), mu )
 }
 
@@ -503,6 +516,8 @@ Parter<-function(MatrixA, n){
 }
 
 Pei<-function(MatrixA, n, alpha){
+  if (MatrixA@datatype=="z")
+    alpha <- as.complex(alpha)
   .Call( paste0("pei", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n), alpha )
 }
 
@@ -532,6 +547,8 @@ Triangle<-function(MatrixA, n){
 }
 
 TriW<-function(MatrixA, n, alpha, k){
+  if (MatrixA@datatype=="z")
+    alpha <- as.complex(alpha)
   .Call( paste0("triW", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n), alpha,
          as.integer(k) )
 }
@@ -555,6 +572,10 @@ Whale<-function(MatrixA, n){
 }
 
 Wigner<-function(MatrixA, n, mean, stddev){
+  if (MatrixA@datatype=="z"){
+    mean <- as.complex(mean)
+    stddev <- as.complex(stddev)
+  }
   .Call( paste0("wigner", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n), mean,
          stddev)
 }
