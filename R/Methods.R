@@ -593,6 +593,11 @@ Zeros<-function(MatrixA, rows, cols){
 # Blas Level 1
 #-------------
 
+## B = A^H
+Adjoint<-function(MatrixA, MatrixB){
+  .Call( paste0("adjoint", .getSuffix(MatrixA)), alpha, MatrixA@ptr, MatrixB@ptr)
+}
+
 Axpy<-function(alpha, MatrixX, MatrixY){
   .Call( paste0("axpy", .getSuffix(MatrixX)), alpha, MatrixX@ptr, MatrixY@ptr)
 }
@@ -606,27 +611,47 @@ AxpyTriangle<-function(uplo, alpha, MatrixX, MatrixY){
     AxpyTrapezoid(uplo, alpha, MatrixX, MatrixY, 0)
 }
 
+Conjugate<- function(MatrixA){
+  .Call( paste0("conjugate", .getSuffix(MatrixA)), MatrixA@ptr)
+}
 
+##B=A
 Copy<-function(MatrixA, MatrixB){
   .Call( paste0("copy", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
 
-DiagonalScale<-function(side, Matrixd, MatrixX){
-  .Call( paste0("diagonalScale", .getSuffix(MatrixX)), side, Matrixd@ptr,
-         MatrixX@ptr)
+DiagonalScale<-function(side, Matrixd, MatrixX, orientation="NORMAL"){
+  if(MatrixX@datatype=="z"){
+    .Call( paste0("diagonalScale", .getSuffix(MatrixX)), side, Matrixd@ptr,
+          MatrixX@ptr, orientation)
+  }else{
+    .Call( paste0("diagonalScale", .getSuffix(MatrixX)), side, Matrixd@ptr,
+          MatrixX@ptr)
+  }
 }
 
 DiagonalScaleTrapezoid<-function(side, uplo, Matrixd, MatrixX, offset){
-  .Call( paste0("diagonalScaleTrapezoid", .getSuffix(MatrixX)), side, uplo,
-         Matrixd@ptr, MatrixX@ptr, as.integer(offset) )
+  if(MatrixX@datatype=="z"){
+    .Call( paste0("diagonalScaleTrapezoid", .getSuffix(MatrixX)), side,
+          Matrixd@ptr, MatrixX@ptr, orientation)
+  }else{
+    .Call( paste0("diagonalScaleTrapezoid", .getSuffix(MatrixX)), side,
+          Matrixd@ptr, MatrixX@ptr)
+  }
+}
+
+DiagonalSolve<-function(side, uplo, Matrixd, MatrixX, offset){
+  if(MatrixX@datatype=="z"){
+    .Call( paste0("diagonalSolve", .getSuffix(MatrixX)), side,
+          Matrixd@ptr, MatrixX@ptr, orientation)
+  }else{
+    .Call( paste0("diagonalSolve", .getSuffix(MatrixX)), side,
+          Matrixd@ptr, MatrixX@ptr)
+  }
 }
 
 Dot<-function(MatrixA, MatrixB){
   .Call( paste0("dot", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
-}
-
-Dotu<-function(MatrixA, MatrixB){
-  .Call( paste0("dotu", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
 
 Fill<-function(MatrixA, alpha){
@@ -645,6 +670,18 @@ Hadamard<-function(MatrixA, MatrixB, MatrixC){
 
 HilbertSchmidt<-function(MatrixA, MatrixB){
   .Call( paste0("hilbertSchmidt", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
+}
+
+ImagPart<-function(MatrixA, MatrixAIm){
+  .Call( paste0("imagPart", .getSuffix(MatrixA)), MatrixA@ptr, MatrixAIm@ptr )
+}
+
+MakeHermitian<-function(uplo, MatrixA){
+  .Call( paste0("makeHermitian", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
+}
+
+MakeReal<-function(MatrixA){
+  .Call( paste0("makeReal", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
 MakeSymmetric<-function(uplo, MatrixA){
@@ -728,6 +765,10 @@ Nrm2<-function(MatrixA){
   .Call( paste0("nrm2", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+RealPart<-function(MatrixA, MatrixAReal){
+  .Call( paste0("realPart", .getSuffix(MatrixA)), MatrixA@ptr, MatrixAReal@ptr )
+}
+
 Scale<-function(alpha, MatrixA){
   .Call( paste0("scale", .getSuffix(MatrixA)), alpha, MatrixA@ptr )
 }
@@ -736,6 +777,11 @@ ScaleTrapezoid<-function(alpha, uplo, MatrixA, offset){
   .Call( paste0("scaleTrapezoid", .getSuffix(MatrixA)), alpha, uplo, MatrixA@ptr,
          as.integer(offset) )
 }
+
+Shift<-function(MatrixA, alpha){
+  .Call( paste0("shift", .getSuffix(MatrixA)), MatrixA@ptr, alpha)
+}
+
 
 ShiftDiagonal<-function(MatrixA, alpha, offset=0){
   .Call( paste0("shiftDiagonal", .getSuffix(MatrixA)), MatrixA@ptr, alpha,
