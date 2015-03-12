@@ -827,6 +827,26 @@ Ger<-function( alpha, Matrixx, Matrixy, MatrixA){
          MatrixA@ptr )
 }
 
+Geru<-function( alpha, Matrixx, Matrixy, MatrixA){
+  .Call( paste0("geru", .getSuffix(MatrixA)), alpha, Matrixx@ptr, Matrixy@ptr,
+         MatrixA@ptr )
+}
+
+Hemv<-function( uplo, alpha, MatrixA, Matrixx, beta, Matrixy){
+  .Call( paste0("hemv", .getSuffix(MatrixA)), uplo, alpha, MatrixA@ptr,
+         Matrixx@ptr, beta, Matrixy@ptr )
+}
+
+Her<-function( uplo, alpha, Matrixx, MatrixA){
+  .Call( paste0("her", .getSuffix(MatrixA)), uplo, alpha, Matrixx@ptr,
+         MatrixA@ptr )
+}
+
+Her2<-function( uplo, alpha, Matrixx, Matrixy, MatrixA){
+  .Call( paste0("her2", .getSuffix(MatrixA)), uplo, alpha, Matrixx@ptr,
+         Matrixy@ptr, MatrixA@ptr )
+}
+
 QuasiTrsv<-function( uplo, orientation, MatrixA, Matrixx){
   .Call( paste0("quasiTrsv", .getSuffix(MatrixA)), uplo, orientation,
          MatrixA@ptr, Matrixx@ptr)
@@ -852,14 +872,24 @@ Trmv<-function( uplo, orientation, diagUnit, MatrixA, Matrixx){
          MatrixA@ptr, Matrixx@ptr)
 }
 
-Trr<-function( uplo, alpha, Matrixx, Matrixy, MatrixA){
-  .Call( paste0("trr", .getSuffix(MatrixA)), uplo, alpha, Matrixx@ptr,
-         Matrixy@ptr, MatrixA@ptr )
+Trr<-function( uplo, alpha, Matrixx, Matrixy, MatrixA, conjugate=FALSE){
+  if( Matrixx@datatype == "z"){
+    .Call( paste0("trr", .getSuffix(MatrixA)), uplo, alpha, Matrixx@ptr,
+           Matrixy@ptr, MatrixA@ptr, conjugate )
+  }else{
+    .Call( paste0("trr", .getSuffix(MatrixA)), uplo, alpha, Matrixx@ptr,
+           Matrixy@ptr, MatrixA@ptr )
+  }
 }
 
-Trr2<-function( uplo, alpha, MatrixX, MatrixY, MatrixA){
-  .Call( paste0("trr2", .getSuffix(MatrixA)), uplo, alpha, MatrixX@ptr,
-         MatrixY@ptr, MatrixA@ptr )
+Trr2<-function( uplo, alpha, MatrixX, MatrixY, MatrixA, conjugate=FALSE){
+  if( Matrixx@datatype == "z"){
+    .Call( paste0("trr2", .getSuffix(MatrixA)), uplo, alpha, MatrixX@ptr,
+           MatrixY@ptr, MatrixA@ptr, conjugate )
+  }else{
+    .Call( paste0("trr2", .getSuffix(MatrixA)), uplo, alpha, MatrixX@ptr,
+           MatrixY@ptr, MatrixA@ptr )
+  }
 }
 
 Trsv<-function( uplo, orientation, diagUnit, MatrixA, Matrixx){
@@ -883,6 +913,21 @@ GemmX<-function( orientationA="NORMAL", orientationB="NORMAL", alpha, MatrixA,
                 MatrixB, beta, MatrixC, algorithm){
   .Call( paste0("gemm", .getSuffix(MatrixA)),orientationA, orientationB, alpha,
          MatrixA@ptr, MatrixB@ptr, beta, MatrixC@ptr, algorithm )
+}
+
+Hemm<-function( side, uplo, alpha, MatrixA, MatrixB, beta, MatrixC ){
+  .Call( paste0("hemm", .getSuffix(MatrixA)), side, uplo, alpha, MatrixA@ptr,
+         MatrixB@ptr, beta, MatrixC@ptr )
+}
+
+Herk<-function( side, orientation, alpha, MatrixA, beta, MatrixC ){
+  .Call( paste0("herk", .getSuffix(MatrixA)), side, orientation, alpha,
+         MatrixA@ptr, beta, MatrixC@ptr )
+}
+
+Her2k<-function( side, orientation, alpha, MatrixA, MatrixB, beta, MatrixC ){
+  .Call( paste0("her2k", .getSuffix(MatrixA)), side, orientation, alpha,
+         MatrixA@ptr, MatrixB@ptr, beta, MatrixC@ptr )
 }
 
 MultiShiftQuasiTrsm<-function( side, uplo, orientationA, alpha, MatrixA,
@@ -917,13 +962,23 @@ Syr2k<-function( uplo, orientation, alpha, MatrixA, MatrixB, beta, MatrixC){
          MatrixA@ptr, MatrixB@ptr, beta, MatrixC@ptr )
 }
 
-Trdtrmm<-function( uplo, MatrixA){
-  .Call( paste0("trdtrmm", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
+Trdtrmm<-function( uplo, MatrixA, conjugate=FALSE){
+  if( MatrixA@datatype == "z"){
+    .Call( paste0("trdtrmm", .getSuffix(MatrixA)), uplo, MatrixA@ptr, conjugate )
+  }else{
+    .Call( paste0("trdtrmm", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
+  }
+    
 }
 
-TrdtrmmQuasi<-function( uplo, MatrixA, MatrixDOff ){
-  .Call( paste0("trdtrmmQuasi", .getSuffix(MatrixA)), uplo, MatrixA@ptr,
-         MatrixDOff@ptr )
+TrdtrmmQuasi<-function( uplo, MatrixA, MatrixDOff, conjugate=FALSE ){
+  if( MatrixA@datatype == "z"){
+    .Call( paste0("trdtrmmQuasi", .getSuffix(MatrixA)), uplo, MatrixA@ptr,
+          MatrixDOff@ptr, conjugate )
+  }else{
+    .Call( paste0("trdtrmmQuasi", .getSuffix(MatrixA)), uplo, MatrixA@ptr,
+          MatrixDOff@ptr )    
+  }
 }
 
 Trmm<-function( side, uplo, orientationA, diagUnit, alpha, MatrixA, MatrixB ){
@@ -955,7 +1010,11 @@ Trstrm<-function( side, uplo, orientationA, diagUnit, alpha, MatrixA, MatrixB ){
 }
 
 Trtrmm<-function( uplo, MatrixA ){
-  .Call( paste0("trtrmm", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
+  if( MatrixA@datatype == "z"){
+    .Call( paste0("trtrmm", .getSuffix(MatrixA)), uplo, MatrixA@ptr, conjugate )
+  }else{
+    .Call( paste0("trtrmm", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
+  }
 }
 
 TwoSidedTrmm<-function( uplo, diagUnit, MatrixA, MatrixB ){
