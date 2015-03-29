@@ -3,16 +3,17 @@
 /* General Linear Model
  */
 
-SEXP gLM_d( SEXP RptrA, SEXP RptrB, SEXP RptrD, SEXP RptrY ){
+SEXP gLM_d( SEXP RptrA, SEXP RptrB, SEXP RptrD, SEXP RptrX, SEXP RptrY ){
   ElGLM_d( toMatrix_d(RptrA), toMatrix_d(RptrB), toMatrix_d(RptrD),
-           toMatrix_d(RptrY) );
+           toMatrix_d(RptrX), toMatrix_d(RptrY) );
   return R_NilValue;
 }
 
 
-SEXP gLMDist_d( SEXP RptrA, SEXP RptrB, SEXP RptrD, SEXP RptrY ){
+SEXP gLMDist_d( SEXP RptrA, SEXP RptrB, SEXP RptrD, SEXP RptrX, SEXP RptrY ){
   ElGLMDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB),
-               toDistMatrix_d(RptrD), toDistMatrix_d(RptrY) );
+               toDistMatrix_d(RptrD), toDistMatrix_d(RptrX),
+	       toDistMatrix_d(RptrY) );
   return R_NilValue;
 }
 
@@ -52,14 +53,17 @@ SEXP lSEDist_d( SEXP RptrA, SEXP RptrB, SEXP RptrC, SEXP RptrD, SEXP RptrX ){
 /* Ridge Regression
  */
 
-SEXP ridge_d( SEXP RptrA, SEXP RptrB, SEXP alpha, SEXP RptrX, SEXP alg){
-  ElRidge_d( toMatrix_d(RptrA), toMatrix_d(RptrB), toDouble(alpha),
-                 toMatrix_d(RptrX), parseRidgeAlg(alg) );
+SEXP ridge_d
+( SEXP orientation, SEXP RptrA, SEXP RptrB, SEXP gamma, SEXP RptrX, SEXP alg){
+  ElRidge_d( parseOrientation(orientation), toMatrix_d(RptrA), toMatrix_d(RptrB),
+	     toDouble(gamma), toMatrix_d(RptrX), parseRidgeAlg(alg) );
   return R_NilValue;
 }
 
-SEXP ridgeDist_d( SEXP RptrA, SEXP RptrB, SEXP alpha, SEXP RptrX, SEXP alg){
-  ElRidgeDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB), toDouble(alpha),
+SEXP ridgeDist_d
+( SEXP orientation, SEXP RptrA, SEXP RptrB, SEXP gamma, SEXP RptrX, SEXP alg){
+  ElRidgeDist_d( parseOrientation(orientation), toDistMatrix_d(RptrA), 
+		 toDistMatrix_d(RptrB), toDouble(gamma),
                  toDistMatrix_d(RptrX), parseRidgeAlg(alg) );
   return R_NilValue;
 }
@@ -68,18 +72,19 @@ SEXP ridgeDist_d( SEXP RptrA, SEXP RptrB, SEXP alpha, SEXP RptrX, SEXP alg){
 /* Tikhonov Regularization
  */
 
-SEXP tikhonov_d( SEXP RptrA, SEXP RptrB, SEXP RptrGamma, SEXP RptrX, SEXP alg){
-  ElTikhonov_d( toMatrix_d(RptrA), toMatrix_d(RptrB),
+SEXP tikhonov_d
+( SEXP orientation, SEXP RptrA, SEXP RptrB, SEXP RptrGamma, SEXP RptrX, SEXP alg){
+  ElTikhonov_d( parseOrientation(orientation), toMatrix_d(RptrA), toMatrix_d(RptrB),
                 toMatrix_d(RptrGamma), toMatrix_d(RptrX),
                 parseTikhonovAlg(alg) );
   return R_NilValue;
 }
 
 SEXP tikhonovDist_d
-( SEXP RptrA, SEXP RptrB, SEXP RptrGamma, SEXP RptrX, SEXP alg){
-  ElTikhonovDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrB),
-                    toDistMatrix_d(RptrGamma), toDistMatrix_d(RptrX),
-                    parseTikhonovAlg(alg) );
+( SEXP orientation, SEXP RptrA, SEXP RptrB, SEXP RptrGamma, SEXP RptrX, SEXP alg){
+  ElTikhonovDist_d( parseOrientation(orientation), toDistMatrix_d(RptrA),
+		    toDistMatrix_d(RptrB), toDistMatrix_d(RptrGamma),
+		    toDistMatrix_d(RptrX), parseTikhonovAlg(alg) );
   return R_NilValue;
 }
 

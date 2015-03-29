@@ -1108,9 +1108,9 @@ SymmetricSolve<-function( uplo, orientation, MatrixA, MatrixB ){
          MatrixA@ptr, MatrixB@ptr )
 }
 
-GLM<-function( MatrixA, MatrixB, MatrixD, MatrixY ){
+GLM<-function( MatrixA, MatrixB, MatrixD, MatrixX, MatrixY ){
   .Call( paste0("gLM", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr,
-         MatrixD@ptr, MatrixY@ptr )
+         MatrixD@ptr, MatrixX@ptr, MatrixY@ptr )
 }
 
 HermitianSolve<-function( uplo, orientation, MatrixA, MatrixB ){
@@ -1139,14 +1139,14 @@ MultiShiftHessSolve<-function( uplo, orientation, alpha, MatrixH, MatrixShifts,
          MatrixH@ptr, MatrixShifts@ptr, MatrixX@ptr )
 }
 
-Ridge<-function( MatrixA, MatrixB, alpha, MatrixX, algorithm){
-  .Call( paste0("ridge", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr, alpha,
+Ridge<-function( orientation, MatrixA, MatrixB, alpha, MatrixX, algorithm){
+  .Call( paste0("ridge", .getSuffix(MatrixA)), orientation, MatrixA@ptr, MatrixB@ptr, alpha,
          MatrixX@ptr, algorithm )
 }
 
 
-Tikhonov<-function( MatrixA, MatrixB, gamma, MatrixX, algorithm){
-  .Call( paste0("tikhonov", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr,
+Tikhonov<-function( orientation, MatrixA, MatrixB, gamma, MatrixX, algorithm){
+  .Call( paste0("tikhonov", .getSuffix(MatrixA)), orientation, MatrixA@ptr, MatrixB@ptr,
          gamma, MatrixX@ptr, algorithm )
 }
 
