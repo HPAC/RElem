@@ -1,13 +1,13 @@
 #R-El
 
-This library links R and the dense linear algebra library
+This R package links R and the dense linear algebra library
 [Elemental](http://www.libelemental.org), providing Elemental functionality in
-R.  It is based on the C-interface of the Elemental 0.85-dev.
+R.  It is based on the C-interface included in Elemental v0.85 and on-wards.
 
 ##Functionality
 
-At the moment the coverage of the interface is mostly limited to **double
-precision matrices only**.  Covered are:
+At the moment the coverage of the interface is limited to **double
+precision (real and complex)**. The following routines are included in this package:
 
 * Core and MPI routines
 * Sequential Matrices
@@ -22,7 +22,7 @@ precision matrices only**.  Covered are:
     * Spectral Decomposition
     * Solvers
 * Matrix Generators
-* Flame
+* LibFLAME-like
     * Partition
     * Merge
     * Repartition (_Not yet active in El headers_)
@@ -40,7 +40,7 @@ The installation of the R-El interface requires two steps:
 - Ideally, Elemental is installed in one of the default paths `/usr/local`, `$HOME/local`, `$HOME/.local`
 
 #### 2. Install R-Elemental
-We have plans to make R-El available in R's package manager CRAN.  So far, **a
+We have plans to make R-El available in R's package manager CRAN in the future.  So far, **a
 superuser** can install the interface from R as follows:
 
 ```s
@@ -55,6 +55,7 @@ options(devtools.install.args='--configure-args=--with-ElPrefix=/YOUR/PREFIX')
 install_github('rocanale/R-Elemental')
 ```
 
+Alternatively it is also possible to 
 
 ## Programming Approach
 
@@ -108,7 +109,7 @@ Note: The openmpi library (or the one installed in the system) must be preloaded
 
 ### Source
 
-The following example invokes Gemm with distributed matrices
+The following example invokes `Gemm` with distributed matrices
 
 ```s
 # Load the library
