@@ -55,7 +55,9 @@ options(devtools.install.args='--configure-args=--with-ElPrefix=/YOUR/PREFIX')
 install_github('rocanale/R-Elemental')
 ```
 
-Alternatively it is also possible to 
+Alternatively it is also possible to install a [released package version](https://github.com/rocanale/R-Elemental/releases) using the following command:
+
+`R CMD INSTALL R-Elemental.zip`
 
 ## Programming Approach
 
