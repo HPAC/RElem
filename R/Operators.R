@@ -1,3 +1,9 @@
+#############
+### Constants
+#############
+
+MAX_SIZE_PRINT <- 10
+
 ############
 ### Addition
 ############
@@ -147,15 +153,15 @@ setMethod("*",
 
 
 
-#########################
-# The default show method
-#########################
+###########################
+### The default show method
+###########################
 
 setMethod("show",
           signature(object = "ElMatrix"),
           function (object) 
           {
-            if(object$Height() <=10 && object$Width()<=10)
+            if(object$Height() <=MAX_SIZE_PRINT && object$Width()<=MAX_SIZE_PRINT)
               {
                 Print(object)
               }
@@ -170,13 +176,47 @@ setMethod("show",
           signature(object = "ElDistMatrix"),
           function (object) 
           {
-            if(object$Height() <=10 && object$Width()<=10)
+            if(object$Height() <=MAX_SIZE_PRINT && object$Width()<=MAX_SIZE_PRINT)
               {
                 Print(object)
               }
             else
               {
                 callNextMethod(object)
+              }
+          }
+          )
+
+################
+### Print method
+################
+
+setMethod("print",
+          signature(x = "ElMatrix"),
+          function (x) 
+          {
+            if(x$Height() <=MAX_SIZE_PRINT && x$Width()<=MAX_SIZE_PRINT)
+              {
+                Print(x)
+              }
+            else
+              {
+                callNextMethod(x)
+              }
+          }
+          )
+
+setMethod("print",
+          signature(x = "ElDistMatrix"),
+          function (x) 
+          {
+            if(x$Height() <=MAX_SIZE_PRINT && x$Width()<=MAX_SIZE_PRINT)
+              {
+                Print(x)
+              }
+            else
+              {
+                callNextMethod(x)
               }
           }
           )
