@@ -43,21 +43,29 @@ The installation of the R-El interface requires two steps:
 We have plans to make R-El available in R's package manager CRAN in the future.  So far, **a
 superuser** can install the interface from R as follows:
 
+A zip file from the package can be downloaded from our [releases](https://github.com/rocanale/R-Elemental/releases) and then installed using the following command:
+
+`R CMD INSTALL R-Elemental.zip`
+
+If Elemental was installed in a custom path, the installation command is:
+
+`R CMD INSTALL R-Elemental.zip --configure-args=--with-ElPrefix=/YOUR/PREFIX`
+
+##### Installing the development version
+
+Alternatively, it is possible to install the development branch of this library using devtools from an R session as follows:
+
 ```s
 install.packages("devtools")
 library(devtools)
 install_github('rocanale/R-Elemental')
 ```
 
-In case Elemental is in a custom installation path, it needs to be provided as follows:
+In case Elemental is installed in a custom installation path, the path should be provided as follows:
 ```s
 options(devtools.install.args='--configure-args=--with-ElPrefix=/YOUR/PREFIX')
 install_github('rocanale/R-Elemental')
 ```
-
-Alternatively it is also possible to install a [released package version](https://github.com/rocanale/R-Elemental/releases) using the following command:
-
-`R CMD INSTALL R-Elemental.zip`
 
 ## Programming Approach
 
