@@ -89,10 +89,23 @@ ElMatrix <- setClass("ElMatrix", representation(ptr="externalptr",
 
 setMethod("initialize",
           signature(.Object = "ElMatrix"),
-          function(.Object, tag = "d"){
+          function(.Object, tag = "d", rmat=NULL){
             .Object@datatype <- tag
             .Object@active <- TRUE
-            .Object@ptr <- .Call(paste0("newMatrix_",tag))
+             if(is.numeric(rmat) || is.complex(rmat)){
+              if(is.matrix(rmat)){
+                He <- dim(rmat)[1]
+                Wi <- dim(rmat)[2]
+              }else{
+                He <- length(rmat)
+                Wi <- as.integer(1)
+              }
+              if (tag="i")
+                rmat <- as.integer(rmat)
+              .Object@ptr <- .Call(paste0("toEl_",tag), rmat, He, Wi)
+            }else{
+              .Object@ptr <- .Call(paste0("newMatrix_",tag))
+            }
             reg.finalizer(.Object@ptr, .ElDestroy(tag,"destroyMatrix"))
             return(.Object)
           })

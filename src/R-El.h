@@ -153,3 +153,15 @@ inline MPI_Comm toComm(SEXP Rcomm){
 inline MPI_Comm *toComm_p(SEXP Rcomm){
   return (MPI_Comm *)R_ExternalPtrAddr(Rcomm);
 }
+
+/*
+  Matrix Constructors
+*/
+
+SEXP newMatrix_d();
+SEXP newMatrix_z();
+SEXP newMatrix_i();
+
+SEXP newDistMatrix_d();
+SEXP newDistMatrix_z();
+SEXP newDistMatrix_i();
