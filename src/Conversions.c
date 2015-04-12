@@ -85,3 +85,23 @@ SEXP toEl_i(SEXP MatA, SEXP height, SEXP width){
   return Rptr;
 }
   
+
+SEXP toElDist_d(SEXP MatA, SEXP height, SEXP width, SEXP RptrGrid, SEXP U, SEXP V){
+  SEXP Rptr;
+  ElDist colD = parseDistText(U);
+  ElDist rowD = parseDistText(V);
+  Rptr = newDistMatrixSpecific_d(U, V, RptrGrid);
+  double *buffer;
+  ElInt bsize;
+  ElInt myRank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+  if(myRank==0){
+    bsize = toElInt(height) * toElInt(width);
+    buffer = malloc(sizeof(double) * bsize );
+    for (ElInt i=0; i<bsize; i++)
+      buffer[i]=REAL(MatA)[i];
+  }
+  ElDistMatrixAttach_d(toDistMatrix_d(Rptr), toElInt(height), toElInt(width),
+		       toGrid(RptrGrid), colD, rowD, buffer, toElInt(height), 0);
+  return Rptr;
+}

@@ -62,11 +62,26 @@ ElDistMatrix<- setClass("ElDistMatrix",
 
 setMethod("initialize",
           signature(.Object = "ElDistMatrix"),
-          function(.Object, tag = "d", colDist="MC", rowDist="MR", grid=new("ElGrid")){
+          function(.Object, tag = "d", colDist="MC", rowDist="MR", grid=new("ElGrid"), rmat=NULL){
             if( Initialized() ){
               .Object@datatype <- tag
               .Object@active <- TRUE
+              if(is.numeric(rmat) || is.complex(rmat)){
+                if(is.matrix(rmat)){
+                  He <- dim(rmat)[1]
+                  Wi <- dim(rmat)[2]
+                }else{
+                  He <- length(rmat)
+                  Wi <- as.integer(1)
+                }
+                if (tag == "i")
+                  rmat <- as.integer(rmat)
+
+                .Object@ptr <- .Call(paste0("toElDist_",tag), rmat, He, Wi, grid@ptr, colDist, rowDist)
+              }else{
+
               .Object@ptr <- .Call(paste0("newDistMatrixSpecific_",tag), colDist, rowDist, grid@ptr)
+              }
               reg.finalizer(.Object@ptr, .ElDestroy(tag,"destroyDistMatrix"))
             }
             else{
@@ -100,7 +115,7 @@ setMethod("initialize",
                 He <- length(rmat)
                 Wi <- as.integer(1)
               }
-              if (tag="i")
+              if (tag == "i")
                 rmat <- as.integer(rmat)
               .Object@ptr <- .Call(paste0("toEl_",tag), rmat, He, Wi)
             }else{
