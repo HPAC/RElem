@@ -252,13 +252,46 @@ setMethod("[","ElDistMatrix",
           })
 
 
-#Pending... not working
-#setMethod("[<-",
-#          signature(x = "ElMatrix"),
-#          function (x, i, j, ..., value) 
-#          {
-#            if (length(i)>1 && length(j)>1){
-#              stop("It is only possible to set single Elements")
-#            }
-#            MatrixSet(x,i-1,j-1,value)
-#          })
+
+setMethod("[<-",
+          signature(x = "ElMatrix"),
+          function (x, i, j, ..., value) 
+          {
+            if (length(i)>1 && length(j)>1){
+              stop("It is only possible to set single Elements")
+            }
+            MatrixSet(x,i-1,j-1,value)
+            x
+          })
+
+setMethod("[<-",
+          signature(x = "ElDistMatrix"),
+          function (x, i, j, ..., value) 
+          {
+            if (length(i)>1 && length(j)>1){
+              stop("It is only possible to set single Elements")
+            }
+            MatrixSet(x,i-1,j-1,value)
+            x
+          })
+
+
+#################
+### Other Methods
+#################
+
+setMethod("t",
+          signature(x = "ElMatrix"),
+          function (x){
+            y <- Matrix(x@datatype)
+            Transpose(x,y)
+            y
+          })
+
+setMethod("t",
+          signature(x = "ElDistMatrix"),
+          function (x){
+            y <- Matrix(x@datatype)
+            Transpose(x,y)
+            y
+          })
