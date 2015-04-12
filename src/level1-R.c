@@ -407,15 +407,15 @@ SEXP makeTrapezoidalDist_z(SEXP uplo, SEXP RptrA, SEXP offset){
 }
 
 SEXP max_d(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   ElMax_d( toMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -426,15 +426,15 @@ SEXP max_d(SEXP RptrA){
 }
 
 SEXP maxDist_d(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   ElMaxDist_d( toDistMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -446,15 +446,15 @@ SEXP maxDist_d(SEXP RptrA){
 
 
 SEXP symmetricMax_d(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   ElSymmetricMax_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -465,15 +465,15 @@ SEXP symmetricMax_d(SEXP uplo, SEXP RptrA){
 }
 
 SEXP symmetricMaxDist_d(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   ElSymmetricMaxDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -520,15 +520,15 @@ SEXP vectorMaxDist_d(SEXP RptrA){
 }
 
 SEXP maxAbs_d(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   ElMaxAbs_d( toMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -539,15 +539,15 @@ SEXP maxAbs_d(SEXP RptrA){
 }
 
 SEXP maxAbs_z(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElMaxAbs_z( toMatrix_z(RptrA), &values );
   REAL(val)[0] = values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -558,15 +558,15 @@ SEXP maxAbs_z(SEXP RptrA){
 }
 
 SEXP maxAbsDist_d(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   ElMaxAbsDist_d( toDistMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -577,15 +577,15 @@ SEXP maxAbsDist_d(SEXP RptrA){
 }
 
 SEXP maxAbsDist_z(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElMaxAbsDist_z( toDistMatrix_z(RptrA), &values );
   REAL(val)[0] = values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -597,15 +597,15 @@ SEXP maxAbsDist_z(SEXP RptrA){
 
 
 SEXP symmetricMaxAbs_d(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElSymmetricMax_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -617,15 +617,15 @@ SEXP symmetricMaxAbs_d(SEXP uplo, SEXP RptrA){
 
 
 SEXP symmetricMaxAbs_z(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElSymmetricMaxAbs_z( parseUpLo(uplo), toMatrix_z(RptrA), &values );
   REAL(val)[0] = values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -637,15 +637,15 @@ SEXP symmetricMaxAbs_z(SEXP uplo, SEXP RptrA){
 
 
 SEXP symmetricMaxAbsDist_d(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElSymmetricMaxDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -656,15 +656,15 @@ SEXP symmetricMaxAbsDist_d(SEXP uplo, SEXP RptrA){
 }
 
 SEXP symmetricMaxAbsDist_z(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElSymmetricMaxAbsDist_z( parseUpLo(uplo), toDistMatrix_z(RptrA), &values );
   REAL(val)[0] = values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -751,15 +751,15 @@ SEXP vectorMaxAbsDist_z(SEXP RptrA){
 //Min
 
 SEXP min_d(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElMin_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -770,15 +770,15 @@ SEXP min_d(SEXP RptrA){
 }
 
 SEXP minDist_d(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElMinDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -789,15 +789,15 @@ SEXP minDist_d(SEXP RptrA){
 }
 
 SEXP symmetricMin_d(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElSymmetricMin_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -808,15 +808,15 @@ SEXP symmetricMin_d(SEXP uplo, SEXP RptrA){
 }
 
 SEXP symmetricMinDist_d(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElSymmetricMinDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -863,15 +863,15 @@ SEXP vectorMinDist_d(SEXP RptrA){
 }
 
 SEXP minAbs_d(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElMinAbs_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -882,15 +882,15 @@ SEXP minAbs_d(SEXP RptrA){
 }
 
 SEXP minAbs_z(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElMinAbs_z( toMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -901,15 +901,15 @@ SEXP minAbs_z(SEXP RptrA){
 }
 
 SEXP minAbsDist_z(SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElMinAbsDist_z( toDistMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -920,15 +920,15 @@ SEXP minAbsDist_z(SEXP RptrA){
 }
 
 SEXP symmetricMinAbs_d(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElSymmetricMinAbs_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -939,15 +939,15 @@ SEXP symmetricMinAbs_d(SEXP uplo, SEXP RptrA){
 }
 
 SEXP symmetricMinAbsDist_d(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElSymmetricMinAbsDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
@@ -958,15 +958,15 @@ SEXP symmetricMinAbsDist_d(SEXP uplo, SEXP RptrA){
 }
 
 SEXP symmetricMinAbsDist_z(SEXP uplo, SEXP RptrA){
-  ElValueIntPair_d values;
+  ElEntry_d values;
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
   ElSymmetricMinAbsDist_z( parseUpLo(uplo), toDistMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
-  INTEGER(coords)[0]=values.indices[0];
-  INTEGER(coords)[1]=values.indices[1];
+  INTEGER(coords)[0]=values.i;
+  INTEGER(coords)[1]=values.j;
   SET_STRING_ELT(names, 0, mkChar("value"));
   SET_STRING_ELT(names, 1, mkChar("indices"));
   SET_VECTOR_ELT(ans, 0, val);
