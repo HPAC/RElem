@@ -17,7 +17,6 @@ SEXP newDistMatrix_i(SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr( pDMat, install("DistMatrix"),
                                           R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_i"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -29,7 +28,6 @@ SEXP newDistMatrix_s(SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                         R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_s"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -41,7 +39,6 @@ SEXP newDistMatrix_d(SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_d"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -53,7 +50,6 @@ SEXP newDistMatrix_c(SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_c"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -65,7 +61,6 @@ SEXP newDistMatrix_z(SEXP RptrGrid){
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                         R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_z"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -83,7 +78,7 @@ SEXP newDistMatrixSpecific_i(SEXP U, SEXP V, SEXP RptrGrid){
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                         R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_i"));
+  //setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_i"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -99,7 +94,6 @@ SEXP newDistMatrixSpecific_s(SEXP U, SEXP V, SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_s"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -115,7 +109,6 @@ SEXP newDistMatrixSpecific_d(SEXP U, SEXP V, SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_d"));
   UNPROTECT(1);
   return Rptr;
 }
@@ -131,7 +124,6 @@ SEXP newDistMatrixSpecific_c(SEXP U, SEXP V, SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_c"));
   UNPROTECT(1);
   return Rptr;
 }

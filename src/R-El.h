@@ -162,6 +162,10 @@ SEXP newMatrix_d();
 SEXP newMatrix_z();
 SEXP newMatrix_i();
 
-SEXP newDistMatrix_d();
-SEXP newDistMatrix_z();
-SEXP newDistMatrix_i();
+SEXP newDistMatrix_d(SEXP RptrGrid);
+SEXP newDistMatrix_z(SEXP RptrGrid);
+SEXP newDistMatrix_i(SEXP RptrGrid);
+
+SEXP newDistMatrixSpecific_d(SEXP U, SEXP V, SEXP RptrGrid);
+SEXP newDistMatrixSpecific_z(SEXP U, SEXP V, SEXP RptrGrid);
+SEXP newDistMatrixSpecific_i(SEXP U, SEXP V, SEXP RptrGrid);

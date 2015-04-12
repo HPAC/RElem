@@ -91,7 +91,7 @@ SEXP toElDist_d(SEXP MatA, SEXP height, SEXP width, SEXP RptrGrid, SEXP U, SEXP 
   ElDist colD = parseDistText(U);
   ElDist rowD = parseDistText(V);
   Rptr = newDistMatrixSpecific_d(U, V, RptrGrid);
-  double *buffer;
+  double *buffer=NULL;
   ElInt bsize;
   ElInt myRank;
   MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
