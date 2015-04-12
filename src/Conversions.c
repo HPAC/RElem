@@ -105,3 +105,44 @@ SEXP toElDist_d(SEXP MatA, SEXP height, SEXP width, SEXP RptrGrid, SEXP U, SEXP 
 		       toGrid(RptrGrid), colD, rowD, buffer, toElInt(height), 0);
   return Rptr;
 }
+
+SEXP toElDist_i(SEXP MatA, SEXP height, SEXP width, SEXP RptrGrid, SEXP U, SEXP V){
+  SEXP Rptr;
+  ElDist colD = parseDistText(U);
+  ElDist rowD = parseDistText(V);
+  Rptr = newDistMatrixSpecific_i(U, V, RptrGrid);
+  ElInt *buffer=NULL;
+  ElInt bsize;
+  ElInt myRank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+  if(myRank==0){
+    bsize = toElInt(height) * toElInt(width);
+    buffer = malloc(sizeof(ElInt) * bsize );
+    for (ElInt i=0; i<bsize; i++)
+      buffer[i]=INTEGER(MatA)[i];
+  }
+  ElDistMatrixAttach_i(toDistMatrix_i(Rptr), toElInt(height), toElInt(width),
+		       toGrid(RptrGrid), colD, rowD, buffer, toElInt(height), 0);
+  return Rptr;
+}
+
+
+SEXP toElDist_z(SEXP MatA, SEXP height, SEXP width, SEXP RptrGrid, SEXP U, SEXP V){
+  SEXP Rptr;
+  ElDist colD = parseDistText(U);
+  ElDist rowD = parseDistText(V);
+  Rptr = newDistMatrixSpecific_z(U, V, RptrGrid);
+  complex_double *buffer=NULL;
+  ElInt bsize;
+  ElInt myRank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+  if(myRank==0){
+    bsize = toElInt(height) * toElInt(width);
+    buffer = malloc(sizeof(complex_double) * bsize );
+    for (ElInt i=0; i<bsize; i++)
+      buffer[i] = COMPLEX(MatA)[i].r + COMPLEX(MatA)[i].i * _Complex_I;
+  }
+  ElDistMatrixAttach_z(toDistMatrix_z(Rptr), toElInt(height), toElInt(width),
+		       toGrid(RptrGrid), colD, rowD, buffer, toElInt(height), 0);
+  return Rptr;
+}
