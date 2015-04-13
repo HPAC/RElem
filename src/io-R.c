@@ -91,8 +91,32 @@ SEXP read_d(SEXP Rptr, SEXP filename, SEXP format){
   return R_NilValue;
 }
 
+SEXP read_i(SEXP Rptr, SEXP filename, SEXP format){
+  ElRead_i( toMatrix_i(Rptr), toChar_p(filename),
+            parseFormatText(format) );
+  return R_NilValue;
+}
+
+SEXP read_z(SEXP Rptr, SEXP filename, SEXP format){
+  ElRead_z( toMatrix_z(Rptr), toChar_p(filename),
+            parseFormatText(format) );
+  return R_NilValue;
+}
+
 SEXP readDist_d(SEXP Rptr, SEXP filename, SEXP format, SEXP sequential){
   ElReadDist_d( toDistMatrix_d(Rptr), toChar_p(filename),
+                parseFormatText(format), toBool(sequential));
+  return R_NilValue;
+}
+
+SEXP readDist_i(SEXP Rptr, SEXP filename, SEXP format, SEXP sequential){
+  ElReadDist_i( toDistMatrix_i(Rptr), toChar_p(filename),
+                parseFormatText(format), toBool(sequential));
+  return R_NilValue;
+}
+
+SEXP readDist_z(SEXP Rptr, SEXP filename, SEXP format, SEXP sequential){
+  ElReadDist_z( toDistMatrix_z(Rptr), toChar_p(filename),
                 parseFormatText(format), toBool(sequential));
   return R_NilValue;
 }
@@ -102,8 +126,28 @@ SEXP spy_d(SEXP Rptr, SEXP title, SEXP tol){
   return R_NilValue;
 }
 
+SEXP spy_i(SEXP Rptr, SEXP title, SEXP tol){
+  ElSpy_i( toMatrix_i(Rptr), toChar_p(title), toDouble(tol) );
+  return R_NilValue;
+}
+
+SEXP spy_z(SEXP Rptr, SEXP title, SEXP tol){
+  ElSpy_z( toMatrix_z(Rptr), toChar_p(title), toDouble(tol) );
+  return R_NilValue;
+}
+
 SEXP spyDist_d(SEXP Rptr, SEXP title, SEXP tol){
   ElSpyDist_d( toDistMatrix_d(Rptr), toChar_p(title), toDouble(tol) );
+  return R_NilValue;
+}
+
+SEXP spyDist_i(SEXP Rptr, SEXP title, SEXP tol){
+  ElSpyDist_i( toDistMatrix_i(Rptr), toChar_p(title), toDouble(tol) );
+  return R_NilValue;
+}
+
+SEXP spyDist_z(SEXP Rptr, SEXP title, SEXP tol){
+  ElSpyDist_z( toDistMatrix_z(Rptr), toChar_p(title), toDouble(tol) );
   return R_NilValue;
 }
 
@@ -113,8 +157,32 @@ SEXP write_d(SEXP Rptr, SEXP basename, SEXP format, SEXP title){
   return R_NilValue;
 }
 
+SEXP write_i(SEXP Rptr, SEXP basename, SEXP format, SEXP title){
+  ElWrite_i( toMatrix_i(Rptr), toChar_p(basename), parseFormatText(format),
+             toChar_p(title) );
+  return R_NilValue;
+}
+
+SEXP write_z(SEXP Rptr, SEXP basename, SEXP format, SEXP title){
+  ElWrite_z( toMatrix_z(Rptr), toChar_p(basename), parseFormatText(format),
+             toChar_p(title) );
+  return R_NilValue;
+}
+
 SEXP writeDist_d(SEXP Rptr, SEXP basename, SEXP format, SEXP title){
   ElWriteDist_d( toDistMatrix_d(Rptr), toChar_p(basename), 
+                 parseFormatText(format), toChar_p(title) );
+  return R_NilValue;
+}
+
+SEXP writeDist_i(SEXP Rptr, SEXP basename, SEXP format, SEXP title){
+  ElWriteDist_i( toDistMatrix_i(Rptr), toChar_p(basename), 
+                 parseFormatText(format), toChar_p(title) );
+  return R_NilValue;
+}
+
+SEXP writeDist_z(SEXP Rptr, SEXP basename, SEXP format, SEXP title){
+  ElWriteDist_z( toDistMatrix_z(Rptr), toChar_p(basename), 
                  parseFormatText(format), toChar_p(title) );
   return R_NilValue;
 }
