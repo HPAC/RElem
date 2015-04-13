@@ -54,7 +54,8 @@ SEXP toEl_d(SEXP MatA, SEXP height, SEXP width){
   ElInt bsize;
   bsize = toElInt(height) * toElInt(width);
   buffer = malloc(sizeof(double) * bsize );
-  memcpy((char *)buffer, (char *) REAL(MatA), sizeof(double) * bsize); 
+  for (ElInt i=0; i<bsize; i++)
+    buffer[i]=REAL(MatA)[i];
   ElMatrixAttach_d(toMatrix_d(Rptr), toElInt(height), toElInt(width), buffer, toElInt(height));
   return Rptr;
 }
@@ -66,7 +67,8 @@ SEXP toEl_z(SEXP MatA, SEXP height, SEXP width){
   ElInt bsize;
   bsize = toElInt(height) * toElInt(width);
   buffer = malloc(sizeof(complex_double) * bsize );
-  memcpy((char *)buffer, (char *) COMPLEX(MatA), sizeof(complex_double) * bsize); 
+  for (ElInt i=0; i<bsize; i++)
+    buffer[i] = COMPLEX(MatA)[i].r + COMPLEX(MatA)[i].i * _Complex_I;
   ElMatrixAttach_z(toMatrix_z(Rptr), toElInt(height), toElInt(width), buffer, toElInt(height));
   return Rptr;
 }
