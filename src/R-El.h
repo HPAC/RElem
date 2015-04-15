@@ -140,6 +140,7 @@ ElRidgeAlg parseRidgeAlg(SEXP alg);
 ElTikhonovAlg parseTikhonovAlg(SEXP alg);
 ElRange_i parseRange_i(SEXP beg, SEXP end);
 ElRegularization parseRegularization(SEXP pen);
+ElNormType parseNorm(SEXP norm);
 
 bool isDestroyed(SEXP Rptr);
 

@@ -1,5 +1,18 @@
 #include "R-El.h"
 
+ElNormType parseNorm(SEXP norm){
+  char *text=(char*) CHAR( STRING_ELT(norm,0) );
+  if (strcmp("ONE_NORM",text)==0) return EL_ONE_NORM;
+  if (strcmp("INFINITY_NORM",text)==0) return EL_INFINITY_NORM;
+  if (strcmp("ENTRYWISE_ONE_NORM",text)==0) return EL_ENTRYWISE_ONE_NORM;
+  if (strcmp("MAX_NORM",text)==0) return EL_MAX_NORM;
+  if (strcmp("NUCLEAR_NORM",text)==0) return EL_NUCLEAR_NORM;
+  if (strcmp("FROBENIUS_NORM",text)==0) return EL_FROBENIUS_NORM;
+  if (strcmp("TWO_NORM",text)==0) return EL_TWO_NORM;
+  printf("wrong value: \"%s\", using \"TWO_NORM\" as default\n",text);
+  return EL_TWO_NORM;
+}
+
 ElDist parseDistText(SEXP dist){
   char *text=(char*) CHAR( STRING_ELT(dist,0) );
   //  printf("The distro is: %s\n",text);
