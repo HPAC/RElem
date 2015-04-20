@@ -17,23 +17,6 @@ SEXP bPDist_d( SEXP MatrixA, SEXP Matrixb, SEXP Matrixx){
 
 /* Basis Pursuit expert (pending) */
 
-/* ADMM  */
-
-SEXP bPADMM_d( SEXP MatrixA, SEXP Matrixb, SEXP Matrixz){
-  SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElBPADMM_d(toMatrix_d(MatrixA), toMatrix_d(Matrixb),
-	     toMatrix_d(Matrixz), INTEGER(numIts));
-  UNPROTECT(1);
-  return numIts;
-}
-
-SEXP bPADMMDist_d( SEXP MatrixA, SEXP Matrixb, SEXP Matrixz){
-  SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElBPADMMDist_d(toDistMatrix_d(MatrixA), toDistMatrix_d(Matrixb),
-		 toDistMatrix_d(Matrixz), INTEGER(numIts));
-  UNPROTECT(1);
-  return numIts;
-}
 
 /* Chebyshev point
  */
@@ -146,23 +129,6 @@ SEXP nNLSDist_d( SEXP MatrixA, SEXP MatrixY, SEXP MatrixZ ){
 
 /* Expert version pending */
 
-/* ADMM */
-
-SEXP nNLSADMM_d( SEXP MatrixA, SEXP MatrixB, SEXP MatrixX ){
-  SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElNNLSADMM_d( toMatrix_d(MatrixA), toMatrix_d(MatrixB),
-		toMatrix_d(MatrixX), INTEGER(numIts) );
-  UNPROTECT(1);
-  return numIts;
-}
-
-SEXP nNLSADMMDist_d( SEXP MatrixA, SEXP MatrixB, SEXP MatrixX ){
-  SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElNNLSADMMDist_d( toDistMatrix_d(MatrixA), toDistMatrix_d(MatrixB),
-		    toDistMatrix_d(MatrixX), INTEGER(numIts) );
-  UNPROTECT(1);
-  return numIts;
-}
 
 /* Basis pursuit denoising */
 
@@ -180,27 +146,6 @@ SEXP bPDNDist_d( SEXP MatrixA, SEXP Matrixb, SEXP lambda, SEXP Matrixx){
 }
 /* Expert version Pending */
 
-/* ADMM */
-
-SEXP bPDNADMM_d( SEXP MatrixA, SEXP Matrixb, SEXP lambda, SEXP Matrixx){
-  SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElBPDNADMM_d(toMatrix_d(MatrixA), toMatrix_d(Matrixb),
-	       toDouble(lambda), toMatrix_d(Matrixx),
-	       INTEGER(numIts));
-  UNPROTECT(1);
-  return numIts;
-}
-
-
-SEXP bPDNADMMDist_d( SEXP MatrixA, SEXP Matrixb, SEXP lambda, SEXP Matrixx){
-  SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElBPDNADMMDist_d(toDistMatrix_d(MatrixA), toDistMatrix_d(Matrixb),
-		   toDouble(lambda), toDistMatrix_d(Matrixx),
-		   INTEGER(numIts));
-  UNPROTECT(1);
-  return numIts;
-
-}
 
 /* Elastic net
  */
