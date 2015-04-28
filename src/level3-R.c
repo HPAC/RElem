@@ -11,6 +11,15 @@ ElGemmAlgorithm parseGemmAlgo(SEXP algo){
   return EL_GEMM_DEFAULT;
 }
 
+SEXP gemm_i
+(SEXP orientationA, SEXP orientationB, SEXP alpha, SEXP RptrA, SEXP RptrB,
+ SEXP beta, SEXP RptrC){
+  ElGemm_i( parseOrientation(orientationA), parseOrientation(orientationB),
+            toElInt(alpha), toMatrix_i(RptrA), toMatrix_i(RptrB), 
+            toElInt(beta), toMatrix_i(RptrC) );
+  return R_NilValue;
+}
+
 SEXP gemm_d
 (SEXP orientationA, SEXP orientationB, SEXP alpha, SEXP RptrA, SEXP RptrB,
  SEXP beta, SEXP RptrC){
@@ -26,6 +35,15 @@ SEXP gemm_z
   ElGemm_z( parseOrientation(orientationA), parseOrientation(orientationB),
             toDComplex(alpha), toMatrix_z(RptrA), toMatrix_z(RptrB), 
             toDComplex(beta), toMatrix_z(RptrC) );
+  return R_NilValue;
+}
+
+SEXP gemmDist_i
+(SEXP orientationA, SEXP orientationB, SEXP alpha, SEXP RptrA, SEXP RptrB,
+ SEXP beta, SEXP RptrC){
+  ElGemmDist_i( parseOrientation(orientationA), parseOrientation(orientationB),
+                toElInt(alpha), toDistMatrix_i(RptrA), toDistMatrix_i(RptrB), 
+                toElInt(beta), toDistMatrix_i(RptrC) );
   return R_NilValue;
 }
 

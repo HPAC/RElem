@@ -1,5 +1,13 @@
 #include "R-El.h"
 
+SEXP gemv_i
+( SEXP orientation, SEXP alpha, SEXP RptrA, SEXP Rptrx,
+  SEXP beta, SEXP Rptry){
+  ElGemv_i( parseOrientation(orientation), toDouble(alpha), toMatrix_i(RptrA),
+            toMatrix_i(Rptrx), toElInt(beta), toMatrix_i(Rptry) );
+  return R_NilValue;
+}
+
 SEXP gemv_d
 ( SEXP orientation, SEXP alpha, SEXP RptrA, SEXP Rptrx,
   SEXP beta, SEXP Rptry){
@@ -13,6 +21,15 @@ SEXP gemv_z
   SEXP beta, SEXP Rptry){
   ElGemv_z( parseOrientation(orientation), toDComplex(alpha), toMatrix_z(RptrA),
             toMatrix_z(Rptrx), toDComplex(beta), toMatrix_z(Rptry) );
+  return R_NilValue;
+}
+
+SEXP gemvDist_i
+( SEXP orientation, SEXP alpha, SEXP RptrA, SEXP Rptrx,
+  SEXP beta, SEXP Rptry){
+  ElGemvDist_i( parseOrientation(orientation), toDouble(alpha), 
+                toDistMatrix_i(RptrA), toDistMatrix_i(Rptrx),
+                toElInt(beta), toDistMatrix_i(Rptry) );
   return R_NilValue;
 }
 
@@ -33,8 +50,13 @@ SEXP gemvDist_z
                 toDComplex(beta), toDistMatrix_z(Rptry) );
   return R_NilValue;
 }
-
-
+/*
+SEXP ger_i( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
+  ElGer_i( toElInt(alpha), toMatrix_i(Rptrx), toMatrix_i(Rptry), 
+           toMatrix_i(RptrA) );
+  return R_NilValue;
+}
+*/
 SEXP ger_d( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
   ElGer_d( toDouble(alpha), toMatrix_d(Rptrx), toMatrix_d(Rptry), 
            toMatrix_d(RptrA) );
@@ -46,16 +68,16 @@ SEXP ger_z( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
            toMatrix_z(RptrA) );
   return R_NilValue;
 }
-
+/*
+SEXP gerDist_i( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
+  ElGerDist_i( toElInt(alpha), toDistMatrix_i(Rptrx), toDistMatrix_i(Rptry),
+               toDistMatrix_i(RptrA) );
+  return R_NilValue;
+}
+*/
 SEXP gerDist_d( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
   ElGerDist_d( toDouble(alpha), toDistMatrix_d(Rptrx), toDistMatrix_d(Rptry),
                toDistMatrix_d(RptrA) );
-  return R_NilValue;
-}
-
-SEXP geru_z( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
-  ElGeru_z( toDComplex(alpha), toMatrix_z(Rptrx), toMatrix_z(Rptry),
-	    toMatrix_z(RptrA) );
   return R_NilValue;
 }
 
@@ -65,12 +87,17 @@ SEXP gerDist_z( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
   return R_NilValue;
 }
 
+SEXP geru_z( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
+  ElGeru_z( toDComplex(alpha), toMatrix_z(Rptrx), toMatrix_z(Rptry),
+	    toMatrix_z(RptrA) );
+  return R_NilValue;
+}
+
 SEXP geruDist_z( SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA){
   ElGeruDist_z( toDComplex(alpha), toDistMatrix_z(Rptrx), toDistMatrix_z(Rptry),
                toDistMatrix_z(RptrA) );
   return R_NilValue;
 }
-
 
 SEXP hemv_z
 ( SEXP uplo, SEXP alpha, SEXP RptrA, SEXP Rptrx, SEXP beta, SEXP Rptry){
@@ -134,6 +161,13 @@ SEXP quasiTrsvDist_z( SEXP uplo, SEXP orientation, SEXP RptrA, SEXP Rptrx){
   return R_NilValue;
 }
 
+SEXP symv_i
+( SEXP uplo, SEXP alpha, SEXP RptrA, SEXP Rptrx, SEXP beta, SEXP Rptry){
+  ElGemv_i( parseUpLo(uplo), toElInt(alpha), toMatrix_i(RptrA),
+            toMatrix_i(Rptrx), toElInt(beta), toMatrix_i(Rptry) );
+  return R_NilValue;
+}
+
 SEXP symv_d
 ( SEXP uplo, SEXP alpha, SEXP RptrA, SEXP Rptrx, SEXP beta, SEXP Rptry){
   ElGemv_d( parseUpLo(uplo), toDouble(alpha), toMatrix_d(RptrA),
@@ -148,11 +182,17 @@ SEXP symv_z
   return R_NilValue;
 }
 
+SEXP symvDist_i
+(SEXP uplo, SEXP alpha, SEXP RptrA, SEXP Rptrx, SEXP beta, SEXP Rptry){
+  ElGemvDist_i( parseUpLo(uplo), toElInt(alpha), toDistMatrix_i(RptrA),
+		toDistMatrix_i(Rptrx), toElInt(beta), toDistMatrix_i(Rptry) );
+  return R_NilValue;
+}
 
 SEXP symvDist_d
 (SEXP uplo, SEXP alpha, SEXP RptrA, SEXP Rptrx, SEXP beta, SEXP Rptry){
   ElGemvDist_d( parseUpLo(uplo), toDouble(alpha), toDistMatrix_d(RptrA),
-            toDistMatrix_d(Rptrx), toDouble(beta), toDistMatrix_d(Rptry) );
+		toDistMatrix_d(Rptrx), toDouble(beta), toDistMatrix_d(Rptry) );
   return R_NilValue;
 }
 
@@ -235,12 +275,17 @@ SEXP trmvDist_d
 }
 */
 
+SEXP trr_i( SEXP uplo, SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA ){
+  ElTrr_i( parseUpLo(uplo), toElInt(alpha), toMatrix_i(Rptrx), 
+           toMatrix_i(Rptry), toMatrix_i(RptrA) );
+  return R_NilValue;
+}
+
 SEXP trr_d( SEXP uplo, SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA ){
   ElTrr_d( parseUpLo(uplo), toDouble(alpha), toMatrix_d(Rptrx), 
            toMatrix_d(Rptry), toMatrix_d(RptrA) );
   return R_NilValue;
 }
-
 
 SEXP trr_z
 ( SEXP uplo, SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA, SEXP conjugate){
@@ -255,11 +300,22 @@ SEXP trrDist_d( SEXP uplo, SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA ){
   return R_NilValue;
 }
 
+SEXP trrDist_i( SEXP uplo, SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA ){
+  ElTrrDist_i( parseUpLo(uplo), toElInt(alpha), toDistMatrix_i(Rptrx),
+               toDistMatrix_i(Rptry), toDistMatrix_i(RptrA) );
+  return R_NilValue;
+}
 
 SEXP trrDist_z
 ( SEXP uplo, SEXP alpha, SEXP Rptrx, SEXP Rptry, SEXP RptrA, SEXP conjugate ){
   ElTrrDist_z( parseUpLo(uplo), toDComplex(alpha), toDistMatrix_z(Rptrx),
                toDistMatrix_z(Rptry), toDistMatrix_z(RptrA), toBool(conjugate) );
+  return R_NilValue;
+}
+
+SEXP trr2_i( SEXP uplo, SEXP alpha, SEXP RptrX, SEXP RptrY, SEXP RptrA ){
+  ElTrr2_i( parseUpLo(uplo), toElInt(alpha), toMatrix_i(RptrX),
+            toMatrix_i(RptrY), toMatrix_i(RptrA) );
   return R_NilValue;
 }
 
@@ -269,7 +325,6 @@ SEXP trr2_d( SEXP uplo, SEXP alpha, SEXP RptrX, SEXP RptrY, SEXP RptrA ){
   return R_NilValue;
 }
 
-
 SEXP trr2_z
 ( SEXP uplo, SEXP alpha, SEXP RptrX, SEXP RptrY, SEXP RptrA, SEXP conjugate ){
   ElTrr2_z( parseUpLo(uplo), toDComplex(alpha), toMatrix_z(RptrX),
@@ -277,9 +332,15 @@ SEXP trr2_z
   return R_NilValue;
 }
 
+SEXP trr2Dist_i( SEXP uplo, SEXP alpha, SEXP RptrX, SEXP RptrY, SEXP RptrA ){
+  ElTrr2Dist_i( parseUpLo(uplo), toElInt(alpha), toDistMatrix_i(RptrX),
+		toDistMatrix_i(RptrY), toDistMatrix_i(RptrA) );
+  return R_NilValue;
+}
+
 SEXP trr2Dist_d( SEXP uplo, SEXP alpha, SEXP RptrX, SEXP RptrY, SEXP RptrA ){
   ElTrr2Dist_d( parseUpLo(uplo), toDouble(alpha), toDistMatrix_d(RptrX),
-               toDistMatrix_d(RptrY), toDistMatrix_d(RptrA) );
+		toDistMatrix_d(RptrY), toDistMatrix_d(RptrA) );
   return R_NilValue;
 }
 
