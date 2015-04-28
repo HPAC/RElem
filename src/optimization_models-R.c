@@ -199,22 +199,6 @@ SEXP sVMDist_d( SEXP MatrixA, SEXP Matrixd, SEXP lambda, SEXP Matrixz){
 }
 
 
-/* ADDM */
-SEXP sVMADMM_d( SEXP MatrixG, SEXP Matrixq, SEXP gamma, SEXP Matrixz){
-  SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElSVMADMM_d( toMatrix_d(MatrixG), toMatrix_d(Matrixq),
-	       toDouble(gamma), toMatrix_d(Matrixz), INTEGER(numIts) );
-  UNPROTECT(1);
-  return numIts;
-}
-
-SEXP sVMADMMDist_d( SEXP MatrixG, SEXP Matrixq, SEXP gamma, SEXP Matrixz){
-  SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElSVMADMMDist_d( toDistMatrix_d(MatrixG), toDistMatrix_d(Matrixq),
-		   toDouble(gamma), toDistMatrix_d(Matrixz), INTEGER(numIts) );
-  UNPROTECT(1);
-  return numIts;
-}
 
 /* Total variation denoising
  */

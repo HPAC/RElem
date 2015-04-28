@@ -1,15 +1,15 @@
-#--------------
-# Aux functions
-#--------------
+#################
+### Aux functions
+#################
 
 .isDistMatrix<-function(MatrixA){
   parts<-strsplit(class(MatrixA),"_")
   ifelse (parts[[1]][1]=="ObjElDistMatrix",TRUE,FALSE)
 }
 
-#------
-# Grids
-#------
+#########
+### Grids
+#########
 
 
 GridRow<-function(Grid){
@@ -71,9 +71,9 @@ GridVRSize<-function(Grid){
 
 
 
-#--------------------
-# Sequential Matrices
-#--------------------
+#######################
+### Sequential Matrices
+#######################
 
 
 MatrixAttach<-function(MatrixA, height, width, buffer, ldim){
@@ -88,9 +88,9 @@ MatrixLockedAttach<-function(MatrixA, height, width, buffer, ldim){
 
 
 
-#---------------------
-# Distributed Matrices
-#---------------------
+########################
+### Distributed Matrices
+########################
 
 
 #TODO: think in a better way to use this function
@@ -162,9 +162,9 @@ DistMatrixSetLocal<-function(DistMatrixA, i, j, alpha){
 } 
 
 
-#-------------------------
-# Common Matrix Properties
-#-------------------------
+###-------------------------
+### Common Matrix Properties
+###-------------------------
 
 MatrixDestroy<-function(MatrixA){
   .Call( paste0("destroy", .getElement(MatrixA) ), MatrixA@ptr )
@@ -230,9 +230,9 @@ MatrixLocked<-function(MAtrixA){
 
 
 
-#-------------
-# Matrix Views
-#-------------
+################
+### Matrix Views
+################
 
 #A is a view of B
 ViewNormal<-function(MatrixA, MatrixB, fromi, toi, fromj, toj){
@@ -267,9 +267,9 @@ LockedViewFull<-function(MatrixA, MatrixB){
 
 
 
-#-----------
-# Partitions
-#-----------
+##############
+### Partitions
+##############
 
 PartitionDown<-function(MatrixA, MatrixAT, MatrixAB, heightAT){
   .Call( paste0("partitionDown", .getSuffix(MatrixA)), MatrixA@ptr, MatrixAT@ptr,
@@ -372,17 +372,17 @@ LockedPartitionUpOffsetDiagonal<-function( offset,
          MatrixABR@ptr, as.integer(diagDist) )
 }
 
-#------------
-# Repartition
-#------------
+###------------
+### Repartition
+###------------
 
-#----------------
-# Slide Partition
-#----------------
+###----------------
+### Slide Partition
+###----------------
 
-#------
-# Merge
-#------
+###------
+### Merge
+###------
 
 Merge1x2<-function( MatrixA, MatrixBL, MatrixBR){
   .Call( paste0("merge1x2", .getSuffix(MatrixA)), MatrixA@ptr,
@@ -416,9 +416,9 @@ LockedMerge2x2<-function( MatrixA, MatrixBTL, MatrixBTR, MatrixBBL, MatrixBBR){
 
 
 
-#------------------
-# Matrix generators
-#------------------
+#####################
+### Matrix Generators
+#####################
 
 Demmel<-function(MatrixA, n){
   .Call( paste0("demmel", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n) )
@@ -588,10 +588,13 @@ Zeros<-function(MatrixA, rows, cols){
   .Call( paste0("zeros", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(rows),
          as.integer(cols))
 }
+#############
+### Blas Like
+#############
 
-#-------------
-# Blas Level 1
-#-------------
+###-------------
+### Blas Level 1
+###-------------
 
 ## B = A^H
 Adjoint<-function(MatrixA, MatrixB){
@@ -813,9 +816,9 @@ Transpose<-function(MatrixA, MatrixB){
 }
 
 
-#-------------
-# Blas Level 2
-#-------------
+###-------------
+### Blas Level 2
+###-------------
 
 Gemv<-function( orientationA="NORMAL", alpha, MatrixA, Matrixx, beta, Matrixy){
   .Call( paste0("gemv", .getSuffix(MatrixA)), orientationA, alpha, MatrixA@ptr,
@@ -899,9 +902,9 @@ Trsv<-function( uplo, orientation, diagUnit, MatrixA, Matrixx){
 
 
 
-#-------------
-# Blas Level 3
-#-------------
+###-------------
+### Blas Level 3
+###-------------
 
 Gemm<-function( orientationA="NORMAL", orientationB="NORMAL", alpha, MatrixA,
                 MatrixB, beta, MatrixC){
@@ -1028,13 +1031,13 @@ TwoSidedTrsm<-function( uplo, diagUnit, MatrixA, MatrixB ){
 }
 
 
-#----------
-# Lapack
-#----------
+############### 
+### Lapack like
+###############
 
-#---------
-# Spectral
-#---------
+###---------
+### Spectral
+###---------
 
 HermitianEig<-function(Uplo, MatrixA, EigenValues, Sort){
   .Call( paste0("hermitianEig", .getSuffix(MatrixA)), Uplo, MatrixA@ptr,
@@ -1094,9 +1097,9 @@ SVD<-function( MatrixA, Matrixs, MatrixV){
          MatrixV@ptr )
 }
 
-#--------
-# Solvers
-#--------
+###--------
+### Solvers
+###--------
 
 LinearSolve<-function( MatrixA, MatrixB ){
   .Call( paste0("linearSolve", .getSuffix(MatrixA)), MatrixA@ptr,
@@ -1106,11 +1109,6 @@ LinearSolve<-function( MatrixA, MatrixB ){
 SymmetricSolve<-function( uplo, orientation, MatrixA, MatrixB ){
   .Call( paste0("symmetricSolve", .getSuffix(MatrixA)), uplo, orientation,
          MatrixA@ptr, MatrixB@ptr )
-}
-
-GLM<-function( MatrixA, MatrixB, MatrixD, MatrixX, MatrixY ){
-  .Call( paste0("gLM", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr,
-         MatrixD@ptr, MatrixX@ptr, MatrixY@ptr )
 }
 
 HermitianSolve<-function( uplo, orientation, MatrixA, MatrixB ){
@@ -1123,15 +1121,6 @@ HPDSolve<-function( uplo, orientation, MatrixA, MatrixB ){
          MatrixB@ptr )
 }
 
-LeastSquares<-function( orientation, MatrixA, MatrixB, MatrixX ){
-  .Call( paste0("leastSquares", .getSuffix(MatrixA)), orientation, MatrixA@ptr,
-         MatrixB@ptr, MatrixX@ptr )
-}
-
-LSE<-function( orientation, MatrixA, MatrixB, MatrixC, MatrixD, MatrixX ){
-  .Call( paste0("lSE", .getSuffix(MatrixA)), orientation, MatrixA@ptr,
-        MatrixB@ptr, MatrixC@ptr, MatrixD@ptr, MatrixX@ptr )
-}
 
 MultiShiftHessSolve<-function( uplo, orientation, alpha, MatrixH, MatrixShifts,
                                MatrixX ){
@@ -1139,20 +1128,39 @@ MultiShiftHessSolve<-function( uplo, orientation, alpha, MatrixH, MatrixShifts,
          MatrixH@ptr, MatrixShifts@ptr, MatrixX@ptr )
 }
 
+###--------------
+### Euclidean Min
+###--------------
+
+LeastSquares<-function( orientation, MatrixA, MatrixB, MatrixX ){
+  .Call( paste0("leastSquares", .getSuffix(MatrixA)), orientation, MatrixA@ptr,
+         MatrixB@ptr, MatrixX@ptr )
+}
+
 Ridge<-function( orientation, MatrixA, MatrixB, alpha, MatrixX, algorithm){
   .Call( paste0("ridge", .getSuffix(MatrixA)), orientation, MatrixA@ptr, MatrixB@ptr, alpha,
          MatrixX@ptr, algorithm )
 }
-
 
 Tikhonov<-function( orientation, MatrixA, MatrixB, gamma, MatrixX, algorithm){
   .Call( paste0("tikhonov", .getSuffix(MatrixA)), orientation, MatrixA@ptr, MatrixB@ptr,
          gamma, MatrixX@ptr, algorithm )
 }
 
-#----------------------
-# Matrix Factorizations
-#----------------------
+LSE<-function( orientation, MatrixA, MatrixB, MatrixC, MatrixD, MatrixX ){
+  .Call( paste0("lSE", .getSuffix(MatrixA)), orientation, MatrixA@ptr,
+        MatrixB@ptr, MatrixC@ptr, MatrixD@ptr, MatrixX@ptr )
+}
+
+GLM<-function( MatrixA, MatrixB, MatrixD, MatrixX, MatrixY ){
+  .Call( paste0("gLM", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr,
+         MatrixD@ptr, MatrixX@ptr, MatrixY@ptr )
+}
+
+
+###----------------------
+### Matrix Factorizations
+###----------------------
 
 Cholesky<-function(uplo, MatrixA){
   .Call( paste0("cholesky", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
@@ -1230,7 +1238,6 @@ SolveAfterLU<-function(orientation, MatrixA, MatrixB){
          MatrixB@ptr )
 }
 
-
 LUPartialPiv<-function( MatrixA,  Matrixp){
   .Call( paste0("lUPartialPiv", .getSuffix(MatrixA)), MatrixA@ptr, Matrixp@ptr )
 }
@@ -1302,6 +1309,11 @@ QRExplicitUnitary<-function( MatrixA ){
   .Call( paste0("qRExplicitUnitary", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+QRExplicit<-function( MatrixA, MatrixR){
+  .Call( paste0("qRExplicitUnitary", .getSuffix(MatrixA)), MatrixA@ptr,
+        MatrixR@ptr )
+}
+
 QRColPivExplicit<-function( MatrixA, MatrixR, Matrixp ){
   .Call( paste0("qRColPivExplicit", .getSuffix(MatrixA)), MatrixA@ptr,
          MatrixR@ptr, Matrixp )
@@ -1364,9 +1376,9 @@ GRQExplicitTriang<-function( MatrixA, MatrixB){
          MatrixB@ptr )
 }
 
-#-----------
-# Properties
-#-----------
+###-----------
+### Properties
+###-----------
 
 FrobeniusNorm<-function(MatrixA){
   .Call( paste0("frobeniusNorm", .getSuffix(MatrixA)), MatrixA@ptr)
@@ -1390,14 +1402,77 @@ MaxNorm<-function(MatrixA){
   .Call( paste0("maxNorm", .getSuffix(MatrixA)), MatrixA@ptr)
 }
 
+###-----------------
+### Matrix Functions
+###-----------------
 
-#----------------------
-# Optimization Routines
-#----------------------
+Inverse<-function(MatrixA){
+  .Call( paste0("inverse", .getSuffix(MatrixA)), MatrixA@ptr)
+}
 
-#---------------------
-# Optimization: Models
-#---------------------
+InverseAfterLUPartialPiv<-function(MatrixA, Matrixp){
+  .Call( paste0("inverseAfterLUPartialPiv", .getSuffix(MatrixA)), MatrixA@ptr,
+         Matrixp@ptr)
+}
+
+HPDInverse<-function(uplo, MatrixA){
+  .Call( paste0("hPDInverse", .getSuffix(MatrixA)), uplo, MatrixA@ptr)
+}
+
+HermitianInverse<-function(uplo, MatrixA){
+  .Call( paste0("hermitianInverse", .getSuffix(MatrixA)), uplo, MatrixA@ptr)
+}
+
+SymmetricInverse<-function(uplo, MatrixA){
+  .Call( paste0("symmetricInverse", .getSuffix(MatrixA)), uplo, MatrixA@ptr)
+}
+
+TriangularInverse<-function(uplo, unitDiag, MatrixA){
+  .Call( paste0("triangularInverse", .getSuffix(MatrixA)), uplo,
+         unitDiag, MatrixA@ptr)
+}
+
+Pseudoinverse<-function(MatrixA){
+  .Call( paste0("pseudoInverse", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+HermitianPseudoinverse<-function(uplo, MatrixA){
+  .Call( paste0("hermitianPseudoinverse", .getSuffix(MatrixA)), uplo, MatrixA@ptr)
+}
+
+Sign<-function(MatrixA){
+  .Call( paste0("sign", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+SignDecomp<-function(MatrixA, MatrixN){
+  .Call( paste0("signDecomp", .getSuffix(MatrixA)), MatrixA@ptr, MatrixN@ptr)
+}
+
+HermitianSign<-function(uplo, MatrixA){
+  .Call( paste0("hermitianSign", .getSuffix(MatrixA)), uplo, MatrixA@ptr)
+}
+
+HermitianSignDecomp<-function(uplo, MatrixA, MatrixN){
+  .Call( paste0("hermitianSignDecomp", .getSuffix(MatrixA)), uplo, MatrixA@ptr,
+         MatrixN@ptr)
+}
+
+SquareRoot<-function(MatrixA){
+  .Call( paste0("squareRoot", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+HPSDSquareRoot<-function(uplo, MatrixA){
+  .Call( paste0("hPSDSquareRoot", .getSuffix(MatrixA)), uplo, MatrixA@ptr)
+}
+
+
+#########################
+### Optimization Routines
+#########################
+
+###---------------------
+### Optimization: Models
+###---------------------
 
 BP<-function(MatrixA, Matrixb, Matrixx){
   .Call( paste0("bP", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
@@ -1478,11 +1553,11 @@ TV<-function(Matrixb, lambda, Matrixx){
   .Call( paste0("tV", .getSuffix(Matrixb)), Matrixb@ptr, lambda, Matrixx@ptr)
 }
 
-# end optimodels
+### end optimodels
 
-#---------------------
-# Optimization Solvers
-#---------------------
+###---------------------
+### Optimization Solvers
+###---------------------
 
 
 LPDirect<-function(MatrixA, Matrixb, Matrixc, Matrixx){
@@ -1510,9 +1585,9 @@ QPAffine<-function(MatrixQ, MatrixA, MatrixG, Matrixb, Matrixc, Matrixh,
          Matrixy@ptr, Matrixz@ptr, Matrixs@ptr)
 }
 
-#------------------
-# Optimization Util
-#------------------
+###------------------
+### Optimization Util
+###------------------
 
 Coherence<-function(MatrixA){
   .Call( paste0("coherence", .getSuffix(MatrixA)), MatrixA@ptr )
@@ -1530,9 +1605,9 @@ LogGetDiv<-function(uplo, MatrixA, MatrixB){
   .Call( paste0("logGetDiv", .getSuffix(MatrixA)), uplo, MatrixA, MatrixB )
 }
 
-#------------------
-# Optimization prox
-#------------------
+###------------------
+### Optimization prox
+###------------------
 
 LowerClip<-function(MatrixX, lowerbound){
   .Call( paste0("lowerClip", .getSuffix(MatrixX)), MatrixX@ptr, lowerbound)
@@ -1569,9 +1644,9 @@ SoftThreshold<-function(MatrixA, rho, relative){
 }
 
 
-#--------------------
-# I/O functions
-#-------------------
+#################
+### I/O functions
+#################
 
 Print<-function(MatrixA,Title=""){
   .Call( paste0("print", .getSuffix(MatrixA)), MatrixA@ptr, as.character(Title) )
@@ -1597,9 +1672,9 @@ Write<-function(MatrixA, basename, format, title){
         as.character(format), as.character(title) )
 }
 
-#---------------------
-# Conversion Functions
-#---------------------
+########################
+### Conversion Functions
+########################
 
 ToR<-function(MatrixA){
   print(paste("the suffix is",.getSuffix(MatrixA)))
@@ -1607,9 +1682,9 @@ ToR<-function(MatrixA){
           MatrixHeight(MatrixA), MatrixWidth(MatrixA) )
 }
 
-#----------------------
-# Attaching the methods
-#----------------------
+####################################
+### Attaching the methods to objects
+####################################
 
 GridFunctions=list(
   'Row'   = GridRow,   
@@ -1720,15 +1795,3 @@ setMethod("$",signature(x="ElDistMatrix"),
               routine(x, ...)
             }
           })
-
-
-##Check how to fix this, since is overwriting the matrix
-#  setMethod("[<-","ElMatrix"),
-#            function(x, i, j ,value){
-#             if (length(i)==1 && length(j)==1){
-#               MatrixSet(x,i,j,value)
-#             }else{
-#               cat("Not possible to set submatrix yet");
-#             }
-#           })
-
