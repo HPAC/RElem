@@ -72,9 +72,9 @@ setMethod("-",
           }
           )
 
-##################
-### Multiplication
-##################
+##########################################################
+### Multiplication (including R and El object interaction)
+##########################################################
 
 setMethod("%*%",
           signature(x = "ElMatrix", y = "ElMatrix"),
@@ -96,6 +96,25 @@ setMethod("%*%",
           )
 
 setMethod("%*%",
+          signature(x = "ElMatrix", y = "numeric"),
+          function (x, y) 
+          {
+            y2 <- Matrix(tag = x@datatype, rmat = y)
+            x %*% y2
+          }
+          )
+
+setMethod("%*%",
+          signature(x = "numeric", y = "ElMatrix"),
+          function (x, y) 
+          {
+            x2 <- Matrix(tag = y@datatype, rmat = x)
+            x2 %*% y
+          }
+          )
+
+
+setMethod("%*%",
           signature(x = "ElDistMatrix", y = "ElDistMatrix"),
           function (x, y) 
           {
@@ -111,6 +130,24 @@ setMethod("%*%",
               Gemm("NORMAL", "NORMAL", 1.0, x, y, 0.0, matC)
             }
             matC
+          }
+          )
+
+setMethod("%*%",
+          signature(x = "ElDistMatrix", y = "numeric"),
+          function (x, y) 
+          {
+            y2 <- DistMatrix(tag = x@datatype, rmat = y)
+            x %*% y2
+          }
+          )
+
+setMethod("%*%",
+          signature(x = "numeric", y = "ElDistMatrix"),
+          function (x, y) 
+          {
+            x2 <- DistMatrix(tag = y@datatype, rmat = x)
+            x2 %*% y
           }
           )
 
@@ -232,7 +269,7 @@ setMethod("[","ElMatrix",
               MatrixGet(x,i-1,j-1)
             }else{
               V<-Matrix(x@datatype);
-              LockedView(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
+              View(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
               V
             }
           })
@@ -246,7 +283,7 @@ setMethod("[","ElDistMatrix",
               g<-Grid()
               ##DistMatrixGrid(x,g)
               V<-DistMatrix(g, x@datatype);
-              LockedView(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
+              View(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
               V
             }
           })
@@ -274,6 +311,54 @@ setMethod("[<-",
             MatrixSet(x,i-1,j-1,value)
             x
           })
+
+######################
+### Solvers
+######################
+
+setMethod("solve",
+    signature(a = "ElMatrix", b = "ElMatrix"),
+    function (a, b, ...) 
+    {
+      x <- Matrix(b@datatype)
+      Copy(b,x)
+      LinearSolve(a,x)
+      x
+    }
+)
+
+setMethod("solve",
+    signature(a = "ElMatrix"),
+    function (a, b, ...) 
+    {
+      ans <- Matrix(a@datatype)
+      Copy(a, ans)
+      Inverse(ans)
+      ans
+    }
+)
+
+setMethod("solve",
+    signature(a = "ElDistMatrix", b = "ElDistMatrix"),
+    function (a, b, ...) 
+    {
+      x <- DistMatrix(b@datatype)
+      Copy(b,x)
+      LinearSolve(a,x)
+      x
+    }
+)
+
+setMethod("solve",
+    signature(a = "ElDistMatrix"),
+    function (a, b, ...) 
+    {
+      ans <- DistMatrix(a@datatype)
+      Copy(a, ans)
+      Inverse(ans)
+      ans
+    }
+)
 
 
 #################
