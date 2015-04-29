@@ -112,7 +112,10 @@ SEXP destroyMatrix_z(SEXP Rptr){
   return R_NilValue;
 }
 
-
+SEXP emptyMatrix_i(SEXP Rptr){
+  ElMatrixEmpty_i( toMatrix_i(Rptr) );
+  return R_NilValue;
+}
 
 SEXP emptyMatrix_d(SEXP Rptr){
   ElMatrixEmpty_d( toMatrix_d(Rptr) );
@@ -124,6 +127,11 @@ SEXP emptyMatrix_z(SEXP Rptr){
   return R_NilValue;
 }
 
+SEXP resizeMatrix_i(SEXP Rptr, SEXP height, SEXP width){
+  ElMatrixResize_i( toMatrix_i(Rptr), toElInt(height), toElInt(width) );
+  return R_NilValue;
+}
+
 SEXP resizeMatrix_d(SEXP Rptr, SEXP height, SEXP width){
   ElMatrixResize_d( toMatrix_d(Rptr), toElInt(height), toElInt(width) );
   return R_NilValue;
@@ -131,6 +139,12 @@ SEXP resizeMatrix_d(SEXP Rptr, SEXP height, SEXP width){
 
 SEXP resizeMatrix_z(SEXP Rptr, SEXP height, SEXP width){
   ElMatrixResize_z( toMatrix_z(Rptr), toElInt(height), toElInt(width) );
+  return R_NilValue;
+}
+
+SEXP resizeLDimMatrix_i(SEXP Rptr, SEXP height, SEXP width, SEXP ldim){
+  ElMatrixResizeWithLDim_i( toMatrix_i(Rptr), toElInt(height),
+                            toElInt(width), toElInt(ldim) );
   return R_NilValue;
 }
 
@@ -146,10 +160,26 @@ SEXP resizeLDimMatrix_z(SEXP Rptr, SEXP height, SEXP width, SEXP ldim){
   return R_NilValue;
 }
 
+/* Attach routines for complex buffers pending */ 
+
+SEXP attachMatrix_i
+(SEXP Rptr, SEXP height, SEXP width, SEXP buffer, SEXP ldim){
+  ElMatrixAttach_i( toMatrix_i(Rptr), toElInt(height), toElInt(width),
+                    toElInt_p(buffer), toElInt(ldim) );
+  return R_NilValue;
+}
+
 SEXP attachMatrix_d
 (SEXP Rptr, SEXP height, SEXP width, SEXP buffer, SEXP ldim){
   ElMatrixAttach_d( toMatrix_d(Rptr), toElInt(height), toElInt(width),
                     toDouble_p(buffer), toElInt(ldim) );
+  return R_NilValue;
+}
+
+SEXP lockedAttachMatrix_i
+(SEXP Rptr, SEXP height, SEXP width, SEXP buffer, SEXP ldim){
+  ElMatrixLockedAttach_i( toMatrix_i(Rptr), toElInt(height), toElInt(width),
+                          (const ElInt *)toElInt_p(buffer), toElInt(ldim) );
   return R_NilValue;
 }
 
@@ -160,11 +190,25 @@ SEXP lockedAttachMatrix_d
   return R_NilValue;
 }
 
+SEXP controlMatrix_i
+(SEXP Rptr, SEXP height, SEXP width, SEXP buffer, SEXP ldim){
+  ElMatrixControl_i( toMatrix_i(Rptr), toElInt(height), toElInt(width),
+                    toElInt_p(buffer), toElInt(ldim) );
+  return R_NilValue;
+}
+
 SEXP controlMatrix_d
 (SEXP Rptr, SEXP height, SEXP width, SEXP buffer, SEXP ldim){
   ElMatrixControl_d( toMatrix_d(Rptr), toElInt(height), toElInt(width),
                     toDouble_p(buffer), toElInt(ldim) );
   return R_NilValue;
+}
+
+SEXP heightMatrix_i(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixHeight_i( toMatrix_i(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
+  return ans;
 }
 
 SEXP heightMatrix_d(SEXP Rptr){
@@ -177,6 +221,13 @@ SEXP heightMatrix_d(SEXP Rptr){
 SEXP heightMatrix_z(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
   ElMatrixHeight_z( toMatrix_z(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
+SEXP widthMatrix_i(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixWidth_i( toMatrix_i(Rptr), INTEGER(ans) );
   UNPROTECT(1);
   return ans;
 }
@@ -195,6 +246,13 @@ SEXP widthMatrix_z(SEXP Rptr){
   return ans;
 }
 
+SEXP ldimMatrix_i(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixLDim_i( toMatrix_i(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
 SEXP ldimMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
   ElMatrixLDim_d( toMatrix_d(Rptr), INTEGER(ans) );
@@ -205,6 +263,13 @@ SEXP ldimMatrix_d(SEXP Rptr){
 SEXP ldimMatrix_z(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
   ElMatrixLDim_z( toMatrix_z(Rptr), INTEGER(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
+SEXP memorySizeMatrix_i(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixMemorySize_i( toMatrix_i(Rptr), INTEGER(ans) );
   UNPROTECT(1);
   return ans;
 }
@@ -223,6 +288,13 @@ SEXP memorySizeMatrix_z(SEXP Rptr){
   return ans;
 }
 
+SEXP diagonalLenghtMatrix_i(SEXP Rptr, SEXP offset){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixDiagonalLength_i( toMatrix_i(Rptr), toElInt(offset), INTEGER(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
 SEXP diagonalLenghtMatrix_d(SEXP Rptr, SEXP offset){
   SEXP ans = PROTECT( allocVector(INTSXP, 1) );
   ElMatrixDiagonalLength_d( toMatrix_d(Rptr), toElInt(offset), INTEGER(ans) );
@@ -237,10 +309,29 @@ SEXP diagonalLenghtMatrix_z(SEXP Rptr, SEXP offset){
   return ans;
 }
 
+SEXP bufferMatrix_i(SEXP Rptr){
+  ElInt *buffer;
+  ElMatrixBuffer_i( toMatrix_i(Rptr), &buffer);
+  SEXP pBuff = PROTECT(R_MakeExternalPtr(buffer, R_NilValue, R_NilValue));
+  R_RegisterCFinalizerEx(pBuff, _clear, TRUE);
+  UNPROTECT(1);
+  return pBuff;
+}
+
 SEXP bufferMatrix_d(SEXP Rptr){
   double *buffer;
   ElMatrixBuffer_d( toMatrix_d(Rptr), &buffer);
   SEXP pBuff = PROTECT(R_MakeExternalPtr(buffer, R_NilValue, R_NilValue));
+  R_RegisterCFinalizerEx(pBuff, _clear, TRUE);
+  UNPROTECT(1);
+  return pBuff;
+}
+
+SEXP lockedBufferMatrix_i(SEXP Rptr){
+  const ElInt *buffer;
+  ElMatrixLockedBuffer_i( toMatrix_i(Rptr), &buffer);
+  SEXP pBuff = PROTECT(R_MakeExternalPtr( (void *)buffer, R_NilValue, 
+                                          R_NilValue));
   R_RegisterCFinalizerEx(pBuff, _clear, TRUE);
   UNPROTECT(1);
   return pBuff;
@@ -256,6 +347,13 @@ SEXP lockedBufferMatrix_d(SEXP Rptr){
   return pBuff;
 }
 
+SEXP viewingMatrix_i(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
+  UNPROTECT(1);
+  ElMatrixViewing_i( toMatrix_i(Rptr), (bool *)LOGICAL(ans) );
+  return ans;
+}
+
 SEXP viewingMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
   UNPROTECT(1);
@@ -267,6 +365,13 @@ SEXP viewingMatrix_z(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
   UNPROTECT(1);
   ElMatrixViewing_z( toMatrix_z(Rptr), (bool *)LOGICAL(ans) );
+  return ans;
+}
+
+SEXP fixedsizeMatrix_i(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
+  ElMatrixFixedSize_i( toMatrix_i(Rptr), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
   return ans;
 }
 
@@ -284,6 +389,13 @@ SEXP fixedsizeMatrix_z(SEXP Rptr){
   return ans;
 }
 
+SEXP lockedMatrix_i(SEXP Rptr){
+  SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
+  ElMatrixLocked_i( toMatrix_i(Rptr), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
 SEXP lockedMatrix_d(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
   ElMatrixLocked_d( toMatrix_d(Rptr), (bool *)LOGICAL(ans) );
@@ -294,6 +406,13 @@ SEXP lockedMatrix_d(SEXP Rptr){
 SEXP lockedMatrix_z(SEXP Rptr){
   SEXP ans = PROTECT( allocVector(LGLSXP, 1) );
   ElMatrixLocked_z( toMatrix_z(Rptr), (bool *)LOGICAL(ans) );
+  UNPROTECT(1);
+  return ans;
+}
+
+SEXP getMatrix_i(SEXP Rptr, SEXP i, SEXP j){
+  SEXP ans = PROTECT( allocVector(INTSXP, 1) );
+  ElMatrixGet_i( toMatrix_i(Rptr), toElInt(i), toElInt(j), INTEGER(ans) );
   UNPROTECT(1);
   return ans;
 }
@@ -315,6 +434,11 @@ SEXP getMatrix_z(SEXP Rptr, SEXP i, SEXP j){
   return ans;
 }
 
+SEXP setMatrix_i(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
+  ElMatrixSet_i( toMatrix_i(Rptr), toElInt(i), toElInt(j), toElInt(alpha) );
+  return R_NilValue;
+}
+
 SEXP setMatrix_d(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
   ElMatrixSet_d( toMatrix_d(Rptr), toElInt(i), toElInt(j), toDouble(alpha) );
   return R_NilValue;
@@ -322,6 +446,12 @@ SEXP setMatrix_d(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
 
 SEXP setMatrix_z(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
   ElMatrixSet_z( toMatrix_z(Rptr), toElInt(i), toElInt(j), toDouble(alpha) );
+  return R_NilValue;
+}
+
+SEXP updateMatrix_i(SEXP Rptr, SEXP i, SEXP j, SEXP alpha){
+  ElMatrixUpdate_i( toMatrix_i(Rptr), toElInt(i), toElInt(j),
+                    toElInt(alpha) );
   return R_NilValue;
 }
 
