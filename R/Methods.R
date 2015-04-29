@@ -1465,6 +1465,23 @@ HPSDSquareRoot<-function(uplo, MatrixA){
   .Call( paste0("hPSDSquareRoot", .getSuffix(MatrixA)), uplo, MatrixA@ptr)
 }
 
+###-------------
+### Matrix Utils
+###-------------
+
+Median<-function(MatrixA){
+  .Call( paste0("median", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+Sort<-function(MatrixA, SortType){
+  .Call( paste0("sort", .getSuffix(MatrixA)), MatrixA@ptr, SortType)
+}
+
+TaggedSort<-function(MatrixA, SortType){
+  .Call( paste0("taggedSort", .getSuffix(MatrixA)), MatrixA@ptr, SortType)
+}
+
+
 
 #########################
 ### Optimization Routines
@@ -1680,6 +1697,40 @@ ToR<-function(MatrixA){
   print(paste("the suffix is",.getSuffix(MatrixA)))
   matrix( .Call( paste0("toR", .getSuffix(MatrixA) ), MatrixA@ptr),
           MatrixHeight(MatrixA), MatrixWidth(MatrixA) )
+}
+
+ToEl<-function(MatrixA){
+  if(is.complex(MatrixA)){
+    mtag="z"
+  }else{
+    if(is.integer(MatrixA)){
+      mtag="i"
+    }else{
+      if(is.numeric(MatrixA)){
+        mtag="d"
+      }else{
+        stop("Please provide a valid R Matrix")
+      }
+    }
+  }
+  Matrix(tag=mtag, rmat=MatrixA)
+}
+
+ToElDist<-function(MatrixA){
+  if(is.complex(MatrixA)){
+    mtag="z"
+  }else{
+    if(is.integer(MatrixA)){
+      mtag="i"
+    }else{
+      if(is.numeric(MatrixA)){
+        mtag="d"
+      }else{
+        stop("Please provide a valid R Matrix")
+      }
+    }
+  }
+  DistMatrix(tag=mtag, rmat=MatrixA)
 }
 
 ####################################

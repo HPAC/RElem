@@ -139,7 +139,6 @@ SEXP newDistMatrixSpecific_z(SEXP U, SEXP V, SEXP RptrGrid){
   SEXP Rptr = PROTECT( R_MakeExternalPtr(pDMat, install("DistMatrix"),
                                          R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
-  setAttrib(Rptr, R_ClassSymbol, mkString("ElDistMatrix_z"));
   UNPROTECT(1);
   return Rptr;
 }
