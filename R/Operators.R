@@ -2,7 +2,7 @@
 ### Constants
 #############
 
-MAX_SIZE_PRINT <- 10
+MAX_SIZE_PRINT <- 100
 
 ############
 ### Addition
@@ -265,11 +265,15 @@ setMethod("print",
 
 setMethod("[","ElMatrix",
           function(x, i, j ,...){
+            if (missing(i))
+              i<-1:x$Height()
+            if (missing(j))
+              j<-1:x$Width()
             if (length(i)==1 && length(j)==1){
               MatrixGet(x,i-1,j-1)
             }else{
               V<-Matrix(x@datatype);
-              View(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
+              ViewNormal(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
               V
             }
           })
@@ -283,7 +287,7 @@ setMethod("[","ElDistMatrix",
               g<-Grid()
               ##DistMatrixGrid(x,g)
               V<-DistMatrix(g, x@datatype);
-              View(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
+              ViewNormal(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
               V
             }
           })
@@ -380,3 +384,68 @@ setMethod("t",
             Transpose(x,y)
             y
           })
+
+### Pending: check if the matrix is symmetric,
+### add the general routine for eigenvalues
+setMethod("eigen",
+          signature(x = "ElMatrix"),
+          function (x, symmetric, only.values = FALSE, EISPACK = FALSE){
+            if(missing(symmetric) || symmetric == FALSE)
+              stop("Not yet implemented for general matrices")
+            tmpMat<-Matrix(x@datatype)
+            Copy(x, tmpMat)
+            evals<-Matrix(x@datatype)
+            evecs<-Matrix(x@datatype)
+            HermitianEigPair("U", tmpMat, evals, evecs)
+            list(values=evals, vectors=evecs)
+          })
+
+setMethod("eigen",
+          signature(x = "ElDistMatrix"),
+          function (x, symmetric, only.values = FALSE, EISPACK = FALSE){
+            if(missing(symmetric) || symmetric == FALSE)
+              stop("Not yet implemented for general matrices")
+            tmpMat<-DistMatrix(x@datatype)
+            Copy(x, tmpMat)
+            evals<-DistMatrix(x@datatype)
+            evecs<-DistMatrix(x@datatype)
+            HermitianEigPair("U", tmpMat, evals, evecs)
+            list(values=evals, vectors=evecs)
+          })
+
+#################
+### I/O Functions
+#################
+
+setMethod("write.table",
+    signature(x = "ElMatrix"),
+    function (x, file = "", append = FALSE, quote = TRUE, sep = " ", 
+        eol = "\n", na = "NA", dec = ".", row.names = TRUE, col.names = TRUE, 
+        qmethod = c("escape", "double"), fileEncoding = "") 
+    {
+        Write(x, file, "ASCII", "")
+    }
+)
+
+
+setMethod("write.table",
+    signature(x = "ElDistMatrix"),
+    function (x, file = "", append = FALSE, quote = TRUE, sep = " ", 
+        eol = "\n", na = "NA", dec = ".", row.names = TRUE, col.names = TRUE, 
+        qmethod = c("escape", "double"), fileEncoding = "") 
+    {
+        Write(x, file, "ASCII", "")
+    }
+)
+
+setMethod("as.matrix",
+    signature(x = "ElMatrix"),
+    function (x, ...){
+      x
+    })
+
+setMethod("as.matrix",
+    signature(x = "ElDistMatrix"),
+    function (x, ...){
+      x
+    })

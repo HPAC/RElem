@@ -4,7 +4,7 @@
 
 .isDistMatrix<-function(MatrixA){
   parts<-strsplit(class(MatrixA),"_")
-  ifelse (parts[[1]][1]=="ObjElDistMatrix",TRUE,FALSE)
+  ifelse (parts[[1]][1]=="ElDistMatrix",TRUE,FALSE)
 }
 
 #########
@@ -1039,12 +1039,12 @@ TwoSidedTrsm<-function( uplo, diagUnit, MatrixA, MatrixB ){
 ### Spectral
 ###---------
 
-HermitianEig<-function(Uplo, MatrixA, EigenValues, Sort){
+HermitianEig<-function(Uplo, MatrixA, EigenValues, Sort="D"){
   .Call( paste0("hermitianEig", .getSuffix(MatrixA)), Uplo, MatrixA@ptr,
         EigenValues, Sort )
 }
 
-HermitianEigPair<-function(Uplo, MatrixA, EigenValues, EigenVectors, Sort){
+HermitianEigPair<-function(Uplo, MatrixA, EigenValues, EigenVectors, Sort="D"){
   .Call( paste0("hermitianEigPair", .getSuffix(MatrixA)) , Uplo, MatrixA@ptr,
         EigenValues@ptr, EigenVectors@ptr, Sort )
 }
@@ -1687,6 +1687,23 @@ Read<-function(MatrixA, filename, format="ASCII", doSequential=FALSE){
 Write<-function(MatrixA, basename, format, title){
   .Call( paste0("write", .getSuffix(MatrixA)), MatrixA@ptr, as.character(basename),
         as.character(format), as.character(title) )
+}
+
+#####################
+### Data Input R-Like
+#####################
+
+
+read.matrix<-function(file, tag="d"){
+  ans<-Matrix(tag)
+  Read(ans, file)
+  ans
+}
+
+read.dmatrix<-function(file, tag="d"){
+  ans<-DistMatrix(tag)
+  Read(ans, file)
+  ans
 }
 
 ########################
