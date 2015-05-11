@@ -68,6 +68,47 @@ GridVRSize<-function(Grid){
   .Call("gridVRSize", Grid@ptr)
 }
 
+GridGCD<-function(Grid){
+  .Call("gridGCD", Grid@ptr)
+}
+
+GridLCM<-function(Grid){
+  .Call("gridLCM", Grid@ptr)
+}
+
+GridInGrid<-function(Grid){
+  .Call("gridInGrid", Grid@ptr)
+}
+
+GridHaveViewers<-function(Grid){
+  .Call("gridHaveViewers", Grid@ptr)
+}
+
+GridOwningRank<-function(Grid){
+  .Call("gridOwningRank", Grid@ptr)
+}
+
+GridViewingRank<-function(Grid){
+  .Call("gridViewingRank", Grid@ptr)
+}
+
+GridVCToViewing<-function(Grid, VCRank){
+  .Call("gridVCToViewing", Grid@ptr, as.integer(VCRank))
+}
+
+GridDiag<-function(Grid, VCRank){
+  .Call("gridDiag", Grid@ptr, as.integer(VCRank))
+}
+
+GridDiagRank<-function(Grid, VCRank){
+  .Call("gridDiagRank", Grid@ptr, as.integer(VCRank))
+}
+
+GridFindFactor<-function( procs ){
+  .Call("gridFindFactor", as.integer(procs))
+}
+
+
 
 
 

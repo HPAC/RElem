@@ -184,9 +184,9 @@ SEXP gridViewingRank( SEXP Rptr){
 }
 
 
-SEXP gridVCToViewingMap( SEXP Rptr, SEXP VCRank){
+SEXP gridVCToViewing( SEXP Rptr, SEXP VCRank){
   SEXP ans= PROTECT( allocVector(INTSXP,1) );
-  ElGridVCToViewingMap( toGrid(Rptr), (int)toElInt(VCRank), INTEGER(ans) );
+  ElGridVCToViewing( toGrid(Rptr), (int)toElInt(VCRank), INTEGER(ans) );
   UNPROTECT(1);
   return ans;
 }
@@ -198,23 +198,16 @@ SEXP gridViewingComm( SEXP Rptr)
 
 */
 
-SEXP gridDiagPath( SEXP Rptr, SEXP VCRank){
+SEXP gridDiag( SEXP Rptr, SEXP VCRank){
   SEXP ans= PROTECT( allocVector(INTSXP,1) );
-  ElGridDiagPath( toGrid(Rptr), (int)toElInt(VCRank), INTEGER(ans) );
+  ElGridDiag( toGrid(Rptr), (int)toElInt(VCRank), INTEGER(ans) );
   UNPROTECT(1);
   return ans;
 }
 
-SEXP gridDiagPathRank( SEXP Rptr, SEXP VCRank){
+SEXP gridDiagRank( SEXP Rptr, SEXP VCRank){
   SEXP ans= PROTECT( allocVector(INTSXP,1) );
-  ElGridDiagPathRank( toGrid(Rptr), (int)toElInt(VCRank), INTEGER(ans) );
-  UNPROTECT(1);
-  return ans;
-}
-
-SEXP gridFirstVCRank( SEXP Rptr, SEXP diagPath){
-  SEXP ans= PROTECT( allocVector(INTSXP,1) );
-  ElGridFirstVCRank( toGrid(Rptr), (int)toElInt(diagPath), INTEGER(ans) );
+  ElGridDiagRank( toGrid(Rptr), (int)toElInt(VCRank), INTEGER(ans) );
   UNPROTECT(1);
   return ans;
 }
