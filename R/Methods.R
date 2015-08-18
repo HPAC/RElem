@@ -465,9 +465,8 @@ Demmel<-function(MatrixA, n){
   .Call( paste0("demmel", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n) )
 }
 
-Diagonal<-function(MatrixA, dSize, buffer){
-  .Call( paste0("diagonal", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(dSize),
-         buffer )
+Diagonal<-function(MatrixA, MatrixD){
+  .Call( paste0("diagonal", .getSuffix(MatrixA)), MatrixA@ptr, MatrixD@ptr )
 }
 
 HermitianUniformSpectrum<-function(MatrixA, n, lower, upper){

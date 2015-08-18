@@ -31,13 +31,13 @@ SEXP demmelDist_z( SEXP Rptr, SEXP n){
 /* Diagonal
  */
 
-SEXP diagonal_d(SEXP RptrA, SEXP dSize, SEXP dBuf){
-  ElDiagonal_d( toMatrix_d(RptrA), toElInt(dSize), toDouble_p(dBuf) );
+SEXP diagonal_d(SEXP RptrA, SEXP RptrD){
+  ElDiagonal_d( toMatrix_d(RptrA), toMatrix_d(RptrD));
   return R_NilValue;
 }
 
-SEXP diagonalDist_d(SEXP RptrA, SEXP dSize, SEXP dBuf){
-  ElDiagonalDist_d( toDistMatrix_d(RptrA), toElInt(dSize), toDouble_p(dBuf) );
+SEXP diagonalDist_d(SEXP RptrA, SEXP RptrD){
+  ElDiagonalDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrD));
   return R_NilValue;
 }
 
