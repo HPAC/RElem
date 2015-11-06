@@ -144,7 +144,7 @@ SEXP newDistMatrixSpecific_z(SEXP U, SEXP V, SEXP RptrGrid){
 }
 
 SEXP showDistData_i(SEXP Rptr){
-  ElDistData data;
+  ElElementalData data;
   ElDistMatrixDistData_i( toDistMatrix_i(Rptr), &data);
   printf("Col Dist: %s\n",parseDistEnum(data.colDist));
   printf("Row Dist: %s\n",parseDistEnum(data.rowDist));
@@ -152,7 +152,7 @@ SEXP showDistData_i(SEXP Rptr){
 }
 
 SEXP showDistData_d(SEXP Rptr){
-  ElDistData data;
+  ElElementalData data;
   ElDistMatrixDistData_d( toDistMatrix_d(Rptr), &data);
   printf("Col Dist: %s\n",parseDistEnum(data.colDist));
   printf("Row Dist: %s\n",parseDistEnum(data.rowDist));
@@ -160,7 +160,7 @@ SEXP showDistData_d(SEXP Rptr){
 }
 
 SEXP showDistData_z(SEXP Rptr){
-  ElDistData data;
+  ElElementalData data;
   ElDistMatrixDistData_z( toDistMatrix_z(Rptr), &data);
   printf("Col Dist: %s\n",parseDistEnum(data.colDist));
   printf("Row Dist: %s\n",parseDistEnum(data.rowDist));
