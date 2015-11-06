@@ -855,6 +855,44 @@ Transpose<-function(MatrixA, MatrixB){
   .Call( paste0("transpose", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
 
+# Element-wise routines
+
+Sqrt<-function(MatrixA){
+  .Call( paste0("sqrt", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+Log<-function(MatrixA){
+  .Call( paste0("log", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+Exp<-function(MatrixA){
+  .Call( paste0("exp", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+Cos<-function(MatrixA){
+  .Call( paste0("cos", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+Sin<-function(MatrixA){
+  .Call( paste0("sin", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+Tan<-function(MatrixA){
+  .Call( paste0("tan", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+Acos<-function(MatrixA){
+  .Call( paste0("acos", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+Asin<-function(MatrixA){
+  .Call( paste0("asin", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
+Atan<-function(MatrixA){
+  .Call( paste0("atan", .getSuffix(MatrixA)), MatrixA@ptr)
+}
+
 
 ###-------------
 ### Blas Level 2

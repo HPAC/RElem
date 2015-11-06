@@ -391,7 +391,7 @@ setMethod("eigen",
           signature(x = "ElMatrix"),
           function (x, symmetric, only.values = FALSE, EISPACK = FALSE){
             if(missing(symmetric) || symmetric == FALSE)
-              stop("Not yet implemented for general matrices")
+              stop("Not yet implemented for general matrices, set the symmetric flag")
             tmpMat<-Matrix(x@datatype)
             Copy(x, tmpMat)
             evals<-Matrix(x@datatype)
@@ -404,7 +404,7 @@ setMethod("eigen",
           signature(x = "ElDistMatrix"),
           function (x, symmetric, only.values = FALSE, EISPACK = FALSE){
             if(missing(symmetric) || symmetric == FALSE)
-              stop("Not yet implemented for general matrices")
+              stop("Not yet implemented for general matrices, set the symmetric flag")
             tmpMat<-DistMatrix(x@datatype)
             Copy(x, tmpMat)
             evals<-DistMatrix(x@datatype)
@@ -412,6 +412,169 @@ setMethod("eigen",
             HermitianEigPair("U", tmpMat, evals, evecs)
             list(values=evals, vectors=evecs)
           })
+
+setMethod("sqrt",
+          signature(x = "ElMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Sqrt(ans)
+          ans
+          })
+
+setMethod("sqrt",
+          signature(x = "ElDistMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Sqrt(ans)
+          ans
+          })
+
+setMethod("log",
+          signature(x = "ElMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Log(ans)
+          ans
+          })
+
+setMethod("log",
+          signature(x = "ElDistMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Log(ans)
+          ans
+          })
+
+setMethod("exp",
+          signature(x = "ElMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Exp(ans)
+          ans
+          })
+
+setMethod("exp",
+          signature(x = "ElDistMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Exp(ans)
+          ans
+          })
+
+setMethod("cos",
+          signature(x = "ElMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Cos(ans)
+          ans
+          })
+
+setMethod("cos",
+          signature(x = "ElDistMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Cos(ans)
+          ans
+          })
+
+setMethod("sin",
+          signature(x = "ElMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Sin(ans)
+          ans
+          })
+
+setMethod("sin",
+          signature(x = "ElDistMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Sin(ans)
+          ans
+          })
+
+setMethod("tan",
+          signature(x = "ElMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Tan(ans)
+          ans
+          })
+
+setMethod("tan",
+          signature(x = "ElDistMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Tan(ans)
+          ans
+          })
+
+setMethod("acos",
+          signature(x = "ElMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Acos(ans)
+          ans
+          })
+
+setMethod("acos",
+          signature(x = "ElDistMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Acos(ans)
+          ans
+          })
+
+setMethod("asin",
+          signature(x = "ElMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Asin(ans)
+          ans
+          })
+
+setMethod("asin",
+          signature(x = "ElDistMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Asin(ans)
+          ans
+          })
+
+setMethod("atan",
+          signature(x = "ElMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Atan(ans)
+          ans
+          })
+
+setMethod("atan",
+          signature(x = "ElDistMatrix"),
+          function(x){
+          ans<-Matrix(x@datatype)
+          Copy(x, ans)
+          Atan(ans)
+          ans
+          })
+
 
 #################
 ### I/O Functions

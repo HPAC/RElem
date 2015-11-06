@@ -170,3 +170,28 @@ SEXP newDistMatrix_i(SEXP RptrGrid);
 SEXP newDistMatrixSpecific_d(SEXP U, SEXP V, SEXP RptrGrid);
 SEXP newDistMatrixSpecific_z(SEXP U, SEXP V, SEXP RptrGrid);
 SEXP newDistMatrixSpecific_i(SEXP U, SEXP V, SEXP RptrGrid);
+
+
+/*
+  Scalar functions
+*/
+
+double RElSqrt_d(double val);
+complex_double RElSqrt_z(complex_double val);
+double RElLog_d(double val);
+complex_double RElLog_z(complex_double val);
+double RElExp_d(double val);
+complex_double RElExp_z(complex_double val);
+double RElCos_d(double val);
+complex_double RElCos_z(complex_double val);
+double RElSin_d(double val);
+complex_double RElSin_z(complex_double val);
+double RElTan_d(double val);
+complex_double RElTan_z(complex_double val);
+double RElAcos_d(double val);
+complex_double RElAcos_z(complex_double val);
+double RElAsin_d(double val);
+complex_double RElAsin_z(complex_double val);
+double RElAtan_d(double val);
+complex_double RElAtan_z(complex_double val);
+

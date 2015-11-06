@@ -2042,3 +2042,198 @@ SEXP zeroDist_z(SEXP RptrA){
   ElZeroDist_z( toDistMatrix_z(RptrA) );
   return R_NilValue;
 }
+
+/*
+  Function mappings
+*/
+
+
+SEXP sqrt_d(SEXP RptrA){
+  ElEntrywiseMap_d(toMatrix_d(RptrA), RElSqrt_d);
+  return R_NilValue;
+}
+
+SEXP sqrt_z(SEXP RptrA){
+  ElEntrywiseMap_z(toMatrix_z(RptrA), RElSqrt_z);
+  return R_NilValue;
+}
+
+SEXP sqrtDist_d(SEXP RptrA){
+  ElEntrywiseMapDist_d(toDistMatrix_d(RptrA), RElSqrt_d);
+  return R_NilValue;
+}
+
+SEXP sqrtDist_z(SEXP RptrA){
+  ElEntrywiseMapDist_z(toDistMatrix_z(RptrA), RElSqrt_z);
+  return R_NilValue;
+}
+
+
+
+SEXP log_d(SEXP RptrA){
+  ElEntrywiseMap_d(toMatrix_d(RptrA), RElLog_d);
+  return R_NilValue;
+}
+
+SEXP log_z(SEXP RptrA){
+  ElEntrywiseMap_z(toMatrix_z(RptrA), RElLog_z);
+  return R_NilValue;
+}
+
+SEXP logDist_d(SEXP RptrA){
+  ElEntrywiseMapDist_d(toDistMatrix_d(RptrA), RElLog_d);
+  return R_NilValue;
+}
+
+SEXP logDist_z(SEXP RptrA){
+  ElEntrywiseMapDist_z(toDistMatrix_z(RptrA), RElLog_z);
+  return R_NilValue;
+}
+
+
+SEXP exp_d(SEXP RptrA){
+  ElEntrywiseMap_d(toMatrix_d(RptrA), RElExp_d);
+  return R_NilValue;
+}
+
+SEXP exp_z(SEXP RptrA){
+  ElEntrywiseMap_z(toMatrix_z(RptrA), RElExp_z);
+  return R_NilValue;
+}
+
+SEXP expDist_d(SEXP RptrA){
+  ElEntrywiseMapDist_d(toDistMatrix_d(RptrA), RElExp_d);
+  return R_NilValue;
+}
+
+SEXP expDist_z(SEXP RptrA){
+  ElEntrywiseMapDist_z(toDistMatrix_z(RptrA), RElExp_z);
+  return R_NilValue;
+}
+
+
+SEXP cos_d(SEXP RptrA){
+  ElEntrywiseMap_d(toMatrix_d(RptrA), RElCos_d);
+  return R_NilValue;
+}
+
+SEXP cos_z(SEXP RptrA){
+  ElEntrywiseMap_z(toMatrix_z(RptrA), RElCos_z);
+  return R_NilValue;
+}
+
+SEXP cosDist_d(SEXP RptrA){
+  ElEntrywiseMapDist_d(toDistMatrix_d(RptrA), RElCos_d);
+  return R_NilValue;
+}
+
+SEXP cosDist_z(SEXP RptrA){
+  ElEntrywiseMapDist_z(toDistMatrix_z(RptrA), RElCos_z);
+  return R_NilValue;
+}
+
+
+SEXP sin_d(SEXP RptrA){
+  ElEntrywiseMap_d(toMatrix_d(RptrA), RElSin_d);
+  return R_NilValue;
+}
+
+SEXP sin_z(SEXP RptrA){
+  ElEntrywiseMap_z(toMatrix_z(RptrA), RElSin_z);
+  return R_NilValue;
+}
+
+SEXP sinDist_d(SEXP RptrA){
+  ElEntrywiseMapDist_d(toDistMatrix_d(RptrA), RElSin_d);
+  return R_NilValue;
+}
+
+SEXP sinDist_z(SEXP RptrA){
+  ElEntrywiseMapDist_z(toDistMatrix_z(RptrA), RElSin_z);
+  return R_NilValue;
+}
+
+
+SEXP tan_d(SEXP RptrA){
+  ElEntrywiseMap_d(toMatrix_d(RptrA), RElTan_d);
+  return R_NilValue;
+}
+
+SEXP tan_z(SEXP RptrA){
+  ElEntrywiseMap_z(toMatrix_z(RptrA), RElTan_z);
+  return R_NilValue;
+}
+
+SEXP tanDist_d(SEXP RptrA){
+  ElEntrywiseMapDist_d(toDistMatrix_d(RptrA), RElTan_d);
+  return R_NilValue;
+}
+
+SEXP tanDist_z(SEXP RptrA){
+  ElEntrywiseMapDist_z(toDistMatrix_z(RptrA), RElTan_z);
+  return R_NilValue;
+}
+
+
+SEXP acos_d(SEXP RptrA){
+  ElEntrywiseMap_d(toMatrix_d(RptrA), RElAcos_d);
+  return R_NilValue;
+}
+
+SEXP acos_z(SEXP RptrA){
+  ElEntrywiseMap_z(toMatrix_z(RptrA), RElAcos_z);
+  return R_NilValue;
+}
+
+SEXP acosDist_d(SEXP RptrA){
+  ElEntrywiseMapDist_d(toDistMatrix_d(RptrA), RElAcos_d);
+  return R_NilValue;
+}
+
+SEXP acosDist_z(SEXP RptrA){
+  ElEntrywiseMapDist_z(toDistMatrix_z(RptrA), RElAcos_z);
+  return R_NilValue;
+}
+
+
+SEXP asin_d(SEXP RptrA){
+  ElEntrywiseMap_d(toMatrix_d(RptrA), RElAsin_d);
+  return R_NilValue;
+}
+
+SEXP asin_z(SEXP RptrA){
+  ElEntrywiseMap_z(toMatrix_z(RptrA), RElAsin_z);
+  return R_NilValue;
+}
+
+SEXP asinDist_d(SEXP RptrA){
+  ElEntrywiseMapDist_d(toDistMatrix_d(RptrA), RElAsin_d);
+  return R_NilValue;
+}
+
+SEXP asinDist_z(SEXP RptrA){
+  ElEntrywiseMapDist_z(toDistMatrix_z(RptrA), RElAsin_z);
+  return R_NilValue;
+}
+
+
+SEXP atan_d(SEXP RptrA){
+  ElEntrywiseMap_d(toMatrix_d(RptrA), RElAtan_d);
+  return R_NilValue;
+}
+
+SEXP atan_z(SEXP RptrA){
+  ElEntrywiseMap_z(toMatrix_z(RptrA), RElAtan_z);
+  return R_NilValue;
+}
+
+SEXP atanDist_d(SEXP RptrA){
+  ElEntrywiseMapDist_d(toDistMatrix_d(RptrA), RElAtan_d);
+  return R_NilValue;
+}
+
+SEXP atanDist_z(SEXP RptrA){
+  ElEntrywiseMapDist_z(toDistMatrix_z(RptrA), RElAtan_z);
+  return R_NilValue;
+}
+
