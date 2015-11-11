@@ -186,8 +186,45 @@ setMethod("*",
           }
           )
 
+################
+# Matrix Scaling
+################
+
+setMethod("*",
+          signature(e1 = "ElMatrix", e2 = "numeric"),
+          function (e1, e2) {
+            if(length(e2) !=1)
+              stop("A scalar must be provided")
+            ans <- Matrix(e1@datatype)
+            Zeros(ans, e1$Height(), e1$Width())
+            Axpy(e2, e1, ans)
+            ans
+          })
+
+setMethod("*",
+          signature(e1 = "numeric", e2 = "ElMatrix"),
+          function (e1, e2) {
+            e2*e1
+          })
+
+setMethod("*",
+          signature(e1 = "ElDistMatrix", e2 = "numeric"),
+          function (e1, e2) 
+          {
+            if(length(e2) !=1)
+              stop("A scalar must be provided")
+            ans <- DistMatrix(e1@datatype)
+            Zeros(ans, e1$Height(), e1$Width())
+            Axpy(e2, e1, ans)
+            ans
+          })
 
 
+setMethod("*",
+          signature(e1 = "numeric", e2 = "ElDistMatrix"),
+          function (e1, e2) {
+            e2*e1
+          })
 
 
 ###########################
@@ -363,6 +400,7 @@ setMethod("solve",
       ans
     }
 )
+
 
 
 #################
@@ -604,11 +642,104 @@ setMethod("write.table",
 setMethod("as.matrix",
     signature(x = "ElMatrix"),
     function (x, ...){
-      x
+      ToR(x)
     })
 
 setMethod("as.matrix",
     signature(x = "ElDistMatrix"),
     function (x, ...){
-      x
+      ToR(x)
+    })
+
+################################
+### Principal component analysis
+################################
+
+setMethod("cov",
+    signature(x = "ElMatrix"),
+    function (x, y = NULL, use = "everything", method = c("pearson", 
+              "kendall", "spearman")){
+      ans <- Matrix(x@datatype) 
+      Covariance(x, ans)
+      ans
+    })
+
+setMethod("cov",
+    signature(x = "ElDistMatrix"),
+    function (x, y = NULL, use = "everything", method = c("pearson", 
+              "kendall", "spearman")){
+      ans <- DistMatrix(x@datatype) 
+      Covariance(x, ans)
+      ans
+    })
+
+
+setMethod("princomp",
+    signature(x = "ElMatrix"),
+    function (x, cor = FALSE, scores = TRUE, covmat = NULL,
+              subset = rep_len(TRUE, x$Width()), ...){
+      if( x$Width() > x$Height() ){
+        stop("Matrix must have more observations than variables")
+      }
+      if(cor){
+        stop("Not available for correlation matrix yet")
+      }
+      if(is.null(covmat)){
+        cv <- cov(x)
+      }        
+      cv <- (1 - 1/x$Height()) * cv
+      ev <- eigen(cv, symmetric = TRUE)
+      sdev <- sqrt(ev$values)
+      cen <- Matrix(x@datatype)
+      cen_mat <- Matrix(x@datatype)
+      Copy(x, cen_mat)
+      cen$Resize(x$Width(), 1)
+      .mat_ones <- Matrix(x@datatype)
+      Ones(.mat_ones, x$Height(), 1)
+      Gemv("T", 1/x$Height(), x, .mat_ones, 0.0, cen)
+      if (scores){
+        Ger(-1.0, .mat_ones, cen, cen_mat) 
+        scr<-cen_mat %*% ev$vectors
+      }
+      else{
+        scr=NULL
+      }
+      list(sdev=sdev, loadings=ev$vectors, center=cen,
+           scale=NULL, n.obs=x$Height(), scores=scr, call=match.call() )
+
+    })
+
+setMethod("princomp",
+    signature(x = "ElDistMatrix"),
+    function (x, cor = FALSE, scores = TRUE, covmat = NULL,
+              subset = rep_len(TRUE, x$Width()), ...){
+      if( x$Width() > x$Height() ){
+        stop("Matrix must have more observations than variables")
+      }
+      if(cor){
+        stop("Not available for correlation matrix yet")
+      }
+      if(is.null(covmat)){
+        cv <- cov(x)
+      }        
+      cv <- (1 - 1/x$Height()) * cv
+      ev <- eigen(cv, symmetric = TRUE)
+      sdev <- sqrt(ev$values)
+      cen <- DistMatrix(x@datatype)
+      cen_mat <- DistMatrix(x@datatype)
+      Copy(x, cen_mat)
+      cen$Resize(x$Width(), 1)
+      .mat_ones <- DistMatrix(x@datatype)
+      Ones(.mat_ones, x$Height(), 1)
+      Gemv("T", 1/x$Height(), x, .mat_ones, 0.0, cen)
+      if (scores){
+        Ger(-1.0, .mat_ones, cen, cen_mat) 
+        scr<-cen_mat %*% ev$vectors
+      }
+      else{
+        scr=NULL
+      }
+      list(sdev=sdev, loadings=ev$vectors, center=cen,
+           scale=NULL, n.obs=x$Height(), scores=scr, call=match.call() )
+
     })

@@ -1789,7 +1789,6 @@ read.dmatrix<-function(file, tag="d"){
 ########################
 
 ToR<-function(MatrixA){
-  print(paste("the suffix is",.getSuffix(MatrixA)))
   matrix( .Call( paste0("toR", .getSuffix(MatrixA) ), MatrixA@ptr),
           MatrixHeight(MatrixA), MatrixWidth(MatrixA) )
 }
