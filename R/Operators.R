@@ -265,6 +265,8 @@ setMethod("show",
 ### Print method
 ################
 
+setGeneric("print")
+
 setMethod("print",
           signature(x = "ElMatrix"),
           function (x) 
@@ -357,6 +359,8 @@ setMethod("[<-",
 ### Solvers
 ######################
 
+setGeneric("solve")
+
 setMethod("solve",
     signature(a = "ElMatrix", b = "ElMatrix"),
     function (a, b, ...) 
@@ -407,6 +411,8 @@ setMethod("solve",
 ### Other Methods
 #################
 
+setGeneric("t")
+
 setMethod("t",
           signature(x = "ElMatrix"),
           function (x){
@@ -425,6 +431,9 @@ setMethod("t",
 
 ### Pending: check if the matrix is symmetric,
 ### add the general routine for eigenvalues
+
+setGeneric("eigen")
+
 setMethod("eigen",
           signature(x = "ElMatrix"),
           function (x, symmetric, only.values = FALSE, EISPACK = FALSE){
@@ -618,6 +627,8 @@ setMethod("atan",
 ### I/O Functions
 #################
 
+setGeneric("write.table")
+
 setMethod("write.table",
     signature(x = "ElMatrix"),
     function (x, file = "", append = FALSE, quote = TRUE, sep = " ", 
@@ -638,6 +649,12 @@ setMethod("write.table",
         Write(x, file, "ASCII", "")
     }
 )
+
+#################
+# Transformations
+#################
+
+setGeneric("as.matrix")
 
 setMethod("as.matrix",
     signature(x = "ElMatrix"),
@@ -654,6 +671,8 @@ setMethod("as.matrix",
 ################################
 ### Principal component analysis
 ################################
+
+setGeneric("cov")
 
 setMethod("cov",
     signature(x = "ElMatrix"),
@@ -673,23 +692,46 @@ setMethod("cov",
       ans
     })
 
+setGeneric("princomp")
 
 setMethod("princomp",
     signature(x = "ElMatrix"),
     function (x, cor = FALSE, scores = TRUE, covmat = NULL,
-              subset = rep_len(TRUE, x$Width()), ...){
-      if( x$Width() > x$Height() ){
+              subset = rep_len(TRUE, x$Width()), rformat=FALSE, ...){
+      cl <- match.call()
+      cl[[1L]] <- as.name("princomp")
+
+      if( x$Width() > x$Height() )
         stop("Matrix must have more observations than variables")
-      }
-      if(cor){
+      
+      if(cor)
         stop("Not available for correlation matrix yet")
-      }
+
+      sc <- Matrix(x@datatype)
+      Ones(sc, x$Width(), 1)
+      
       if(is.null(covmat)){
         cv <- cov(x)
+      }
+      else{
+        if ( class(covmat) == "ElMatrix")
+          cv<-covmat
+        else
+          stop("error, expecting an Elemental covariance matrix")
       }        
+      
       cv <- (1 - 1/x$Height()) * cv
       ev <- eigen(cv, symmetric = TRUE)
+
+      
+      if (!is.null(covmat)){
+        min_evalue <- Min(ev$values)
+        if ( min_evalue$value < - 9 * .Machine$double.ev * ev$values[1] )
+          stop("covariance matrix is not negative definite")
+      }
+      
       sdev <- sqrt(ev$values)
+     
       cen <- Matrix(x@datatype)
       cen_mat <- Matrix(x@datatype)
       Copy(x, cen_mat)
@@ -697,6 +739,7 @@ setMethod("princomp",
       .mat_ones <- Matrix(x@datatype)
       Ones(.mat_ones, x$Height(), 1)
       Gemv("T", 1/x$Height(), x, .mat_ones, 0.0, cen)
+      
       if (scores){
         Ger(-1.0, .mat_ones, cen, cen_mat) 
         scr<-cen_mat %*% ev$vectors
@@ -704,27 +747,65 @@ setMethod("princomp",
       else{
         scr=NULL
       }
-      list(sdev=sdev, loadings=ev$vectors, center=cen,
-           scale=NULL, n.obs=x$Height(), scores=scr, call=match.call() )
+      if (rformat){
+          cn <- paste0("Comp.", 1L:cv$Width())
+          sdev <- as.numeric(as.matrix(sdev))
+          sc <- as.numeric(as.matrix(sc))
+          scr <- as.matrix(scr)
+          names(sdev) <- cn
+          cen <- as.numeric(as.matrix(cen))
+          vectors <- as.matrix(ev$vectors)
+          dimnames(vectors) <- list(dimnames(vectors)[[1L]], cn)
+          list(sdev=sdev, loadings=structure(vectors, class="loadings"),
+            center=cen, scale=sc, n.obs=x$Height(), scores=scr,
+            call=cl )
+      }
+      else{
+        list(sdev=sdev, loadings=ev$vectors,
+             center=cen, scale=sc, n.obs=x$Height(), scores=scr,
+             call=cl )
+      }
 
     })
 
 setMethod("princomp",
     signature(x = "ElDistMatrix"),
     function (x, cor = FALSE, scores = TRUE, covmat = NULL,
-              subset = rep_len(TRUE, x$Width()), ...){
-      if( x$Width() > x$Height() ){
+              subset = rep_len(TRUE, x$Width()), rformat=FALSE, ...){
+      cl <- match.call()
+      cl[[1L]] <- as.name("princomp")
+
+      if( x$Width() > x$Height() )
         stop("Matrix must have more observations than variables")
-      }
-      if(cor){
+      
+      if(cor)
         stop("Not available for correlation matrix yet")
-      }
+
+      sc <- DistMatrix(x@datatype)
+      Ones(sc, x$Width(), 1)
+      
       if(is.null(covmat)){
         cv <- cov(x)
+      }
+      else{
+        if ( class(covmat) == "ElDistMatrix")
+          cv<-covmat
+        else
+          stop("error, expecting an Elemental covariance matrix")
       }        
+      
       cv <- (1 - 1/x$Height()) * cv
       ev <- eigen(cv, symmetric = TRUE)
+
+      
+      if (!is.null(covmat)){
+        min_evalue <- Min(ev$values)
+        if ( min_evalue$value < - 9 * .Machine$double.ev * ev$values[1] )
+          stop("covariance matrix is not negative definite")
+      }
+      
       sdev <- sqrt(ev$values)
+     
       cen <- DistMatrix(x@datatype)
       cen_mat <- DistMatrix(x@datatype)
       Copy(x, cen_mat)
@@ -732,6 +813,7 @@ setMethod("princomp",
       .mat_ones <- DistMatrix(x@datatype)
       Ones(.mat_ones, x$Height(), 1)
       Gemv("T", 1/x$Height(), x, .mat_ones, 0.0, cen)
+      
       if (scores){
         Ger(-1.0, .mat_ones, cen, cen_mat) 
         scr<-cen_mat %*% ev$vectors
@@ -739,7 +821,23 @@ setMethod("princomp",
       else{
         scr=NULL
       }
-      list(sdev=sdev, loadings=ev$vectors, center=cen,
-           scale=NULL, n.obs=x$Height(), scores=scr, call=match.call() )
+      if (rformat){
+          cn <- paste0("Comp.", 1L:cv$Width())
+          sdev <- as.numeric(as.matrix(sdev))
+          sc <- as.numeric(as.matrix(sc))
+          scr <- as.matrix(scr)
+          names(sdev) <- cn
+          cen <- as.numeric(as.matrix(cen))
+          vectors <- as.matrix(ev$vectors)
+          dimnames(vectors) <- list(dimnames(vectors)[[1L]], cn)
+          list(sdev=sdev, loadings=structure(vectors, class="loadings"),
+            center=cen, scale=sc, n.obs=x$Height(), scores=scr,
+            call=cl )
+      }
+      else{
+        list(sdev=sdev, loadings=ev$vectors,
+             center=cen, scale=sc, n.obs=x$Height(), scores=scr,
+             call=cl )
+      }
 
     })
