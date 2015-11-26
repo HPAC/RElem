@@ -562,7 +562,7 @@ SEXP makeTrapezoidalDist_z(SEXP uplo, SEXP RptrA, SEXP offset){
 
 SEXP max_i(SEXP RptrA){
   ElEntry_i values;
-  ElMax_i( toMatrix_i(RptrA), &values );
+  ElMaxLoc_i( toMatrix_i(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
@@ -581,7 +581,7 @@ SEXP max_i(SEXP RptrA){
 
 SEXP max_d(SEXP RptrA){
   ElEntry_d values;
-  ElMax_d( toMatrix_d(RptrA), &values );
+  ElMaxLoc_d( toMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
@@ -600,7 +600,7 @@ SEXP max_d(SEXP RptrA){
 
 SEXP maxDist_i(SEXP RptrA){
   ElEntry_i values;
-  ElMaxDist_i( toDistMatrix_i(RptrA), &values );
+  ElMaxLocDist_i( toDistMatrix_i(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
@@ -619,7 +619,7 @@ SEXP maxDist_i(SEXP RptrA){
 
 SEXP maxDist_d(SEXP RptrA){
   ElEntry_d values;
-  ElMaxDist_d( toDistMatrix_d(RptrA), &values );
+  ElMaxLocDist_d( toDistMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
@@ -638,7 +638,7 @@ SEXP maxDist_d(SEXP RptrA){
 
 SEXP symmetricMax_i(SEXP uplo, SEXP RptrA){
   ElEntry_i values;
-  ElSymmetricMax_i( parseUpLo(uplo), toMatrix_i(RptrA), &values );
+  ElSymmetricMaxLoc_i( parseUpLo(uplo), toMatrix_i(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
@@ -657,7 +657,7 @@ SEXP symmetricMax_i(SEXP uplo, SEXP RptrA){
 
 SEXP symmetricMax_d(SEXP uplo, SEXP RptrA){
   ElEntry_d values;
-  ElSymmetricMax_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
+  ElSymmetricMaxLoc_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
@@ -676,7 +676,7 @@ SEXP symmetricMax_d(SEXP uplo, SEXP RptrA){
 
 SEXP symmetricMaxDist_i(SEXP uplo, SEXP RptrA){
   ElEntry_i values;
-  ElSymmetricMaxDist_i( parseUpLo(uplo), toDistMatrix_i(RptrA), &values );
+  ElSymmetricMaxLocDist_i( parseUpLo(uplo), toDistMatrix_i(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
@@ -695,7 +695,7 @@ SEXP symmetricMaxDist_i(SEXP uplo, SEXP RptrA){
 
 SEXP symmetricMaxDist_d(SEXP uplo, SEXP RptrA){
   ElEntry_d values;
-  ElSymmetricMaxDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
+  ElSymmetricMaxLocDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
@@ -714,7 +714,7 @@ SEXP symmetricMaxDist_d(SEXP uplo, SEXP RptrA){
 
 SEXP vectorMax_i(SEXP RptrA){
   ElValueInt_i values;
-  ElVectorMax_i( toMatrix_i(RptrA), &values );
+  ElVectorMaxLoc_i( toMatrix_i(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
@@ -732,7 +732,7 @@ SEXP vectorMax_i(SEXP RptrA){
 
 SEXP vectorMax_d(SEXP RptrA){
   ElValueInt_d values;
-  ElVectorMax_d( toMatrix_d(RptrA), &values );
+  ElVectorMaxLoc_d( toMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
@@ -750,7 +750,7 @@ SEXP vectorMax_d(SEXP RptrA){
 
 SEXP vectorMaxDist_i(SEXP RptrA){
   ElValueInt_i values;
-  ElVectorMaxDist_i( toDistMatrix_i(RptrA), &values );
+  ElVectorMaxLocDist_i( toDistMatrix_i(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
@@ -768,7 +768,7 @@ SEXP vectorMaxDist_i(SEXP RptrA){
 
 SEXP vectorMaxDist_d(SEXP RptrA){
   ElValueInt_d values;
-  ElVectorMaxDist_d( toDistMatrix_d(RptrA), &values );
+  ElVectorMaxLocDist_d( toDistMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
@@ -786,7 +786,7 @@ SEXP vectorMaxDist_d(SEXP RptrA){
 
 SEXP maxAbs_i(SEXP RptrA){
   ElEntry_i values;
-  ElMaxAbs_i( toMatrix_i(RptrA), &values );
+  ElMaxAbsLoc_i( toMatrix_i(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
@@ -805,7 +805,7 @@ SEXP maxAbs_i(SEXP RptrA){
 
 SEXP maxAbs_d(SEXP RptrA){
   ElEntry_d values;
-  ElMaxAbs_d( toMatrix_d(RptrA), &values );
+  ElMaxAbsLoc_d( toMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
@@ -828,7 +828,7 @@ SEXP maxAbs_z(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMaxAbs_z( toMatrix_z(RptrA), &values );
+  ElMaxAbsLoc_z( toMatrix_z(RptrA), &values );
   REAL(val)[0] = values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -843,7 +843,7 @@ SEXP maxAbs_z(SEXP RptrA){
 
 SEXP maxAbsDist_i(SEXP RptrA){
   ElEntry_i values;
-  ElMaxAbsDist_i( toDistMatrix_i(RptrA), &values );
+  ElMaxAbsLocDist_i( toDistMatrix_i(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
@@ -862,7 +862,7 @@ SEXP maxAbsDist_i(SEXP RptrA){
 
 SEXP maxAbsDist_d(SEXP RptrA){
   ElEntry_d values;
-  ElMaxAbsDist_d( toDistMatrix_d(RptrA), &values );
+  ElMaxAbsLocDist_d( toDistMatrix_d(RptrA), &values );
   SEXP ans=PROTECT( allocVector(VECSXP,2) );
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
@@ -885,7 +885,7 @@ SEXP maxAbsDist_z(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMaxAbsDist_z( toDistMatrix_z(RptrA), &values );
+  ElMaxAbsLocDist_z( toDistMatrix_z(RptrA), &values );
   REAL(val)[0] = values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -904,7 +904,7 @@ SEXP symmetricMaxAbs_i(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMax_i( parseUpLo(uplo), toMatrix_i(RptrA), &values );
+  ElSymmetricMaxLoc_i( parseUpLo(uplo), toMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -923,7 +923,7 @@ SEXP symmetricMaxAbs_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMax_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
+  ElSymmetricMaxLoc_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -942,7 +942,7 @@ SEXP symmetricMaxAbs_z(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMaxAbs_z( parseUpLo(uplo), toMatrix_z(RptrA), &values );
+  ElSymmetricMaxAbsLoc_z( parseUpLo(uplo), toMatrix_z(RptrA), &values );
   REAL(val)[0] = values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -961,7 +961,7 @@ SEXP symmetricMaxAbsDist_i(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMaxDist_i( parseUpLo(uplo), toDistMatrix_i(RptrA), &values );
+  ElSymmetricMaxLocDist_i( parseUpLo(uplo), toDistMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -980,7 +980,7 @@ SEXP symmetricMaxAbsDist_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMaxDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
+  ElSymmetricMaxLocDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -999,7 +999,7 @@ SEXP symmetricMaxAbsDist_z(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMaxAbsDist_z( parseUpLo(uplo), toDistMatrix_z(RptrA), &values );
+  ElSymmetricMaxAbsLocDist_z( parseUpLo(uplo), toDistMatrix_z(RptrA), &values );
   REAL(val)[0] = values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1018,7 +1018,7 @@ SEXP vectorMaxAbs_i(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMaxAbs_i( toMatrix_i(RptrA), &values );
+  ElVectorMaxAbsLoc_i( toMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1036,7 +1036,7 @@ SEXP vectorMaxAbs_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMaxAbs_d( toMatrix_d(RptrA), &values );
+  ElVectorMaxAbsLoc_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1054,7 +1054,7 @@ SEXP vectorMaxAbs_z(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMaxAbs_z( toMatrix_z(RptrA), &values );
+  ElVectorMaxAbsLoc_z( toMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1072,7 +1072,7 @@ SEXP vectorMaxAbsDist_i(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMaxAbsDist_i( toDistMatrix_i(RptrA), &values );
+  ElVectorMaxAbsLocDist_i( toDistMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1090,7 +1090,7 @@ SEXP vectorMaxAbsDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMaxAbsDist_d( toDistMatrix_d(RptrA), &values );
+  ElVectorMaxAbsLocDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1108,7 +1108,7 @@ SEXP vectorMaxAbsDist_z(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMaxAbsDist_z( toDistMatrix_z(RptrA), &values );
+  ElVectorMaxAbsLocDist_z( toDistMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1129,7 +1129,7 @@ SEXP min_i(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(INTSXP,2) );
-  ElMin_i( toMatrix_i(RptrA), &values );
+  ElMinLoc_i( toMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1148,7 +1148,7 @@ SEXP min_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMin_d( toMatrix_d(RptrA), &values );
+  ElMinLoc_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1167,7 +1167,7 @@ SEXP minDist_i(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMinDist_i( toDistMatrix_i(RptrA), &values );
+  ElMinLocDist_i( toDistMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1186,7 +1186,7 @@ SEXP minDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMinDist_d( toDistMatrix_d(RptrA), &values );
+  ElMinLocDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1205,7 +1205,7 @@ SEXP symmetricMin_i(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(INTSXP,2) );
-  ElSymmetricMin_i( parseUpLo(uplo), toMatrix_i(RptrA), &values );
+  ElSymmetricMinLoc_i( parseUpLo(uplo), toMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1224,7 +1224,7 @@ SEXP symmetricMin_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMin_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
+  ElSymmetricMinLoc_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1243,7 +1243,7 @@ SEXP symmetricMinDist_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMinDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
+  ElSymmetricMinLocDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1262,7 +1262,7 @@ SEXP vectorMin_i(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMin_i( toMatrix_i(RptrA), &values );
+  ElVectorMinLoc_i( toMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1280,7 +1280,7 @@ SEXP vectorMin_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMin_d( toMatrix_d(RptrA), &values );
+  ElVectorMinLoc_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1298,7 +1298,7 @@ SEXP vectorMinDist_i(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMinDist_i( toDistMatrix_i(RptrA), &values );
+  ElVectorMinLocDist_i( toDistMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1316,7 +1316,7 @@ SEXP vectorMinDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMinDist_d( toDistMatrix_d(RptrA), &values );
+  ElVectorMinLocDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1334,7 +1334,7 @@ SEXP minAbs_i(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMinAbs_i( toMatrix_i(RptrA), &values );
+  ElMinAbsLoc_i( toMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1353,7 +1353,7 @@ SEXP minAbs_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMinAbs_d( toMatrix_d(RptrA), &values );
+  ElMinAbsLoc_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1372,7 +1372,7 @@ SEXP minAbs_z(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMinAbs_z( toMatrix_z(RptrA), &values );
+  ElMinAbsLoc_z( toMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1391,7 +1391,7 @@ SEXP minAbsDist_i(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMinAbsDist_i( toDistMatrix_i(RptrA), &values );
+  ElMinAbsLocDist_i( toDistMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1410,7 +1410,7 @@ SEXP minAbsDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMinAbsDist_d( toDistMatrix_d(RptrA), &values );
+  ElMinAbsLocDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1429,7 +1429,7 @@ SEXP minAbsDist_z(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElMinAbsDist_z( toDistMatrix_z(RptrA), &values );
+  ElMinAbsLocDist_z( toDistMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1448,7 +1448,7 @@ SEXP symmetricMinAbs_i(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMinAbs_i( parseUpLo(uplo), toMatrix_i(RptrA), &values );
+  ElSymmetricMinAbsLoc_i( parseUpLo(uplo), toMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1467,7 +1467,7 @@ SEXP symmetricMinAbs_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMinAbs_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
+  ElSymmetricMinAbsLoc_d( parseUpLo(uplo), toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1486,7 +1486,7 @@ SEXP symmetricMinAbs_z(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMinAbs_z( parseUpLo(uplo), toMatrix_z(RptrA), &values );
+  ElSymmetricMinAbsLoc_z( parseUpLo(uplo), toMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1505,7 +1505,7 @@ SEXP symmetricMinAbsDist_i(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMinAbsDist_i( parseUpLo(uplo), toDistMatrix_i(RptrA), &values );
+  ElSymmetricMinAbsLocDist_i( parseUpLo(uplo), toDistMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1524,7 +1524,7 @@ SEXP symmetricMinAbsDist_d(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMinAbsDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
+  ElSymmetricMinAbsLocDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1543,7 +1543,7 @@ SEXP symmetricMinAbsDist_z(SEXP uplo, SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,2) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElSymmetricMinAbsDist_z( parseUpLo(uplo), toDistMatrix_z(RptrA), &values );
+  ElSymmetricMinAbsLocDist_z( parseUpLo(uplo), toDistMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.i;
   INTEGER(coords)[1]=values.j;
@@ -1562,7 +1562,7 @@ SEXP vectorMinAbs_i(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMinAbs_i( toMatrix_i(RptrA), &values );
+  ElVectorMinAbsLoc_i( toMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1580,7 +1580,7 @@ SEXP vectorMinAbs_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMinAbs_d( toMatrix_d(RptrA), &values );
+  ElVectorMinAbsLoc_d( toMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1598,7 +1598,7 @@ SEXP vectorMinAbs_z(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMinAbs_z( toMatrix_z(RptrA), &values );
+  ElVectorMinAbsLoc_z( toMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1616,7 +1616,7 @@ SEXP vectorMinAbsDist_i(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(INTSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMinAbsDist_i( toDistMatrix_i(RptrA), &values );
+  ElVectorMinAbsLocDist_i( toDistMatrix_i(RptrA), &values );
   INTEGER(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1634,7 +1634,7 @@ SEXP vectorMinAbsDist_d(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMinAbsDist_d( toDistMatrix_d(RptrA), &values );
+  ElVectorMinAbsLocDist_d( toDistMatrix_d(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));
@@ -1652,7 +1652,7 @@ SEXP vectorMinAbsDist_z(SEXP RptrA){
   SEXP coords=PROTECT( allocVector(INTSXP,1) );
   SEXP val=PROTECT( allocVector(REALSXP,1) );
   SEXP names=PROTECT( allocVector(STRSXP,2) );
-  ElVectorMinAbsDist_z( toDistMatrix_z(RptrA), &values );
+  ElVectorMinAbsLocDist_z( toDistMatrix_z(RptrA), &values );
   REAL(val)[0]=values.value;
   INTEGER(coords)[0]=values.index;
   SET_STRING_ELT(names, 0, mkChar("value"));

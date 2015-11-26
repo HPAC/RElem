@@ -240,8 +240,8 @@ MatrixLDim<-function(MatrixA){
 }
 
 
-MatrixEmpty<-function(MatrixA){
-  .Call( paste0("empty", .getElement(MatrixA)), MatrixA@ptr )
+MatrixEmpty<-function(MatrixA, freeMem = true){
+  .Call( paste0("empty", .getElement(MatrixA)), MatrixA@ptr, as.logical(freeMem) )
 }
 
 MatrixResize<-function(MatrixA, height, width){

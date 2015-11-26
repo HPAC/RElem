@@ -212,35 +212,21 @@ SEXP destroyDistMatrix_z(SEXP Rptr){
   return R_NilValue;
 }
 
-SEXP emptyDistMatrix_i(SEXP Rptr){
-  ElDistMatrixEmpty_i( toDistMatrix_i(Rptr) );
+SEXP emptyDistMatrix_i(SEXP Rptr, SEXP freeMem){
+  ElDistMatrixEmpty_i( toDistMatrix_i(Rptr), toBool(freeMem) );
   return R_NilValue;
 }
 
-SEXP emptyDistMatrix_d(SEXP Rptr){
-  ElDistMatrixEmpty_d( toDistMatrix_d(Rptr) );
+SEXP emptyDistMatrix_d(SEXP Rptr, SEXP freeMem){
+  ElDistMatrixEmpty_d( toDistMatrix_d(Rptr), toBool(freeMem) );
   return R_NilValue;
 }
 
-SEXP emptyDistMatrix_z(SEXP Rptr){
-  ElDistMatrixEmpty_z( toDistMatrix_z(Rptr) );
+SEXP emptyDistMatrix_z(SEXP Rptr, SEXP freeMem){
+  ElDistMatrixEmpty_z( toDistMatrix_z(Rptr), toBool(freeMem) );
   return R_NilValue;
 }
 
-SEXP emptyDataDistMatrix_i(SEXP Rptr){
-  ElDistMatrixEmptyData_i( toDistMatrix_i(Rptr) );
-  return R_NilValue;
-}
-
-SEXP emptyDataDistMatrix_d(SEXP Rptr){
-  ElDistMatrixEmptyData_d( toDistMatrix_d(Rptr) );
-  return R_NilValue;
-}
-
-SEXP emptyDataDistMatrix_z(SEXP Rptr){
-  ElDistMatrixEmptyData_z( toDistMatrix_z(Rptr) );
-  return R_NilValue;
-}
 
 SEXP setGridDistMatrix_i(SEXP Rptr, SEXP RptrGrid){
   ElDistMatrixSetGrid_i( toDistMatrix_i(Rptr) , toGrid(RptrGrid) );
