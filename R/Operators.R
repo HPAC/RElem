@@ -841,3 +841,125 @@ setMethod("princomp",
       }
 
     })
+
+######### SVD Method
+
+setMethod("prcomp",
+    signature(x = "ElMatrix"),
+    function (x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, rformat=FALSE, ...) 
+    {
+      if (!is.logical(scale.))
+        stop("scale arg not implemented")
+      if (!is.null(tol))
+        stop("tol arg not implemented")
+      cen_mat <- Matrix(x@datatype) #Stores the centered Matrix
+      Copy(x, cen_mat)
+      .mat_ones <- Matrix(x@datatype)
+      Ones(.mat_ones, x$Height(), 1)
+      if (is.logical(center))
+      {
+        cen <- Matrix(x@datatype)  #Stores the Mean of every column
+        if (center == TRUE)
+        {
+          cen$Resize(x$Width(), 1)
+          Gemv("T", 1/x$Height(), x, .mat_ones, 0.0, cen)
+        }
+        else
+        {
+          Zeros(cen, x$Width(), 1)
+        }
+      }
+      else
+      {
+        if(class(center) == "ElMatrix")
+        {
+          cen = center
+        }
+        else
+        {
+          stop("Not recognized arg center")
+        }
+      }
+      Ger(-1.0, .mat_ones, cen, cen_mat)
+      U <- Matrix(x@datatype)
+      Copy(cen_mat, U)
+      s <- Matrix(x@datatype)
+      V <- Matrix(x@datatype)
+      SVD(U, s, V)      
+      s <- (1/sqrt(x$Height()-1)) * s
+      if (rformat)
+      {
+        s <- as.numeric(as.matrix(cen))
+        V <- as.matrix(t(V))
+        dimnames(V) <- list( dimnames(V)[[1L]], paste0("PC", seq_len(ncol(V))))
+        ans <- list( sdev = s, rotation = V, center = cen)
+        class(ans) <- "prcomp"
+      }
+      else
+      {
+        ans <- list( sdev = s, rotation = V, center = cen)
+      }
+      
+      ans
+    }
+)
+
+setMethod("prcomp",
+    signature(x = "ElDistMatrix"),
+    function (x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, rformat=FALSE, ...) 
+    {
+      if (!is.logical(scale.))
+        stop("scale arg not implemented")
+      if (!is.null(tol))
+        stop("tol arg not implemented")
+      cen_mat <- DistMatrix(x@datatype) #Stores the centered Matrix
+      Copy(x, cen_mat)
+      .mat_ones <- DistMatrix(x@datatype)
+      Ones(.mat_ones, x$Height(), 1)
+      if (is.logical(center))
+      {
+        cen <- DistMatrix(x@datatype)  #Stores the Mean of every column
+        if (center == TRUE)
+        {
+          cen$Resize(x$Width(), 1)
+          Gemv("T", 1/x$Height(), x, .mat_ones, 0.0, cen)
+        }
+        else
+        {
+          Zeros(cen, x$Width(), 1)
+        }
+      }
+      else
+      {
+        if(class(center) == "ElDistMatrix")
+        {
+          cen = center
+        }
+        else
+        {
+          stop("Not recognized arg center")
+        }
+      }
+      Ger(-1.0, .mat_ones, cen, cen_mat)
+      U <- DistMatrix(x@datatype)
+      Copy(cen_mat, U)
+      s <- DistMatrix(x@datatype)
+      V <- DistMatrix(x@datatype)
+      SVD(U, s, V)      
+      s <- (1/sqrt(x$Height()-1)) * s
+      if (rformat)
+      {
+        s <- as.numeric(as.matrix(cen))
+        V <- as.matrix(t(V))
+        dimnames(V) <- list( dimnames(V)[[1L]], paste0("PC", seq_len(ncol(V))))
+        ans <- list( sdev = s, rotation = V, center = cen)
+        class(ans) <- "prcomp"
+      }
+      else
+      {
+        ans <- list( sdev = s, rotation = V, center = cen)
+      }
+      
+      ans
+    }
+)
