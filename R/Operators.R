@@ -31,7 +31,7 @@ setMethod("+",
               stop("Matrices have to be of the same datatype")
             if(e1$Height() != e2$Height() && e1$Width() != e2$Width())
               stop("Matrices should have the same size")
-            matA <- Matrix(e1@datatype)
+            matA <- DistMatrix(e1@datatype)
             Copy(e1, matA)
             Axpy(1.0, e2, matA)
             matA
@@ -65,7 +65,7 @@ setMethod("-",
               stop("Matrices have to be of the same datatype")
             if(e1$Height() != e2$Height() && e1$Width() != e2$Width())
               stop("Matrices should have the same size")
-            matA <- Matrix(e1@datatype)
+            matA <- DistMatrix(e1@datatype)
             Copy(e1, matA)
             Axpy(-1.0, e2, matA)
             matA
@@ -122,7 +122,7 @@ setMethod("%*%",
               stop("Matrices have to be of the same datatype")
             if(x$Width() != y$Height() )
               stop("Matrices cannot be multiplied, A$Width()!=B$Height()")
-            matC <- Matrix(x@datatype)
+            matC <- DistMatrix(x@datatype)
             MatrixResize(matC, x$Height(), y$Width())
             if(y$Width() == 1){
               Gemv("NORMAL", 1.0, x, y, 0.0, matC)
@@ -180,7 +180,7 @@ setMethod("*",
               stop("Matrices have to be of the same datatype")
             if(e1$Height() != e2$Height() && e1$Width() != e2$Width())
               stop("Matrices should have the same size")
-            matC <- Matrix(e1@datatype)
+            matC <- DistMatrix(e1@datatype)
             Hadamard(e1,e2,matC)
             matC
           }
@@ -463,7 +463,7 @@ setMethod("eigen",
 setMethod("sqrt",
           signature(x = "ElMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- Matrix(x@datatype)
           Copy(x, ans)
           Sqrt(ans)
           ans
@@ -472,7 +472,7 @@ setMethod("sqrt",
 setMethod("sqrt",
           signature(x = "ElDistMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- DistMatrix(x@datatype)
           Copy(x, ans)
           Sqrt(ans)
           ans
@@ -481,7 +481,7 @@ setMethod("sqrt",
 setMethod("log",
           signature(x = "ElMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- Matrix(x@datatype)
           Copy(x, ans)
           Log(ans)
           ans
@@ -490,7 +490,7 @@ setMethod("log",
 setMethod("log",
           signature(x = "ElDistMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- DistMatrix(x@datatype)
           Copy(x, ans)
           Log(ans)
           ans
@@ -499,7 +499,7 @@ setMethod("log",
 setMethod("exp",
           signature(x = "ElMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- Matrix(x@datatype)
           Copy(x, ans)
           Exp(ans)
           ans
@@ -508,7 +508,7 @@ setMethod("exp",
 setMethod("exp",
           signature(x = "ElDistMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- DistMatrix(x@datatype)
           Copy(x, ans)
           Exp(ans)
           ans
@@ -517,7 +517,7 @@ setMethod("exp",
 setMethod("cos",
           signature(x = "ElMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- Matrix(x@datatype)
           Copy(x, ans)
           Cos(ans)
           ans
@@ -526,7 +526,7 @@ setMethod("cos",
 setMethod("cos",
           signature(x = "ElDistMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- DistMatrix(x@datatype)
           Copy(x, ans)
           Cos(ans)
           ans
@@ -535,7 +535,7 @@ setMethod("cos",
 setMethod("sin",
           signature(x = "ElMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- Matrix(x@datatype)
           Copy(x, ans)
           Sin(ans)
           ans
@@ -544,7 +544,7 @@ setMethod("sin",
 setMethod("sin",
           signature(x = "ElDistMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- DistMatrix(x@datatype)
           Copy(x, ans)
           Sin(ans)
           ans
@@ -553,7 +553,7 @@ setMethod("sin",
 setMethod("tan",
           signature(x = "ElMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- Matrix(x@datatype)
           Copy(x, ans)
           Tan(ans)
           ans
@@ -562,7 +562,7 @@ setMethod("tan",
 setMethod("tan",
           signature(x = "ElDistMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- DistMatrix(x@datatype)
           Copy(x, ans)
           Tan(ans)
           ans
@@ -571,7 +571,7 @@ setMethod("tan",
 setMethod("acos",
           signature(x = "ElMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- Matrix(x@datatype)
           Copy(x, ans)
           Acos(ans)
           ans
@@ -580,7 +580,7 @@ setMethod("acos",
 setMethod("acos",
           signature(x = "ElDistMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- DistMatrix(x@datatype)
           Copy(x, ans)
           Acos(ans)
           ans
@@ -589,7 +589,7 @@ setMethod("acos",
 setMethod("asin",
           signature(x = "ElMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- Matrix(x@datatype)
           Copy(x, ans)
           Asin(ans)
           ans
@@ -598,7 +598,7 @@ setMethod("asin",
 setMethod("asin",
           signature(x = "ElDistMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- DistMatrix(x@datatype)
           Copy(x, ans)
           Asin(ans)
           ans
@@ -607,7 +607,7 @@ setMethod("asin",
 setMethod("atan",
           signature(x = "ElMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- Matrix(x@datatype)
           Copy(x, ans)
           Atan(ans)
           ans
@@ -616,7 +616,7 @@ setMethod("atan",
 setMethod("atan",
           signature(x = "ElDistMatrix"),
           function(x){
-          ans<-Matrix(x@datatype)
+          ans <- DistMatrix(x@datatype)
           Copy(x, ans)
           Atan(ans)
           ans
@@ -665,12 +665,16 @@ setMethod("as.matrix",
 setMethod("as.matrix",
     signature(x = "ElDistMatrix"),
     function (x, ...){
-      ToR(x)
+      M<-Matrix()
+      DistMatrixToMatrix(x,M)
+      ToR(M)
     })
 
 ################################
 ### Principal component analysis
 ################################
+
+## Aux functions
 
 setGeneric("cov")
 
@@ -692,6 +696,148 @@ setMethod("cov",
       ans
     })
 
+setGeneric("scale")
+
+setMethod("scale",
+    signature(x = "ElMatrix"),
+    function (x, center = TRUE, scale = TRUE) {
+      .mat_ones <- Matrix(x@datatype)  # Creating aux matrix
+      Ones(.mat_ones, x$Height(), 1)
+      cen_mat <- Matrix(x@datatype)
+      Copy(x, cen_mat)
+
+      if (is.logical(center)){
+        cen <- Matrix(x@datatype)  # Stores the Mean of every column
+        if (center == TRUE){
+          cen$Resize(x$Width(), 1)
+          Gemv("T", 1/x$Height(), x, .mat_ones, 0.0, cen)
+        } else {
+          cen <- NULL
+        }
+      } else {
+        if(class(center) == "ElMatrix") {
+          if( center$Width() == 1 && center$Height() == x$Width()){
+            cen = center
+          } else {
+            cen <- NULL
+            stop("center must be column vector, with lenght equal to the columns of 'x'")
+          }
+        } else {
+          cen <- NULL
+          stop("center must be a logical value or ElMatrix")
+        }
+      }
+      if (!is.null(cen)) {
+        Ger(-1.0, .mat_ones, cen, cen_mat)
+        attr(cen_mat, "scaled:center") <- cen
+      }
+      
+      if(is.logical(scale)) {
+        if(scale) {
+          sq_mat <- cen_mat * cen_mat
+          factors <- Matrix(x@datatype)
+          factors$Resize(x$Width(), 1)
+          Gemv("T", 1/(x$Height()-1), sq_mat, .mat_ones, 0.0, factors)
+          factors <- sqrt(factors)
+        } else {
+          factors <- NULL
+        }
+      } else {
+        if(class(scale) == "ElMatrix") {
+          if( scale$Width() == 1 && scale$Height() == x$Width()){
+            factors = scale
+          } else {
+            factors <- NULL
+            stop("scale must be column vector, with lenght equal to the columns of 'x'")
+          }
+        } else {
+          factors <- NULL
+          stop("scale must be a logical value or ElMatrix")
+        }
+      }
+      if (!is.null(factors)) {
+        tmp <- Matrix(x@datatype)  # Matrix View
+        for ( i in 1:x$Width() ) {
+          ViewNormal(tmp, cen_mat, 0, x$Height(), i-1, i)
+          Scale(1/factors[i,1], tmp)
+        }
+      attr(cen_mat, "scaled:scale") <- factors
+      }
+      cen_mat
+    }
+)
+
+setMethod("scale",
+    signature(x = "ElDistMatrix"),
+    function (x, center = TRUE, scale = TRUE) {
+      .mat_ones <- DistMatrix(x@datatype)  # Creating aux matrix
+      Ones(.mat_ones, x$Height(), 1)
+      cen_mat <- DistMatrix(x@datatype)
+      Copy(x, cen_mat)
+
+      if (is.logical(center)) {
+        cen <- DistMatrix(x@datatype)  # Stores the Mean of every column
+        if (center == TRUE){
+          cen$Resize(x$Width(), 1)
+          Gemv("T", 1/x$Height(), x, .mat_ones, 0.0, cen)
+        } else {
+          cen <- NULL
+        }
+      } else {
+        if(class(center) == "ElDistMatrix") {
+          if( center$Width() == 1 && center$Height() == x$Width()){
+            cen = center
+          } else {
+            cen <- NULL
+            stop("center must be column vector, with lenght equal to the columns of 'x'")
+          }
+        } else {
+          cen <- NULL
+          stop("center must be a logical value or ElDistMatrix")
+        }
+      }
+      if (!is.null(cen)){
+        Ger(-1.0, .mat_ones, cen, cen_mat)
+        attr(cen_mat, "scaled:center") <- cen
+      }
+      
+      if (is.logical(scale)) {
+        if (scale) {
+          sq_mat <- cen_mat * cen_mat
+          factors <- DistMatrix(x@datatype)
+          factors$Resize(x$Width(), 1)
+          Gemv("T", 1/(x$Height()-1), sq_mat, .mat_ones, 0.0, factors)
+          factors <- sqrt(factors)
+        } else {
+          factors <- NULL
+        }
+      } else {
+        if (class(scale) == "ElDistMatrix") {
+          if ( scale$Width() == 1 && scale$Height() == x$Width()) {
+            factors = scale
+          } else {
+            factors <- NULL
+            stop("scale must be column vector, with lenght equal to the columns of 'x'")
+          }
+        } else {
+          factors <- NULL
+          stop("scale must be a logical value or ElDistMatrix")
+        }
+      }
+      if (!is.null(factors)){
+        tmp <- DistMatrix(x@datatype)  # Matrix View
+        for ( i in 1:x$Width() ) {
+          ViewNormal(tmp, cen_mat, 0, x$Height(), i-1, i)
+          Scale(1/factors[i,1], tmp)
+        }
+      attr(cen_mat, "scaled:scale") <- factors
+      }
+      cen_mat
+    }
+)
+
+
+
 setGeneric("princomp")
 
 setMethod("princomp",
@@ -701,23 +847,23 @@ setMethod("princomp",
       cl <- match.call()
       cl[[1L]] <- as.name("princomp")
 
-      if( x$Width() > x$Height() )
+      if ( x$Width() > x$Height() )
         stop("Matrix must have more observations than variables")
       
-      if(cor)
+      if (cor)
         stop("Not available for correlation matrix yet")
 
       sc <- Matrix(x@datatype)
       Ones(sc, x$Width(), 1)
       
-      if(is.null(covmat)){
+      if (is.null(covmat)) {
         cv <- cov(x)
-      }
-      else{
-        if ( class(covmat) == "ElMatrix")
+      } else {
+        if ( class(covmat) == "ElMatrix") {
           cv<-covmat
-        else
+        } else {
           stop("error, expecting an Elemental covariance matrix")
+        }
       }        
       
       cv <- (1 - 1/x$Height()) * cv
@@ -759,8 +905,7 @@ setMethod("princomp",
           list(sdev=sdev, loadings=structure(vectors, class="loadings"),
             center=cen, scale=sc, n.obs=x$Height(), scores=scr,
             call=cl )
-      }
-      else{
+      } else {
         list(sdev=sdev, loadings=ev$vectors,
              center=cen, scale=sc, n.obs=x$Height(), scores=scr,
              call=cl )
@@ -784,10 +929,9 @@ setMethod("princomp",
       sc <- DistMatrix(x@datatype)
       Ones(sc, x$Width(), 1)
       
-      if(is.null(covmat)){
+      if (is.null(covmat)) {
         cv <- cov(x)
-      }
-      else{
+      } else {
         if ( class(covmat) == "ElDistMatrix")
           cv<-covmat
         else
@@ -817,8 +961,7 @@ setMethod("princomp",
       if (scores){
         Ger(-1.0, .mat_ones, cen, cen_mat) 
         scr<-cen_mat %*% ev$vectors
-      }
-      else{
+      } else {
         scr=NULL
       }
       if (rformat){
@@ -844,122 +987,69 @@ setMethod("princomp",
 
 ######### SVD Method
 
+setGeneric("prcomp")
+
 setMethod("prcomp",
     signature(x = "ElMatrix"),
-    function (x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, rformat=FALSE, ...) 
-    {
+    function (x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, rformat=FALSE, ...) {
       if (!is.logical(scale.))
         stop("scale arg not implemented")
       if (!is.null(tol))
         stop("tol arg not implemented")
       cen_mat <- Matrix(x@datatype) #Stores the centered Matrix
-      Copy(x, cen_mat)
       .mat_ones <- Matrix(x@datatype)
       Ones(.mat_ones, x$Height(), 1)
-      if (is.logical(center))
-      {
-        cen <- Matrix(x@datatype)  #Stores the Mean of every column
-        if (center == TRUE)
-        {
-          cen$Resize(x$Width(), 1)
-          Gemv("T", 1/x$Height(), x, .mat_ones, 0.0, cen)
-        }
-        else
-        {
-          Zeros(cen, x$Width(), 1)
-        }
-      }
-      else
-      {
-        if(class(center) == "ElMatrix")
-        {
-          cen = center
-        }
-        else
-        {
-          stop("Not recognized arg center")
-        }
-      }
-      Ger(-1.0, .mat_ones, cen, cen_mat)
+      cen_mat <- scale(x, center, scale.)
+      cen <- attr(cen_mat, "scaled:center")
       U <- Matrix(x@datatype)
       Copy(cen_mat, U)
       s <- Matrix(x@datatype)
       V <- Matrix(x@datatype)
       SVD(U, s, V)      
       s <- (1/sqrt(x$Height()-1)) * s
-      if (rformat)
-      {
-        s <- as.numeric(as.matrix(cen))
+      if (rformat) {
+        s <- as.numeric(as.matrix(s))
         V <- as.matrix(t(V))
+        cen <- as.numeric(as.matrix(cen))
         dimnames(V) <- list( dimnames(V)[[1L]], paste0("PC", seq_len(ncol(V))))
         ans <- list( sdev = s, rotation = V, center = cen)
         class(ans) <- "prcomp"
-      }
-      else
-      {
+      } else {
         ans <- list( sdev = s, rotation = V, center = cen)
       }
-      
       ans
     }
 )
 
 setMethod("prcomp",
     signature(x = "ElDistMatrix"),
-    function (x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, rformat=FALSE, ...) 
-    {
+    function (x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, rformat=FALSE, ...) {
       if (!is.logical(scale.))
         stop("scale arg not implemented")
       if (!is.null(tol))
         stop("tol arg not implemented")
       cen_mat <- DistMatrix(x@datatype) #Stores the centered Matrix
-      Copy(x, cen_mat)
       .mat_ones <- DistMatrix(x@datatype)
       Ones(.mat_ones, x$Height(), 1)
-      if (is.logical(center))
-      {
-        cen <- DistMatrix(x@datatype)  #Stores the Mean of every column
-        if (center == TRUE)
-        {
-          cen$Resize(x$Width(), 1)
-          Gemv("T", 1/x$Height(), x, .mat_ones, 0.0, cen)
-        }
-        else
-        {
-          Zeros(cen, x$Width(), 1)
-        }
-      }
-      else
-      {
-        if(class(center) == "ElDistMatrix")
-        {
-          cen = center
-        }
-        else
-        {
-          stop("Not recognized arg center")
-        }
-      }
-      Ger(-1.0, .mat_ones, cen, cen_mat)
+      cen_mat <- scale(x, center, scale.)
+      cen <- attr(cen_mat, "scaled:center")
       U <- DistMatrix(x@datatype)
       Copy(cen_mat, U)
       s <- DistMatrix(x@datatype)
       V <- DistMatrix(x@datatype)
       SVD(U, s, V)      
       s <- (1/sqrt(x$Height()-1)) * s
-      if (rformat)
-      {
-        s <- as.numeric(as.matrix(cen))
+      if (rformat) {
+        s <- as.numeric(as.matrix(s))
         V <- as.matrix(t(V))
+        cen <- as.numeric(as.matrix(cen))
         dimnames(V) <- list( dimnames(V)[[1L]], paste0("PC", seq_len(ncol(V))))
         ans <- list( sdev = s, rotation = V, center = cen)
         class(ans) <- "prcomp"
-      }
-      else
-      {
+      } else {
         ans <- list( sdev = s, rotation = V, center = cen)
       }
-      
       ans
     }
 )
+
