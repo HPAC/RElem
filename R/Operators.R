@@ -836,7 +836,7 @@ setMethod("scale",
     }
 )
 
-
+#### Cov matrix Method
 
 setGeneric("princomp")
 
@@ -986,36 +986,71 @@ setMethod("princomp",
     })
 
 ######### SVD Method
+setGeneric("svd")
+
+setMethod("svd",
+    signature(x = "ElMatrix"),
+    function (x, nu = min(n, p), nv = min(n, p), LINPACK = FALSE){
+      n <- x$Height()
+      p <- x$Width()
+      if (nu > min(n,p) || nv > min(n,p))
+        stop("Only thin svd is implemented, please change the values of nu / nv")
+      U <- Matrix(x@datatype)
+      Copy(x, U)
+      s <- Matrix(x@datatype)
+      V <- Matrix(x@datatype)
+      SVD(U, s, V)      
+      ans <- list (d = s)
+      if (nv)
+        ans$v <- V
+      if (nu)
+        ans$u <- U
+      ans
+    }
+)
+
+setMethod("svd",
+    signature(x = "ElDistMatrix"),
+    function (x, nu = min(n, p), nv = min(n, p), LINPACK = FALSE){
+      n <- x$Height()
+      p <- x$Width()
+      if (nu > min(n,p) || nv > min(n,p))
+        stop("Only thin svd is implemented, please change the values of nu / nv")
+      U <- DistMatrix(x@datatype)
+      Copy(x, U)
+      s <- DistMatrix(x@datatype)
+      V <- DistMatrix(x@datatype)
+      SVD(U, s, V)      
+      ans <- list (d = s)
+      if (nv)
+        ans$v <- V
+      if (nu)
+        ans$u <- U
+      ans
+    }
+)
+
 
 setGeneric("prcomp")
 
 setMethod("prcomp",
     signature(x = "ElMatrix"),
     function (x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, rformat=FALSE, ...) {
-      if (!is.logical(scale.))
-        stop("scale arg not implemented")
       if (!is.null(tol))
         stop("tol arg not implemented")
-      cen_mat <- Matrix(x@datatype) #Stores the centered Matrix
-      .mat_ones <- Matrix(x@datatype)
-      Ones(.mat_ones, x$Height(), 1)
       cen_mat <- scale(x, center, scale.)
       cen <- attr(cen_mat, "scaled:center")
-      U <- Matrix(x@datatype)
-      Copy(cen_mat, U)
-      s <- Matrix(x@datatype)
-      V <- Matrix(x@datatype)
-      SVD(U, s, V)      
-      s <- (1/sqrt(x$Height()-1)) * s
+      s <- svd(cen_mat, nu=0)
+      s$d <- (1/sqrt(x$Height()-1)) * s$d
       if (rformat) {
-        s <- as.numeric(as.matrix(s))
-        V <- as.matrix(t(V))
+        s$d <- as.numeric(as.matrix(s$d))
+        s$v <- as.matrix(t(s$v))
         cen <- as.numeric(as.matrix(cen))
-        dimnames(V) <- list( dimnames(V)[[1L]], paste0("PC", seq_len(ncol(V))))
-        ans <- list( sdev = s, rotation = V, center = cen)
+        dimnames(s$v) <- list( dimnames(s$v)[[1L]], paste0("PC", seq_len(ncol(s$v))))
+        ans <- list( sdev = s$d, rotation = s$v, center = cen)
         class(ans) <- "prcomp"
       } else {
-        ans <- list( sdev = s, rotation = V, center = cen)
+        ans <- list( sdev = s$d, rotation = s$v, center = cen)
       }
       ans
     }
@@ -1024,30 +1059,21 @@ setMethod("prcomp",
 setMethod("prcomp",
     signature(x = "ElDistMatrix"),
     function (x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, rformat=FALSE, ...) {
-      if (!is.logical(scale.))
-        stop("scale arg not implemented")
       if (!is.null(tol))
         stop("tol arg not implemented")
-      cen_mat <- DistMatrix(x@datatype) #Stores the centered Matrix
-      .mat_ones <- DistMatrix(x@datatype)
-      Ones(.mat_ones, x$Height(), 1)
       cen_mat <- scale(x, center, scale.)
       cen <- attr(cen_mat, "scaled:center")
-      U <- DistMatrix(x@datatype)
-      Copy(cen_mat, U)
-      s <- DistMatrix(x@datatype)
-      V <- DistMatrix(x@datatype)
-      SVD(U, s, V)      
-      s <- (1/sqrt(x$Height()-1)) * s
+      s <- svd(cen_mat, nu=0)
+      s$d <- (1/sqrt(x$Height()-1)) * s$d
       if (rformat) {
-        s <- as.numeric(as.matrix(s))
-        V <- as.matrix(t(V))
+        s$d <- as.numeric(as.matrix(s$d))
+        s$v <- as.matrix(t(s$v))
         cen <- as.numeric(as.matrix(cen))
-        dimnames(V) <- list( dimnames(V)[[1L]], paste0("PC", seq_len(ncol(V))))
-        ans <- list( sdev = s, rotation = V, center = cen)
+        dimnames(s$v) <- list( dimnames(s$v)[[1L]], paste0("PC", seq_len(ncol(s$v))))
+        ans <- list( sdev = s$d, rotation = s$v, center = cen)
         class(ans) <- "prcomp"
       } else {
-        ans <- list( sdev = s, rotation = V, center = cen)
+        ans <- list( sdev = s$d, rotation = s$v, center = cen)
       }
       ans
     }
