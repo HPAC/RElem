@@ -1170,9 +1170,9 @@ SingularValues<-function( MatrixA, Matrixs){
          Matrixs@ptr )
 }
 
-SVD<-function( MatrixA, Matrixs, MatrixV){
-  .Call( paste0("sVD", .getSuffix(MatrixA)), MatrixA@ptr, Matrixs@ptr,
-         MatrixV@ptr )
+SVD<-function( MatrixA, MatrixU, Matrixs, MatrixV){
+  .Call( paste0("sVD", .getSuffix(MatrixA)), MatrixA@ptr, MatrixU@ptr,
+         Matrixs@ptr, MatrixV@ptr )
 }
 
 ###--------
@@ -1940,3 +1940,9 @@ setMethod("$",signature(x="ElDistMatrix"),
               routine(x, ...)
             }
           })
+
+read.table.dist <- function(name){
+        ans <- DistMatrix()
+        Read(ans, name)
+        ans
+        } 

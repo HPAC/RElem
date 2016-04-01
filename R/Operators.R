@@ -320,12 +320,16 @@ setMethod("[","ElMatrix",
 
 setMethod("[","ElDistMatrix",
           function(x, i, j ,...){
+            if (missing(i))
+              i<-1:x$Height()
+            if (missing(j))
+              j<-1:x$Width()
             if (length(i)==1 && length(j)==1){
               MatrixGet(x,i-1,j-1)
             }else{
               g<-Grid()
-              ##DistMatrixGrid(x,g)
-              V<-DistMatrix(g, x@datatype);
+              DistMatrixGrid(x,g)
+              V<-DistMatrix(grid=g, tag=x@datatype);
               ViewNormal(V,x,i[1]-1,tail(i,1), j[1]-1, tail(j,1))
               V
             }
@@ -996,10 +1000,10 @@ setMethod("svd",
       if (nu > min(n,p) || nv > min(n,p))
         stop("Only thin svd is implemented, please change the values of nu / nv")
       U <- Matrix(x@datatype)
-      Copy(x, U)
+      #Copy(x, U)
       s <- Matrix(x@datatype)
       V <- Matrix(x@datatype)
-      SVD(U, s, V)      
+      SVD(x, U, s, V)      
       ans <- list (d = s)
       if (nv)
         ans$v <- V
@@ -1017,10 +1021,10 @@ setMethod("svd",
       if (nu > min(n,p) || nv > min(n,p))
         stop("Only thin svd is implemented, please change the values of nu / nv")
       U <- DistMatrix(x@datatype)
-      Copy(x, U)
+      #Copy(x, U)
       s <- DistMatrix(x@datatype)
       V <- DistMatrix(x@datatype)
-      SVD(U, s, V)      
+      SVD(x, U, s, V)      
       ans <- list (d = s)
       if (nv)
         ans$v <- V
@@ -1064,7 +1068,8 @@ setMethod("prcomp",
       cen_mat <- scale(x, center, scale.)
       cen <- attr(cen_mat, "scaled:center")
       s <- svd(cen_mat, nu=0)
-      s$d <- (1/sqrt(x$Height()-1)) * s$d
+      Scale(1/sqrt(x$Height()-1), s$d)
+      #s$d <- (1/sqrt(x$Height()-1)) * s$d
       if (rformat) {
         s$d <- as.numeric(as.matrix(s$d))
         s$v <- as.matrix(t(s$v))
@@ -1078,4 +1083,4 @@ setMethod("prcomp",
       ans
     }
 )
-
+          
