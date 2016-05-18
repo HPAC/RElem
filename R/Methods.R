@@ -240,7 +240,7 @@ MatrixLDim<-function(MatrixA){
 }
 
 
-MatrixEmpty<-function(MatrixA, freeMem = true){
+MatrixEmpty<-function(MatrixA, freeMem = TRUE){
   .Call( paste0("empty", .getElement(MatrixA)), MatrixA@ptr, as.logical(freeMem) )
 }
 
@@ -258,11 +258,11 @@ MatrixDiagonalLength<-function(MatrixA){
   .Call( paste0("diagonalLength", .getElement(MatrixA)), MatrixA@ptr )
 }
 
-MatrixViewing<-function(MAtrixA){
+MatrixViewing<-function(MatrixA){
   .Call( paste0("viewing", .getElement(MatrixA)), MatrixA@ptr )
 }
 
-MatrixLocked<-function(MAtrixA){
+MatrixLocked<-function(MatrixA){
   .Call( paste0("locked", .getElement(MatrixA)), MatrixA@ptr )
 }
 
@@ -322,12 +322,12 @@ LockedPartitionDown<-function(MatrixA, MatrixAT, MatrixAB, heightAT){
          MatrixAT@ptr, MatrixAB@ptr, as.integer(heightAT) )
 }
 
-PartitionUp<-function(MatrixA, MatrixAT, MatrixAB, heightAT){
+PartitionUp<-function(MatrixA, MatrixAT, MatrixAB, heightAB){
   .Call( paste0("partitionUp", .getSuffix(MatrixA)), MatrixA@ptr, MatrixAT@ptr,
          MatrixAB@ptr, as.integer(heightAB) )
 }
 
-LockedPartitionUp<-function(MatrixA, MatrixAT, MatrixAB, heightAT){
+LockedPartitionUp<-function(MatrixA, MatrixAT, MatrixAB, heightAB){
   .Call( paste0("lockedPartitionUp", .getSuffix(MatrixA)), Matrix@ptr,
          MatrixAT@ptr, MatrixAB@ptr, as.integer(heightAB) )
 }
@@ -638,7 +638,7 @@ Zeros<-function(MatrixA, rows, cols){
 
 ## B = A^H
 Adjoint<-function(MatrixA, MatrixB){
-  .Call( paste0("adjoint", .getSuffix(MatrixA)), alpha, MatrixA@ptr, MatrixB@ptr)
+  .Call( paste0("adjoint", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr)
 }
 
 Axpy<-function(alpha, MatrixX, MatrixY){
@@ -673,7 +673,8 @@ DiagonalScale<-function(side, Matrixd, MatrixX, orientation="NORMAL"){
   }
 }
 
-DiagonalScaleTrapezoid<-function(side, uplo, Matrixd, MatrixX, offset){
+DiagonalScaleTrapezoid<-function(side, uplo, Matrixd, MatrixX, offset,
+                                 orientation="NORMAL"){
   if(MatrixX@datatype=="z"){
     .Call( paste0("diagonalScaleTrapezoid", .getSuffix(MatrixX)), side,
           Matrixd@ptr, MatrixX@ptr, orientation)
@@ -683,7 +684,8 @@ DiagonalScaleTrapezoid<-function(side, uplo, Matrixd, MatrixX, offset){
   }
 }
 
-DiagonalSolve<-function(side, uplo, Matrixd, MatrixX, offset){
+DiagonalSolve<-function(side, uplo, Matrixd, MatrixX, offset,
+                        orientation="NORMAL"){
   if(MatrixX@datatype=="z"){
     .Call( paste0("diagonalSolve", .getSuffix(MatrixX)), side,
           Matrixd@ptr, MatrixX@ptr, orientation)
@@ -964,7 +966,7 @@ Trr<-function( uplo, alpha, Matrixx, Matrixy, MatrixA, conjugate=FALSE){
 }
 
 Trr2<-function( uplo, alpha, MatrixX, MatrixY, MatrixA, conjugate=FALSE){
-  if( Matrixx@datatype == "z"){
+  if( MatrixX@datatype == "z"){
     .Call( paste0("trr2", .getSuffix(MatrixA)), uplo, alpha, MatrixX@ptr,
            MatrixY@ptr, MatrixA@ptr, conjugate )
   }else{
@@ -1090,9 +1092,9 @@ Trstrm<-function( side, uplo, orientationA, diagUnit, alpha, MatrixA, MatrixB ){
          diagUnit, alpha, MatrixA@ptr, MatrixB@ptr )
 }
 
-Trtrmm<-function( uplo, MatrixA ){
+Trtrmm<-function( uplo, MatrixA, conjugate=FALSE){
   if( MatrixA@datatype == "z"){
-    .Call( paste0("trtrmm", .getSuffix(MatrixA)), uplo, MatrixA@ptr, conjugate )
+    .Call( paste0("trtrmm", .getSuffix(MatrixA)), uplo, MatrixA@ptr, as.logical(conjugate) )
   }else{
     .Call( paste0("trtrmm", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
   }
@@ -1142,7 +1144,7 @@ Polar<-function(MatrixA){
   .Call( paste0("polar", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
-HermitianPolar<-function(Uplo, Matrix){
+HermitianPolar<-function(Uplo, MatrixA){
   .Call( paste0("polar", .getSuffix(MatrixA)), Uplo,  MatrixA@ptr )
 }
 
@@ -1570,27 +1572,27 @@ TaggedSort<-function(MatrixA, SortType){
 ###---------------------
 
 BP<-function(MatrixA, Matrixb, Matrixx){
-  .Call( paste0("bP", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+  .Call( paste0("bP", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
          Matrixx@ptr)
 }
 
 BPADMM<-function(MatrixA, Matrixb, Matrixz){
-  .Call( paste0("bP", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+  .Call( paste0("bP", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
          Matrixz@ptr)
 }
 
 CP<-function(MatrixA, Matrixb, Matrixx){
-  .Call( paste0("cP", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+  .Call( paste0("cP", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
          Matrixx@ptr)
 }
 
 DS<-function(MatrixA, Matrixb, lambda, Matrixx){
-  .Call( paste0("dS", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+  .Call( paste0("dS", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
          lambda, Matrixx@ptr)
 }
 
 LAV<-function(MatrixA, Matrixb, Matrixx){
-  .Call( paste0("lAV", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+  .Call( paste0("lAV", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
          Matrixx@ptr)
 }
 
@@ -1615,17 +1617,17 @@ NNLSADMM<-function(MatrixA, MatrixY, MatrixZ){
 }
 
 BPDN<-function(MatrixA, Matrixb, lambda, Matrixx){
-  .Call( paste0("bPDN", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+  .Call( paste0("bPDN", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
          lambda, Matrixx@ptr)
 }
 
 BPDNADMM<-function(MatrixA, Matrixb, lambda, Matrixx){
-  .Call( paste0("bPDNADMM", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+  .Call( paste0("bPDNADMM", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
          lambda, Matrixx@ptr)
 }
 
 EN<-function(MatrixA, Matrixb, lambda1, lambda2, Matrixx){
-  .Call( paste0("eN", .getSuffix(MatrixA)), MattixA@ptr, Matrixb@ptr,
+  .Call( paste0("eN", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
          lambda1, lambda2, Matrixx@ptr)
 }
 
@@ -1657,7 +1659,7 @@ TV<-function(Matrixb, lambda, Matrixx){
 
 LPDirect<-function(MatrixA, Matrixb, Matrixc, Matrixx){
   .Call( paste0("lPDirect", .getSuffix(MatrixA)), MatrixA@ptr, Matrixb@ptr,
-         Matrixz@ptr, Matrixx@ptr)
+         Matrixc@ptr, Matrixx@ptr)
 }
 
 LPAffine<-function(MatrixA, MatrixG, Matrixb, Matrixc, Matrixh, Matrixx,
