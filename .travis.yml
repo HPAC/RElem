@@ -8,9 +8,10 @@ before_install:
  - sudo apt-get install -qq -y gcc-5 g++-5 gfortran-5 libstdc++-5-dev
  - sudo apt-get install -q mpich2 libmpich2-3 libmpich2-dev;
  - if test x$CC = xgcc; then export CC=gcc-5; export CXX=g++-5; export F77=gfortran-5; fi
+ - curl https://cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz | sudo tar -x -z --strip-components 1 -C /usr
  - sudo hostname localhost
  - git clone git://github.com/elemental/Elemental.git
  - cd Elemental
  - mkdir build && cd build
- - cmake .. -DCMAKE_INSTALL_PREFIX=~/local/El;
+ - cmake .. -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_C_COMPILER=$CC -DCMAKE_Fortran_COMPILER=$F77 -DCMAKE_INSTALL_PREFIX=~/local/El;
  - make -j2 && sudo make install
