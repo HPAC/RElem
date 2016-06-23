@@ -1177,6 +1177,16 @@ SVD<-function( MatrixA, MatrixU, Matrixs, MatrixV){
          Matrixs@ptr, MatrixV@ptr )
 }
 
+TSQRSVD<-function( MatrixA, MatrixU, Matrixs, MatrixV){
+  if (.isDistMatrix(MatrixA)){
+    stop("TSQRSVD is only implemented for distributed matrices")
+  }
+  .Call( paste0("sVD", .getSuffix(MatrixA)), MatrixA@ptr, MatrixU@ptr,
+         Matrixs@ptr, MatrixV@ptr )
+}
+
+
+
 ###--------
 ### Solvers
 ###--------
@@ -1745,7 +1755,7 @@ SoftThreshold<-function(MatrixA, rho, relative){
 ### I/O functions
 #################
 
-Print<-function(MatrixA,Title=""){
+Print<-function(MatrixA, Title=""){
   .Call( paste0("print", .getSuffix(MatrixA)), MatrixA@ptr, as.character(Title) )
 }
 

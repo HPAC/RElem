@@ -441,22 +441,22 @@ SEXP schurDecompDist_z
 /* SVD
  */
 
-SEXP singuarValues_d( SEXP RptrA, SEXP Rptrs){
+SEXP singularValues_d( SEXP RptrA, SEXP Rptrs){
   ElSingularValues_d( toMatrix_d(RptrA), toMatrix_d(Rptrs) );
   return R_NilValue;
 }
 
-SEXP singuarValues_z( SEXP RptrA, SEXP Rptrs){
+SEXP singularValues_z( SEXP RptrA, SEXP Rptrs){
   ElSingularValues_z( toMatrix_z(RptrA), toMatrix_d(Rptrs) );
   return R_NilValue;
 }
 
-SEXP singuarValuesDist_d( SEXP RptrA, SEXP Rptrs){
+SEXP singularValuesDist_d( SEXP RptrA, SEXP Rptrs){
   ElSingularValuesDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(Rptrs) );
   return R_NilValue;
 }
 
-SEXP singuarValuesDist_z( SEXP RptrA, SEXP Rptrs){
+SEXP singularValuesDist_z( SEXP RptrA, SEXP Rptrs){
   ElSingularValuesDist_z( toDistMatrix_z(RptrA), toDistMatrix_d(Rptrs) );
   return R_NilValue;
 }
@@ -484,3 +484,30 @@ SEXP sVDDist_z( SEXP RptrA, SEXP RptrU, SEXP Rptrs, SEXP RptrV){
                toDistMatrix_d(Rptrs), toDistMatrix_z(RptrV) );
   return R_NilValue;
 }
+
+SEXP tSQRSVDDist_d( SEXP RptrA, SEXP RptrU, SEXP Rptrs, SEXP RptrV){
+  ElTSQRSVD_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrU), toDistMatrix_d(Rptrs),
+	   toDistMatrix_d(RptrV) );
+  return R_NilValue;
+}
+
+SEXP tSQRSVDDist_z( SEXP RptrA, SEXP RptrU, SEXP Rptrs, SEXP RptrV){
+  ElTSQRSVD_z( toDistMatrix_z(RptrA), toDistMatrix_z(RptrU), toDistMatrix_d(Rptrs),
+	   toDistMatrix_z(RptrV) );
+  return R_NilValue;
+}
+
+/*
+SEXP tSQRSVDDist_d( SEXP RptrA, SEXP RptrU, SEXP Rptrs, SEXP RptrV){
+  ElTSQRSVDDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrU), 
+               toDistMatrix_d(Rptrs), toDistMatrix_d(RptrV) );
+  return R_NilValue;
+}
+
+SEXP tSQRSVDDist_z( SEXP RptrA, SEXP RptrU, SEXP Rptrs, SEXP RptrV){
+  ElTSQRSVDDist_z( toDistMatrix_z(RptrA), toDistMatrix_z(RptrU), 
+               toDistMatrix_d(Rptrs), toDistMatrix_z(RptrV) );
+  return R_NilValue;
+}
+
+*/

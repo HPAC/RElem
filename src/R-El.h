@@ -2,127 +2,128 @@
 #include "R.h"
 #include "Rdefines.h"
 
-inline ElMatrix_i toMatrix_i(SEXP Rptr){
+static inline ElMatrix_i toMatrix_i(SEXP Rptr){
   return *(ElMatrix_i *)R_ExternalPtrAddr(Rptr);
 }
-inline ElMatrix_i* toMatrix_i_p(SEXP Rptr){
+static inline ElMatrix_i* toMatrix_i_p(SEXP Rptr){
   return (ElMatrix_i *)R_ExternalPtrAddr(Rptr);
 }
 
-inline ElMatrix_s toMatrix_s(SEXP Rptr){
+static inline ElMatrix_s toMatrix_s(SEXP Rptr){
   return *(ElMatrix_s *)R_ExternalPtrAddr(Rptr);
 }
-inline ElMatrix_s* toMatrix_s_p(SEXP Rptr){
+static inline ElMatrix_s* toMatrix_s_p(SEXP Rptr){
   return (ElMatrix_s *)R_ExternalPtrAddr(Rptr);
 }
 
-inline ElMatrix_d toMatrix_d(SEXP Rptr){
+static inline ElMatrix_d toMatrix_d(SEXP Rptr){
   return *(ElMatrix_d *)R_ExternalPtrAddr(Rptr);
 }
-inline ElMatrix_d* toMatrix_d_p(SEXP Rptr){
+static inline ElMatrix_d* toMatrix_d_p(SEXP Rptr){
   return (ElMatrix_d *)R_ExternalPtrAddr(Rptr);
 }
 
-inline ElMatrix_c toMatrix_c(SEXP Rptr){
+static inline ElMatrix_c toMatrix_c(SEXP Rptr){
   return *(ElMatrix_c *)R_ExternalPtrAddr(Rptr);
 }
-inline ElMatrix_c* toMatrix_c_p(SEXP Rptr){
+static inline ElMatrix_c* toMatrix_c_p(SEXP Rptr){
   return (ElMatrix_c *)R_ExternalPtrAddr(Rptr);
 }
 
-inline ElMatrix_z toMatrix_z(SEXP Rptr){
+static inline ElMatrix_z toMatrix_z(SEXP Rptr){
   return *(ElMatrix_z *)R_ExternalPtrAddr(Rptr);
 }
-inline ElMatrix_z* toMatrix_z_p(SEXP Rptr){
+static inline ElMatrix_z* toMatrix_z_p(SEXP Rptr){
   return (ElMatrix_z *)R_ExternalPtrAddr(Rptr);
 }
 
 /*
-inline ElConstMatrix_d toConstMatrix_d(SEXP Rptr){
+static inline ElConstMatrix_d toConstMatrix_d(SEXP Rptr){
   return *(ElConstMatrix_d*)R_ExternalPtrAddr(Rptr);
 }
 */
 
-inline ElDistMatrix_i toDistMatrix_i(SEXP Rptr){
+static inline ElDistMatrix_i toDistMatrix_i(SEXP Rptr){
   return *(ElDistMatrix_i *)R_ExternalPtrAddr(Rptr);
 }
-inline ElDistMatrix_i* toDistMatrix_i_p(SEXP Rptr){
+static inline ElDistMatrix_i* toDistMatrix_i_p(SEXP Rptr){
   return (ElDistMatrix_i *)R_ExternalPtrAddr(Rptr);
 }
 
-inline ElDistMatrix_s toDistMatrix_s(SEXP Rptr){
+static inline ElDistMatrix_s toDistMatrix_s(SEXP Rptr){
   return *(ElDistMatrix_s *)R_ExternalPtrAddr(Rptr);
 }
-inline ElDistMatrix_s* toDistMatrix_s_p(SEXP Rptr){
+static inline ElDistMatrix_s* toDistMatrix_s_p(SEXP Rptr){
   return (ElDistMatrix_s *)R_ExternalPtrAddr(Rptr);
 }
 
-inline ElDistMatrix_d toDistMatrix_d(SEXP Rptr){
+static inline ElDistMatrix_d toDistMatrix_d(SEXP Rptr){
   return *(ElDistMatrix_d *)R_ExternalPtrAddr(Rptr);
 }
-inline ElDistMatrix_d* toDistMatrix_d_p(SEXP Rptr){
+static inline ElDistMatrix_d* toDistMatrix_d_p(SEXP Rptr){
   return (ElDistMatrix_d *)R_ExternalPtrAddr(Rptr);
 }
 
-inline ElDistMatrix_c toDistMatrix_c(SEXP Rptr){
+static inline ElDistMatrix_c toDistMatrix_c(SEXP Rptr){
   return *(ElDistMatrix_c *)R_ExternalPtrAddr(Rptr);
 }
-inline ElDistMatrix_c* toDistMatrix_c_p(SEXP Rptr){
+static inline ElDistMatrix_c* toDistMatrix_c_p(SEXP Rptr){
   return (ElDistMatrix_c *)R_ExternalPtrAddr(Rptr);
 }
 
-inline ElDistMatrix_z toDistMatrix_z(SEXP Rptr){
+static inline ElDistMatrix_z toDistMatrix_z(SEXP Rptr){
   return *(ElDistMatrix_z *)R_ExternalPtrAddr(Rptr);
 }
-inline ElDistMatrix_z* toDistMatrix_z_p(SEXP Rptr){
+
+static inline ElDistMatrix_z* toDistMatrix_z_p(SEXP Rptr){
   return (ElDistMatrix_z *)R_ExternalPtrAddr(Rptr);
 }
 
 /*
-inline ElConstDistMatrix_d toConstDistMatrix_d(SEXP Rptr){
+static inline ElConstDistMatrix_d toConstDistMatrix_d(SEXP Rptr){
   return *(ElConstDistMatrix_d *)R_ExternalPtrAddr(Rptr);
 }
 */
 
-inline ElGrid toGrid(SEXP Rgrid){
+static inline ElGrid toGrid(SEXP Rgrid){
   return *(ElGrid *)R_ExternalPtrAddr(Rgrid);
 }
 
-inline ElGrid* toGrid_p(SEXP Rgrid){
+static inline ElGrid* toGrid_p(SEXP Rgrid){
   return (ElGrid *)R_ExternalPtrAddr(Rgrid);
 }
 
 /*
-inline ElConstGrid toConstGrid(SEXP Rgrid){
+static inline ElConstGrid toConstGrid(SEXP Rgrid){
   return *(ElConstGrid *)R_ExternalPtrAddr(Rgrid);
 }
 */
 
-inline ElInt toElInt(SEXP Rint){
+static inline ElInt toElInt(SEXP Rint){
   return (ElInt)INTEGER(Rint)[0];
 }
 
-inline ElInt* toElInt_p(SEXP Rint){
+static inline ElInt* toElInt_p(SEXP Rint){
   return (ElInt *)INTEGER(Rint);
 }
 
-inline double toDouble(SEXP Rdouble){
+static inline double toDouble(SEXP Rdouble){
   return REAL(Rdouble)[0];
 }
 
-inline double* toDouble_p(SEXP Rdouble){
+static inline double* toDouble_p(SEXP Rdouble){
   return REAL(Rdouble);
 }
 
-inline const char* toChar_p(SEXP Rtext){
+static inline const char* toChar_p(SEXP Rtext){
   return (const char*) CHAR(STRING_ELT(Rtext,0));
 }
 
-inline bool toBool(SEXP Rlog){
+static inline bool toBool(SEXP Rlog){
   return (bool)LOGICAL(Rlog)[0];
 }
 
-inline complex_double toDComplex(SEXP Rcplex){
+static inline complex_double toDComplex(SEXP Rcplex){
   return (complex_double)(COMPLEX(Rcplex)[0].r + \
 			  COMPLEX(Rcplex)[0].i * _Complex_I);
 }
@@ -147,11 +148,11 @@ bool isDestroyed(SEXP Rptr);
 MPI_Datatype parseMPIDatatype(SEXP type);
 MPI_Op parseMPIOp(SEXP Op);
 
-inline MPI_Comm toComm(SEXP Rcomm){
+static inline MPI_Comm toComm(SEXP Rcomm){
   return *(MPI_Comm *)R_ExternalPtrAddr(Rcomm);
 }
 
-inline MPI_Comm *toComm_p(SEXP Rcomm){
+static inline MPI_Comm *toComm_p(SEXP Rcomm){
   return (MPI_Comm *)R_ExternalPtrAddr(Rcomm);
 }
 

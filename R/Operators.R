@@ -994,13 +994,14 @@ setGeneric("svd")
 
 setMethod("svd",
     signature(x = "ElMatrix"),
-    function (x, nu = min(n, p), nv = min(n, p), LINPACK = FALSE){
+    function (x, nu = min(x$Height(), x$Width()),
+              nv = min(x$Height(), x$Width()),
+              LINPACK = FALSE){
       n <- x$Height()
       p <- x$Width()
       if (nu > min(n,p) || nv > min(n,p))
         stop("Only thin svd is implemented, please change the values of nu / nv")
       U <- Matrix(x@datatype)
-      #Copy(x, U)
       s <- Matrix(x@datatype)
       V <- Matrix(x@datatype)
       SVD(x, U, s, V)      
@@ -1015,13 +1016,14 @@ setMethod("svd",
 
 setMethod("svd",
     signature(x = "ElDistMatrix"),
-    function (x, nu = min(n, p), nv = min(n, p), LINPACK = FALSE){
+    function (x, nu = min(x$Height(), x$Width()), 
+              nv = min(x$Height(), x$Width()),
+              LINPACK = FALSE){
       n <- x$Height()
       p <- x$Width()
       if (nu > min(n,p) || nv > min(n,p))
         stop("Only thin svd is implemented, please change the values of nu / nv")
       U <- DistMatrix(x@datatype)
-      #Copy(x, U)
       s <- DistMatrix(x@datatype)
       V <- DistMatrix(x@datatype)
       SVD(x, U, s, V)      
@@ -1068,8 +1070,7 @@ setMethod("prcomp",
       cen_mat <- scale(x, center, scale.)
       cen <- attr(cen_mat, "scaled:center")
       s <- svd(cen_mat, nu=0)
-      Scale(1/sqrt(x$Height()-1), s$d)
-      #s$d <- (1/sqrt(x$Height()-1)) * s$d
+      s$d <- (1/sqrt(x$Height()-1)) * s$d
       if (rformat) {
         s$d <- as.numeric(as.matrix(s$d))
         s$v <- as.matrix(t(s$v))
@@ -1083,4 +1084,13 @@ setMethod("prcomp",
       ans
     }
 )
+
+#setGeneric("prcomp2")
+
+#setMethod("prcomp2",
+#    signature(x = "ElDistMatrix"),
+#    function(x){
+#      sdev <-DistMatrix()
+                  
+          
           
