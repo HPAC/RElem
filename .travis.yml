@@ -1,17 +1,14 @@
 language: r
 compiler:
  - gcc
-env:
- - MPI=mpich2
 
 before_install:
  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
  - sudo apt-get update -qq -y
  - sudo apt-get install -qq -y gcc-5 g++-5 gfortran-5 libstdc++-5-dev
- - sh travis/install-mpi.sh $MPI
+ - sudo apt-get install -q mpich2 libmpich2-3 libmpich2-dev;
  - if test x$CC = xgcc; then export CC=gcc-5; export CXX=g++-5; export F77=gfortran-5; fi
  - sudo hostname localhost
- - test $MPI == mpich2 && MPIEXEC='mpiexec -launcher fork' || true
  - git clone git://github.com/elemental/Elemental.git
  - cd Elemental
  - mkdir build && cd build
