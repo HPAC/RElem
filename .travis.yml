@@ -14,3 +14,5 @@ before_install:
  - cmake .. -DCMAKE_CXX_COMPILER=g++-5 -DCMAKE_C_COMPILER=gcc-5 -DCMAKE_Fortran_COMPILER=gfortran-5 -DCMAKE_INSTALL_PREFIX=~/local/El;
  - make -j2 && sudo make install
  - cd ../..
+ - rm -rf Elemental
+ - export LD_LIBRARY_PATH=~/local/El/lib
