@@ -1,5 +1,6 @@
 #R-El
 
+[![Build Status](https://travis-ci.org/rocanale/R-Elemental.svg?branch=master)](https://travis-ci.org/rocanale/R-Elemental)
 This R package links R and the dense linear algebra library
 [Elemental](http://www.libelemental.org), providing Elemental functionality in
 R.  It is based on the C-interface included in Elemental v0.85 and on-wards.

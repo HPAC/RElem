@@ -1,6 +1,9 @@
 language: r
+
 compiler:
  - gcc
+
+warnings_are_errors: false
 
 before_install:
  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
