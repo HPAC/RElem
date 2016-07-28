@@ -19,66 +19,62 @@ ElHermitianEigSubset_d subsetParamsHermitian_d(SEXP from, SEXP to){
 /* Hermitian Tridiagonal
  */
 
-SEXP hermitianTridiagEig_d(SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP sort){
+SEXP hermitianTridiagEig_d(SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw){
   ElHermitianTridiagEig_d( toMatrix_d(Rptrd), toMatrix_d(RptrdSub),
-                           toMatrix_d(Rptrw), parseSort(sort) );
+                           toMatrix_d(Rptrw) );
   return R_NilValue;
 }
 
-SEXP hermitianTridiagEig_z(SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP sort){
+SEXP hermitianTridiagEig_z(SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw){
   ElHermitianTridiagEig_z( toMatrix_d(Rptrd), toMatrix_z(RptrdSub),
-                           toMatrix_d(Rptrw), parseSort(sort) );
+                           toMatrix_d(Rptrw) );
   return R_NilValue;
 }
 
 SEXP hermitianTridiagEigDist_d
-( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP sort){
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw){
   ElHermitianTridiagEigDist_d( toDistMatrix_d(Rptrd), toDistMatrix_d(RptrdSub),
-                               toDistMatrix_d(Rptrw), parseSort(sort) );
+                               toDistMatrix_d(Rptrw));
   return R_NilValue;
 }
 
 SEXP hermitianTridiagEigDist_z
-( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP sort){
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw){
   ElHermitianTridiagEigDist_z( toDistMatrix_d(Rptrd), toDistMatrix_z(RptrdSub),
-                               toDistMatrix_d(Rptrw), parseSort(sort) );
+                               toDistMatrix_d(Rptrw) );
   return R_NilValue;
 }
 
 SEXP hermitianTridiagEigPair_d
-( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ, SEXP sort){
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ){
   ElHermitianTridiagEigPair_d( toMatrix_d(Rptrd), toMatrix_d(RptrdSub),
-                               toMatrix_d(Rptrw), toMatrix_d(RptrZ), 
-                               parseSort(sort) );
+                               toMatrix_d(Rptrw), toMatrix_d(RptrZ));
   return R_NilValue;
 }
 
 SEXP hermitianTridiagEigPair_z
-( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ, SEXP sort){
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ){
   ElHermitianTridiagEigPair_z( toMatrix_d(Rptrd), toMatrix_z(RptrdSub),
-                               toMatrix_d(Rptrw), toMatrix_z(RptrZ), 
-                               parseSort(sort) );
+                               toMatrix_d(Rptrw), toMatrix_z(RptrZ));
   return R_NilValue;
 }
 
 SEXP hermitianTridiagEigPairDist_d
-( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ, SEXP sort){
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ){
   ElHermitianTridiagEigPairDist_d( toDistMatrix_d(Rptrd), 
                                    toDistMatrix_d(RptrdSub),
-                                   toDistMatrix_d(Rptrw), toDistMatrix_d(RptrZ),
-                                   parseSort(sort) );
+                                   toDistMatrix_d(Rptrw), toDistMatrix_d(RptrZ));  
   return R_NilValue;
 }
 
 SEXP hermitianTridiagEigPairDist_z
-( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ, SEXP sort){
+( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP RptrZ){
   ElHermitianTridiagEigPairDist_z( toDistMatrix_d(Rptrd), 
                                    toDistMatrix_z(RptrdSub),
-                                   toDistMatrix_d(Rptrw), toDistMatrix_z(RptrZ),
-                                   parseSort(sort) );
+                                   toDistMatrix_d(Rptrw), toDistMatrix_z(RptrZ));
   return R_NilValue;
 }
-
+/*
 SEXP hermitianTridiagEigPartial_d
 ( SEXP Rptrd, SEXP RptrdSub, SEXP Rptrw, SEXP sort, SEXP idx1, SEXP idx2){
   ElHermitianEigSubset_d subset =  subsetParamsHermitian_d(idx1, idx2);
@@ -164,64 +160,61 @@ SEXP hermitianTridiagEigPairPartialDist_z
                                           subset );
   return R_NilValue;
 }
-
+*/
 /* Hermitian
  */
 
-SEXP hermitianEig_d(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP sort){
-  ElHermitianEig_d( parseUpLo(uplo), toMatrix_d(RptrA), toMatrix_d(Rptrw), 
-                    parseSort(sort) );
+SEXP hermitianEig_d(SEXP uplo, SEXP RptrA, SEXP Rptrw){
+  ElHermitianEig_d( parseUpLo(uplo), toMatrix_d(RptrA), toMatrix_d(Rptrw));
   return R_NilValue;
 }
 
-SEXP hermitianEig_z(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP sort){
-  ElHermitianEig_z( parseUpLo(uplo), toMatrix_z(RptrA), toMatrix_d(Rptrw), 
-                    parseSort(sort) );
+SEXP hermitianEig_z(SEXP uplo, SEXP RptrA, SEXP Rptrw){
+  ElHermitianEig_z( parseUpLo(uplo), toMatrix_z(RptrA), toMatrix_d(Rptrw));
   return R_NilValue;
 }
 
-SEXP hermitianEigDist_d(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP sort){
+SEXP hermitianEigDist_d(SEXP uplo, SEXP RptrA, SEXP Rptrw){
   ElHermitianEigDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA), 
-                        toDistMatrix_d(Rptrw), parseSort(sort) );
+                        toDistMatrix_d(Rptrw));
   return R_NilValue;
 }
 
-SEXP hermitianEigDist_z(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP sort){
+SEXP hermitianEigDist_z(SEXP uplo, SEXP RptrA, SEXP Rptrw){
   ElHermitianEigDist_z( parseUpLo(uplo), toDistMatrix_z(RptrA), 
-                        toDistMatrix_d(Rptrw), parseSort(sort) );
+                        toDistMatrix_d(Rptrw));
   return R_NilValue;
 }
 
 SEXP hermitianEigPair_d
-(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ, SEXP sort){
+(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ){
   ElHermitianEigPair_d( parseUpLo(uplo), toMatrix_d(RptrA), toMatrix_d(Rptrw), 
-                        toMatrix_d(RptrZ), parseSort(sort) );
+                        toMatrix_d(RptrZ));
   return R_NilValue;
 }
 
 SEXP hermitianEigPair_z
-(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ, SEXP sort){
+(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ){
   ElHermitianEigPair_z( parseUpLo(uplo), toMatrix_z(RptrA), toMatrix_d(Rptrw), 
-                        toMatrix_z(RptrZ), parseSort(sort) );
+                        toMatrix_z(RptrZ));
   return R_NilValue;
 }
 
 SEXP hermitianEigPairDist_d
-(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ, SEXP sort){
+(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ){
   ElHermitianEigPairDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA),
-                            toDistMatrix_d(Rptrw), toDistMatrix_d(RptrZ),
-                            parseSort(sort) );
+                            toDistMatrix_d(Rptrw), toDistMatrix_d(RptrZ));
   return R_NilValue;
 }
 
 SEXP hermitianEigPairDist_z
-(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ, SEXP sort){
+(SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP RptrZ){
   ElHermitianEigPairDist_z( parseUpLo(uplo), toDistMatrix_z(RptrA),
-                            toDistMatrix_d(Rptrw), toDistMatrix_z(RptrZ),
-                            parseSort(sort) );
+                            toDistMatrix_d(Rptrw), toDistMatrix_z(RptrZ));
   return R_NilValue;
 }
 
+/*
 SEXP hermitianEigPartial_d
 ( SEXP uplo, SEXP RptrA, SEXP Rptrw, SEXP sort, SEXP idx1, SEXP idx2){
   ElHermitianEigSubset_d subset =  subsetParamsHermitian_d(idx1, idx2);
@@ -296,6 +289,7 @@ SEXP hermitianEigPairPartialDist_z
                                    parseSort(sort), subset );
   return R_NilValue;
 }
+*/
 
 /*Not complete...
  */

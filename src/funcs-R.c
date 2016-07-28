@@ -21,24 +21,24 @@ SEXP inverseDist_z( SEXP RptrA){
 }
 
 SEXP inverseAfterLUPartialPiv_d( SEXP RptrA, SEXP Rptrp){
-  ElInverseAfterLUPartialPiv_d( toMatrix_d(RptrA), toMatrix_i(Rptrp) );
+  ElInverseAfterLUPartialPiv_d( toMatrix_d(RptrA), toPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP inverseAfterLUPartialPiv_z( SEXP RptrA, SEXP Rptrp){
-  ElInverseAfterLUPartialPiv_z( toMatrix_z(RptrA), toMatrix_i(Rptrp) );
+  ElInverseAfterLUPartialPiv_z( toMatrix_z(RptrA), toPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP inverseAfterLUPartialPivDist_d( SEXP RptrA, SEXP Rptrp){
   ElInverseAfterLUPartialPivDist_d( toDistMatrix_d(RptrA),
-				    toDistMatrix_i(Rptrp) );
+				    toDistPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP inverseAfterLUPartialPivDist_z( SEXP RptrA, SEXP Rptrp){
   ElInverseAfterLUPartialPivDist_z( toDistMatrix_z(RptrA),
-				    toDistMatrix_i(Rptrp) );
+				    toDistPermutation(Rptrp) );
   return R_NilValue;
 }
 

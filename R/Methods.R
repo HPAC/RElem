@@ -1119,26 +1119,29 @@ TwoSidedTrsm<-function( uplo, diagUnit, MatrixA, MatrixB ){
 ### Spectral
 ###---------
 
-HermitianEig<-function(Uplo, MatrixA, EigenValues, Sort="D"){
+HermitianEig<-function(Uplo, MatrixA, EigenValues){
   .Call( paste0("hermitianEig", .getSuffix(MatrixA)), Uplo, MatrixA@ptr,
         EigenValues, Sort )
 }
 
-HermitianEigPair<-function(Uplo, MatrixA, EigenValues, EigenVectors, Sort="D"){
+HermitianEigPair<-function(Uplo, MatrixA, EigenValues, EigenVectors){
   .Call( paste0("hermitianEigPair", .getSuffix(MatrixA)) , Uplo, MatrixA@ptr,
         EigenValues@ptr, EigenVectors@ptr, Sort )
 }
 
-HermitianEigPartial<-function(Uplo, MatrixA, EigenValues, Sort, From, To){
-  .Call( paste0("hermitianEigPartial", .getSuffix(MatrixA)), Uplo, MatrixA@ptr,
-        EigenValues@ptr, Sort, From, To )
-}
+# Disable Partial Eigenvalues
+#
 
-HermitianEigPairPartial<-function(Uplo, MatrixA, EigenValues, EigenVectors,
-                                  Sort, From, To){
-  .Call( paste0("hermitianEigPairPartial", .getSuffix(MatrixA)), Uplo, MatrixA@ptr,
-        EigenValues@ptr, EigenVectors@ptr, Sort, From, To )
-}
+# HermitianEigPartial<-function(Uplo, MatrixA, EigenValues, Sort, From, To){
+#   .Call( paste0("hermitianEigPartial", .getSuffix(MatrixA)), Uplo, MatrixA@ptr,
+#         EigenValues@ptr, Sort, From, To )
+# }
+
+# HermitianEigPairPartial<-function(Uplo, MatrixA, EigenValues, EigenVectors,
+#                                   Sort, From, To){
+#   .Call( paste0("hermitianEigPairPartial", .getSuffix(MatrixA)), Uplo, MatrixA@ptr,
+#         EigenValues@ptr, EigenVectors@ptr, Sort, From, To )
+# }
 
 Polar<-function(MatrixA){
   .Call( paste0("polar", .getSuffix(MatrixA)), MatrixA@ptr )
