@@ -79,11 +79,29 @@ static inline ElDistMatrix_z* toDistMatrix_z_p(SEXP Rptr){
   return (ElDistMatrix_z *)R_ExternalPtrAddr(Rptr);
 }
 
+
 /*
 static inline ElConstDistMatrix_d toConstDistMatrix_d(SEXP Rptr){
   return *(ElConstDistMatrix_d *)R_ExternalPtrAddr(Rptr);
 }
 */
+
+static inline ElDistPermutation toDistPermutation(SEXP Rptr){
+  return *(ElDistPermutation *)R_ExternalPtrAddr(Rptr);
+}
+
+static inline ElDistPermutation* toDistPermutation_p(SEXP Rptr){
+  return (ElDistPermutation *)R_ExternalPtrAddr(Rptr);
+}
+
+static inline ElPermutation toPermutation(SEXP Rptr){
+  return *(ElPermutation *)R_ExternalPtrAddr(Rptr);
+}
+
+static inline ElPermutation* toPermutation_p(SEXP Rptr){
+  return (ElPermutation *)R_ExternalPtrAddr(Rptr);
+}
+
 
 static inline ElGrid toGrid(SEXP Rgrid){
   return *(ElGrid *)R_ExternalPtrAddr(Rgrid);
