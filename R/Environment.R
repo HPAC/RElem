@@ -29,8 +29,6 @@ Initialize<-function(){
 Finalize<-function(){
   if( Initialized() )
     .Call("finalize")
-  else
-    cat("Not initialized\n");
 }
 
 WorldRank<-function(){

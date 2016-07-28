@@ -1,2 +1,4 @@
 exportPattern("^[[:alpha:]]+")
+export(".onLoad")
+export(".onDetach")
 useDynLib(RElem)
