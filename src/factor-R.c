@@ -85,31 +85,31 @@ SEXP reverseCholeskyDist_z( SEXP uplo, SEXP RptrA){
 }
 
 SEXP choleskyPiv_d( SEXP uplo, SEXP RptrA, SEXP Rptrp){
-  ElCholeskyPiv_d( parseUpLo(uplo), toMatrix_d(RptrA), toMatrix_i(Rptrp) );
+  ElCholeskyPiv_d( parseUpLo(uplo), toMatrix_d(RptrA), toPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP choleskyPiv_z( SEXP uplo, SEXP RptrA, SEXP Rptrp){
-  ElCholeskyPiv_z( parseUpLo(uplo), toMatrix_z(RptrA), toMatrix_i(Rptrp) );
+  ElCholeskyPiv_z( parseUpLo(uplo), toMatrix_z(RptrA), toPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP choleskyPivDist_d( SEXP uplo, SEXP RptrA, SEXP Rptrp){
   ElCholeskyPivDist_d( parseUpLo(uplo), toDistMatrix_d(RptrA),
-                       toDistMatrix_i(Rptrp) );
+                       toDistPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP choleskyPivDist_z( SEXP uplo, SEXP RptrA, SEXP Rptrp){
   ElCholeskyPivDist_z( parseUpLo(uplo), toDistMatrix_z(RptrA),
-                       toDistMatrix_i(Rptrp) );
+                       toDistPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP solveAfterCholeskyPiv_d
 ( SEXP uplo, SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP RptrB){
   ElSolveAfterCholeskyPiv_d( parseUpLo(uplo), parseOrientation(orientation),
-			     toMatrix_d(RptrA), toMatrix_i(Rptrp),
+			     toMatrix_d(RptrA), toPermutation(Rptrp),
 			     toMatrix_d(RptrB) );
   return R_NilValue;
 }
@@ -117,7 +117,7 @@ SEXP solveAfterCholeskyPiv_d
 SEXP solveAfterCholeskyPiv_z
 ( SEXP uplo, SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP RptrB){
   ElSolveAfterCholeskyPiv_z( parseUpLo(uplo), parseOrientation(orientation),
-			     toMatrix_z(RptrA), toMatrix_i(Rptrp),
+			     toMatrix_z(RptrA), toPermutation(Rptrp),
 			     toMatrix_z(RptrB) );
   return R_NilValue;
 }
@@ -127,7 +127,7 @@ SEXP solveAfterCholeskyPivDist_d
   ElSolveAfterCholeskyPivDist_d( parseUpLo(uplo), 
 				 parseOrientation(orientation),
 				 toDistMatrix_d(RptrA), 
-				 toDistMatrix_i(Rptrp),
+				 toDistPermutation(Rptrp),
 				 toDistMatrix_d(RptrB) );
   return R_NilValue;
 }
@@ -137,7 +137,7 @@ SEXP solveAfterCholeskyPivDist_z
   ElSolveAfterCholeskyPivDist_z( parseUpLo(uplo), 
 				 parseOrientation(orientation),
 				 toDistMatrix_z(RptrA), 
-				 toDistMatrix_i(Rptrp),
+				 toDistPermutation(Rptrp),
 				 toDistMatrix_z(RptrB) );
   return R_NilValue;
 }
@@ -211,25 +211,25 @@ SEXP lDLDist_z( SEXP RptrA, SEXP conjugate ){
 }
 
 SEXP lDLPiv_d( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp){
-  ElLDLPiv_d( toMatrix_d(RptrA), toMatrix_d(RptrdSub), toMatrix_i(Rptrp) );
+  ElLDLPiv_d( toMatrix_d(RptrA), toMatrix_d(RptrdSub), toPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP lDLPiv_z( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP conjugate){
-  ElLDLPiv_z( toMatrix_z(RptrA), toMatrix_z(RptrdSub), toMatrix_i(Rptrp),
+  ElLDLPiv_z( toMatrix_z(RptrA), toMatrix_z(RptrdSub), toPermutation(Rptrp),
 	      toBool(conjugate) );
   return R_NilValue;
 }
 
 SEXP lDLPivDist_d( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp){
   ElLDLPivDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrdSub), 
-                  toDistMatrix_i(Rptrp) );
+                  toDistPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP lDLPivDist_z( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP conjugate){
   ElLDLPivDist_z( toDistMatrix_z(RptrA), toDistMatrix_z(RptrdSub), 
-                  toDistMatrix_i(Rptrp), toBool(conjugate) );
+                  toDistPermutation(Rptrp), toBool(conjugate) );
   return R_NilValue;
 }
 
@@ -304,14 +304,14 @@ SEXP solveAfterLDLDist_z( SEXP RptrA, SEXP RptrB, SEXP conjugate){
 
 SEXP solveAfterLDLPiv_d( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP RptrB ){
   ElSolveAfterLDLPiv_d( toMatrix_d(RptrA), toMatrix_d(RptrdSub),
-                        toMatrix_i(Rptrp), toMatrix_d(RptrB) );
+                        toPermutation(Rptrp), toMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP solveAfterLDLPiv_z
 ( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP RptrB, SEXP conjugate ){
   ElSolveAfterLDLPiv_z( toMatrix_z(RptrA), toMatrix_z(RptrdSub),
-                        toMatrix_i(Rptrp), toMatrix_z(RptrB),
+                        toPermutation(Rptrp), toMatrix_z(RptrB),
 			toBool(conjugate) );
   return R_NilValue;
 }
@@ -319,14 +319,14 @@ SEXP solveAfterLDLPiv_z
 SEXP solveAfterLDLPivDist_d
 ( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP RptrB ){
   ElSolveAfterLDLPivDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrdSub),
-                        toDistMatrix_i(Rptrp), toDistMatrix_d(RptrB) );
+                        toDistPermutation(Rptrp), toDistMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP solveAfterLDLPivDist_z
 ( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP RptrB, SEXP conjugate ){
   ElSolveAfterLDLPivDist_z( toDistMatrix_z(RptrA), toDistMatrix_z(RptrdSub),
-			    toDistMatrix_i(Rptrp), toDistMatrix_z(RptrB),
+			    toDistPermutation(Rptrp), toDistMatrix_z(RptrB),
 			    toBool(conjugate) );
   return R_NilValue;
 }
@@ -355,14 +355,14 @@ SEXP multiplyAfterLDLDist_z( SEXP RptrA, SEXP RptrB, SEXP conjugate){
 
 SEXP multiplyAfterLDLPiv_d( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP RptrB ){
   ElMultiplyAfterLDLPiv_d( toMatrix_d(RptrA), toMatrix_d(RptrdSub),
-			   toMatrix_i(Rptrp), toMatrix_d(RptrB) );
+			   toPermutation(Rptrp), toMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP multiplyAfterLDLPiv_z
 ( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP RptrB, SEXP conjugate ){
   ElMultiplyAfterLDLPiv_z( toMatrix_z(RptrA), toMatrix_z(RptrdSub),
-			   toMatrix_i(Rptrp), toMatrix_z(RptrB),
+			   toPermutation(Rptrp), toMatrix_z(RptrB),
 			   toBool(conjugate));
   return R_NilValue;
 }
@@ -370,14 +370,14 @@ SEXP multiplyAfterLDLPiv_z
 SEXP multiplyAfterLDLPivDist_d
 ( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP RptrB ){
   ElMultiplyAfterLDLPivDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrdSub),
-                        toDistMatrix_i(Rptrp), toDistMatrix_d(RptrB) );
+                        toDistPermutation(Rptrp), toDistMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP multiplyAfterLDLPivDist_z
 ( SEXP RptrA, SEXP RptrdSub, SEXP Rptrp, SEXP RptrB, SEXP conjugate ){
   ElMultiplyAfterLDLPivDist_z( toDistMatrix_z(RptrA), toDistMatrix_z(RptrdSub),
-			       toDistMatrix_i(Rptrp), toDistMatrix_z(RptrB),
+			       toDistPermutation(Rptrp), toDistMatrix_z(RptrB),
 			       toBool(conjugate) );
   return R_NilValue;
 }
@@ -430,36 +430,36 @@ SEXP solveAfterLUDist_z( SEXP orientation, SEXP RptrA, SEXP RptrB ){
 }
 
 SEXP lUPartialPiv_d( SEXP RptrA, SEXP Rptrp){
-  ElLUPartialPiv_d( toMatrix_d(RptrA), toMatrix_i(Rptrp) );
+  ElLUPartialPiv_d( toMatrix_d(RptrA), toPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP lUPartialPiv_z( SEXP RptrA, SEXP Rptrp){
-  ElLUPartialPiv_z( toMatrix_z(RptrA), toMatrix_i(Rptrp) );
+  ElLUPartialPiv_z( toMatrix_z(RptrA), toPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP lUPartialPivDist_d( SEXP RptrA, SEXP Rptrp){
-  ElLUPartialPivDist_d( toDistMatrix_d(RptrA), toDistMatrix_i(Rptrp) );
+  ElLUPartialPivDist_d( toDistMatrix_d(RptrA), toDistPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP lUPartialPivDist_z( SEXP RptrA, SEXP Rptrp){
-  ElLUPartialPivDist_z( toDistMatrix_z(RptrA), toDistMatrix_i(Rptrp) );
+  ElLUPartialPivDist_z( toDistMatrix_z(RptrA), toDistPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP solveAfterLUPartialPiv_d
 ( SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP RptrB){
   ElSolveAfterLUPartialPiv_d( parseOrientation(orientation), toMatrix_d(RptrA),
-                              toMatrix_i(Rptrp), toMatrix_d(RptrB) );
+                              toPermutation(Rptrp), toMatrix_d(RptrB) );
   return R_NilValue;
 }
 
 SEXP solveAfterLUPartialPiv_z
 ( SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP RptrB){
   ElSolveAfterLUPartialPiv_z( parseOrientation(orientation), toMatrix_z(RptrA),
-                              toMatrix_i(Rptrp), toMatrix_z(RptrB) );
+                              toPermutation(Rptrp), toMatrix_z(RptrB) );
   return R_NilValue;
 }
 
@@ -467,7 +467,7 @@ SEXP solveAfterLUPartialPivDist_d
 ( SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP RptrB){
   ElSolveAfterLUPartialPivDist_d( parseOrientation(orientation), 
                                   toDistMatrix_d(RptrA),
-                                  toDistMatrix_i(Rptrp), 
+                                  toDistPermutation(Rptrp), 
                                   toDistMatrix_d(RptrB) );
   return R_NilValue;
 }
@@ -476,37 +476,37 @@ SEXP solveAfterLUPartialPivDist_z
 ( SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP RptrB){
   ElSolveAfterLUPartialPivDist_z( parseOrientation(orientation), 
                                   toDistMatrix_z(RptrA),
-                                  toDistMatrix_i(Rptrp), 
+                                  toDistPermutation(Rptrp), 
                                   toDistMatrix_z(RptrB) );
   return R_NilValue;
 }
 
 SEXP lUFullPiv_d( SEXP RptrA, SEXP Rptrp, SEXP Rptrq){
-  ElLUFullPiv_d( toMatrix_d(RptrA), toMatrix_i(Rptrp), toMatrix_i(Rptrq) );
+  ElLUFullPiv_d( toMatrix_d(RptrA), toPermutation(Rptrp), toPermutation(Rptrq) );
   return R_NilValue;
 }
 
 SEXP lUFullPiv_z( SEXP RptrA, SEXP Rptrp, SEXP Rptrq){
-  ElLUFullPiv_z( toMatrix_z(RptrA), toMatrix_i(Rptrp), toMatrix_i(Rptrq) );
+  ElLUFullPiv_z( toMatrix_z(RptrA), toPermutation(Rptrp), toPermutation(Rptrq) );
   return R_NilValue;
 }
 
 SEXP lUFullPivDist_d( SEXP RptrA, SEXP Rptrp, SEXP Rptrq ){
-  ElLUFullPivDist_d( toDistMatrix_d(RptrA), toDistMatrix_i(Rptrp),
-                     toDistMatrix_i(Rptrq) );
+  ElLUFullPivDist_d( toDistMatrix_d(RptrA), toDistPermutation(Rptrp),
+                     toDistPermutation(Rptrq) );
   return R_NilValue;
 }
 
 SEXP lUFullPivDist_z( SEXP RptrA, SEXP Rptrp, SEXP Rptrq ){
-  ElLUFullPivDist_z( toDistMatrix_z(RptrA), toDistMatrix_i(Rptrp),
-                     toDistMatrix_i(Rptrq) );
+  ElLUFullPivDist_z( toDistMatrix_z(RptrA), toDistPermutation(Rptrp),
+                     toDistPermutation(Rptrq) );
   return R_NilValue;
 }
 
 SEXP solveAfterLUFullPiv_d
 ( SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP Rptrq, SEXP RptrB){
   ElSolveAfterLUFullPiv_d( parseOrientation(orientation), toMatrix_d(RptrA),
-                           toMatrix_i(Rptrp), toMatrix_i(Rptrq), 
+                           toPermutation(Rptrp), toPermutation(Rptrq), 
                            toMatrix_d(RptrB) );
   return R_NilValue;
 }
@@ -514,7 +514,7 @@ SEXP solveAfterLUFullPiv_d
 SEXP solveAfterLUFullPiv_z
 ( SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP Rptrq, SEXP RptrB){
   ElSolveAfterLUFullPiv_z( parseOrientation(orientation), toMatrix_z(RptrA),
-                           toMatrix_i(Rptrp), toMatrix_i(Rptrq), 
+                           toPermutation(Rptrp), toPermutation(Rptrq), 
                            toMatrix_z(RptrB) );
   return R_NilValue;
 }
@@ -523,8 +523,8 @@ SEXP solveAfterLUFullPivDist_d
 ( SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP Rptrq, SEXP RptrB){
   ElSolveAfterLUFullPivDist_d( parseOrientation(orientation), 
                                toDistMatrix_d(RptrA),
-                               toDistMatrix_i(Rptrp),
-                               toDistMatrix_i(Rptrq),
+                               toDistPermutation(Rptrp),
+                               toDistPermutation(Rptrq),
                                toDistMatrix_d(RptrB) );
   return R_NilValue;
 }
@@ -533,34 +533,34 @@ SEXP solveAfterLUFullPivDist_z
 ( SEXP orientation, SEXP RptrA, SEXP Rptrp, SEXP Rptrq, SEXP RptrB){
   ElSolveAfterLUFullPivDist_z( parseOrientation(orientation), 
                                toDistMatrix_z(RptrA),
-                               toDistMatrix_i(Rptrp),
-                               toDistMatrix_i(Rptrq),
+                               toDistPermutation(Rptrp),
+                               toDistPermutation(Rptrq),
                                toDistMatrix_z(RptrB) );
   return R_NilValue;
 }
 
 SEXP lUMod_d( SEXP RptrA, SEXP Rptrp, SEXP Rptru, SEXP Rptrv, SEXP tau ){
-  ElLUMod_d( toMatrix_d(RptrA), toMatrix_i(Rptrp), toMatrix_d(Rptru),
+  ElLUMod_d( toMatrix_d(RptrA), toPermutation(Rptrp), toMatrix_d(Rptru),
              toMatrix_d(Rptrv), toDouble(tau) );
   return R_NilValue;
 }
 
 SEXP lUMod_z
 ( SEXP RptrA, SEXP Rptrp, SEXP Rptru, SEXP Rptrv, SEXP conjugate, SEXP tau ){
-  ElLUMod_z( toMatrix_z(RptrA), toMatrix_i(Rptrp), toMatrix_z(Rptru),
+  ElLUMod_z( toMatrix_z(RptrA), toPermutation(Rptrp), toMatrix_z(Rptru),
              toMatrix_z(Rptrv), toBool(conjugate), toDouble(tau) );
   return R_NilValue;
 }
 
 SEXP lUModDist_d( SEXP RptrA, SEXP Rptrp, SEXP Rptru, SEXP Rptrv, SEXP tau ){
-  ElLUModDist_d( toDistMatrix_d(RptrA), toDistMatrix_i(Rptrp),
+  ElLUModDist_d( toDistMatrix_d(RptrA), toDistPermutation(Rptrp),
                  toDistMatrix_d(Rptru), toDistMatrix_d(Rptrv), toDouble(tau) );
   return R_NilValue;
 }
 
 SEXP lUModDist_z
 ( SEXP RptrA, SEXP Rptrp, SEXP Rptru, SEXP Rptrv, SEXP conjugate, SEXP tau ){
-  ElLUModDist_z( toDistMatrix_z(RptrA), toDistMatrix_i(Rptrp),
+  ElLUModDist_z( toDistMatrix_z(RptrA), toDistPermutation(Rptrp),
                  toDistMatrix_z(Rptru), toDistMatrix_z(Rptrv),
 		 toBool(conjugate), toDouble(tau) );
   return R_NilValue;
@@ -744,25 +744,25 @@ SEXP qRDist_z( SEXP RptrA, SEXP Rptrt, SEXP Rptrd){
 
 SEXP qRColPiv_d( SEXP RptrA, SEXP Rptrt, SEXP Rptrd, SEXP Rptrp){
   ElQRColPiv_d( toMatrix_d(RptrA), toMatrix_d(Rptrt), toMatrix_d(Rptrd),
-                toMatrix_i(Rptrp) );
+                toPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP qRColPiv_z( SEXP RptrA, SEXP Rptrt, SEXP Rptrd, SEXP Rptrp){
   ElQRColPiv_z( toMatrix_z(RptrA), toMatrix_z(Rptrt), toMatrix_d(Rptrd),
-                toMatrix_i(Rptrp) );
+                toPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP qRColPivDist_d( SEXP RptrA, SEXP Rptrt, SEXP Rptrd, SEXP Rptrp){
   ElQRColPivDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(Rptrt),
-                    toDistMatrix_d(Rptrd), toDistMatrix_i(Rptrp) );
+                    toDistMatrix_d(Rptrd), toDistPermutation(Rptrp) );
   return R_NilValue;
 }
 
 SEXP qRColPivDist_z( SEXP RptrA, SEXP Rptrt, SEXP Rptrd, SEXP Rptrp){
   ElQRColPivDist_z( toDistMatrix_z(RptrA), toDistMatrix_z(Rptrt),
-                    toDistMatrix_d(Rptrd), toDistMatrix_i(Rptrp) );
+                    toDistMatrix_d(Rptrd), toDistPermutation(Rptrp) );
   return R_NilValue;
 }
 
@@ -825,25 +825,29 @@ SEXP qRExplicitDist_d( SEXP RptrA, SEXP RptrR ){
 }
 */
 
-SEXP qRColPivExplicit_d( SEXP RptrA, SEXP RptrR, SEXP Rptrp){
+SEXP qRColPivExplicit_d( SEXP RptrA, SEXP RptrR, SEXP RptrO){
   ElQRColPivExplicit_d( toMatrix_d(RptrA), toMatrix_d(RptrR), 
-                        toMatrix_i(Rptrp) );
+                        toMatrix_i(RptrO) );
   return R_NilValue;
 }
 
-SEXP qRColPivExplicit_z( SEXP RptrA, SEXP RptrR, SEXP Rptrp){
+SEXP qRColPivExplicit_z( SEXP RptrA, SEXP RptrR, SEXP RptrO){
   ElQRColPivExplicit_z( toMatrix_z(RptrA), toMatrix_z(RptrR), 
-                        toMatrix_i(Rptrp) );
+                        toMatrix_i(RptrO) );
   return R_NilValue;
 }
 
-/* Not yet linked:
-SEXP qRColPivExplicitDist_d( SEXP RptrA, SEXP RptrR, SEXP Rptrp){
+SEXP qRColPivExplicitDist_d( SEXP RptrA, SEXP RptrR, SEXP RptrO){
   ElQRColPivExplicitDist_d( toDistMatrix_d(RptrA), toDistMatrix_d(RptrR),
-                            toDistMatrix_i(Rptrp) );
+                            toDistMatrix_i(RptrO) );
   return R_NilValue;
 }
-*/
+
+SEXP qRColPivExplicitDist_z( SEXP RptrA, SEXP RptrR, SEXP RptrO){
+  ElQRColPivExplicitDist_z( toDistMatrix_z(RptrA), toDistMatrix_z(RptrR),
+                            toDistMatrix_i(RptrO) );
+  return R_NilValue;
+}
 
 SEXP choleskyQR_d( SEXP RptrA, SEXP RptrR){
   ElCholeskyQR_d( toMatrix_d(RptrA), toMatrix_d(RptrR) );
