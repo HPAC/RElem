@@ -1,6 +1,6 @@
 #RElem
 
-[![Build Status](https://travis-ci.org/rocanale/R-Elemental.svg?branch=master)](https://travis-ci.org/rocanale/R-Elemental)
+[![Build Status](https://travis-ci.org/rocanale/RElem.svg?branch=master)](https://travis-ci.org/rocanale/RElem)
 This R package links R and the dense linear algebra library
 [Elemental](http://www.libelemental.org), providing Elemental functionality in
 R.  It is based on the C-interface included in Elemental v0.85 and on-wards.
@@ -44,13 +44,13 @@ The installation of the RElem requires two steps:
 We have plans to make R-El available in R's package manager CRAN in the future.  So far, **a
 superuser** can install the interface from R as follows:
 
-A zip file from the package can be downloaded from our [releases](https://github.com/rocanale/R-Elemental/releases) and then installed using the following command:
+A zip file from the package can be downloaded from our [releases](https://github.com/rocanale/RElem/releases) and then installed using the following command:
 
-`R CMD INSTALL R-Elemental.zip`
+`R CMD INSTALL RElem.zip`
 
 If Elemental was installed in a custom path, the installation command is:
 
-`R CMD INSTALL R-Elemental.zip --configure-args=--with-ElPrefix=/YOUR/PREFIX`
+`R CMD INSTALL RElem.zip --configure-args=--with-ElPrefix=/YOUR/PREFIX`
 
 ##### Installing the development version
 
@@ -59,13 +59,13 @@ Alternatively, it is possible to install the development branch of this library 
 ```s
 install.packages("devtools")
 library(devtools)
-install_github('rocanale/R-Elemental')
+install_github('rocanale/RElem')
 ```
 
 In case Elemental is installed in a custom installation path, the path should be provided as follows:
 ```s
 options(devtools.install.args='--configure-args=--with-ElPrefix=/YOUR/PREFIX')
-install_github('rocanale/R-Elemental')
+install_github('rocanale/RElem')
 ```
 
 ## Programming Approach
@@ -120,36 +120,23 @@ Note: The openmpi library (or the one installed in the system) must be preloaded
 
 ### Source
 
-The following example invokes `Gemm` with distributed matrices
+The following example invokes `GEMM` with distributed matrices
 
 ```s
 # Load the library
 library(RElem)
 
-# Initialize Elemental/MPI
-Initialize()
-
-# Create grid
-g <- Grid()
-
 # Create the Matrices
 A <- DistMatrix(g)
 B <- DistMatrix(g)
-C <- DistMatrix(g)
 
 #Initialize the Matrices
 Uniform(A,6,4)
 Uniform(B,3,4)
 
-MatrixResize(C,4,3)
+#Execute GEMM
+C <- A%*%B
 
-alpha <- 1.0
-beta <- 0.0
+print(C)
 
-#Execute Gemm
-Gemm("NORMAL", "TRANSPOSE", alpha, A, B, beta, C)
-
-Print(C)
-#Finalize El/MPI
-Finalize()
 ```
