@@ -8,41 +8,21 @@
   }
 }
 
-#possibleDatatypes = c('d','z','i')
-#
-#validMatrix <- function(object){
-#  errors <- character()
-#  if ( is.na(match(object@datatype, possibleDatatypes)))
-#    errors <- c(errors,paste("Unknown datatype:",object@datatype))
-#  if ( !object@active )
-#    errors <- c(errors,paste("Not initialized"))
-#  if (length(errors)==0){
-#    TRUE
-#  }
-#  else{
-#    errors
-#  }
-#}
-
 
 #' Class to represent the Grid
 #'
 #' @slot ptr A pointer to the grid (C++)
-#' @slot active a boolean value that indicates whether the grid is
-#'       still alive or not.
-ElGrid <- setClass("ElGrid", representation(ptr="externalptr",
-                                            active="logical"))
+ElGrid <- setClass("ElGrid", representation(ptr="externalptr"))
+
 
 setMethod("initialize",
           signature(.Object = "ElGrid"),
           function(.Object){
             if ( Initialized() ){
               .Object@ptr <- .Call("newGrid")
-              .Object@active <- TRUE
             }
             else{
               cat("To use grids, MPI/Elemental must be Initialized\n")
-              .Object@active <- FALSE
             }
             return(.Object)
           })
@@ -52,11 +32,9 @@ setMethod("initialize",
 #'
 #' @slot ptr A pointer to the distributed matrix object (C++)
 #' @slot datatype A character that stores the datatype
-#' @slot active a boolean value that indicates whether the grid is
-#'       still alive or not.
+
 ElDistMatrix<- setClass("ElDistMatrix",
                         representation(ptr="externalptr",
-                                       active="logical",
                                        datatype="character"))
 
 
@@ -65,7 +43,6 @@ setMethod("initialize",
           function(.Object, tag = "d", colDist="MC", rowDist="MR", grid=new("ElGrid"), rmat=NULL){
             if( Initialized() ){
               .Object@datatype <- tag
-              .Object@active <- TRUE
               if(is.numeric(rmat) || is.complex(rmat)){
                 if(is.matrix(rmat)){
                   He <- dim(rmat)[1]
@@ -86,7 +63,6 @@ setMethod("initialize",
             }
             else{
               cat("To use Distributed Matrices, MPI/Elemental must be Initialized\n")
-              .Object@active <- FALSE
             }
             return(.Object)
           })
@@ -95,18 +71,14 @@ setMethod("initialize",
 #'
 #' @slot ptr A pointer to the matrix object (C++)
 #' @slot datatype A character that stores the datatype
-#' @slot active a boolean value that indicates whether the grid is
-#'       still alive or not.
 
 ElMatrix <- setClass("ElMatrix", representation(ptr="externalptr",
-                                                active="logical",
                                                 datatype="character"))
 
 setMethod("initialize",
           signature(.Object = "ElMatrix"),
           function(.Object, tag = "d", rmat=NULL){
             .Object@datatype <- tag
-            .Object@active <- TRUE
              if(is.numeric(rmat) || is.complex(rmat)){
               if(is.matrix(rmat)){
                 He <- dim(rmat)[1]

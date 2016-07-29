@@ -208,7 +208,8 @@ DistMatrixSetLocal<-function(DistMatrixA, i, j, alpha){
 ###-------------------------
 
 MatrixDestroy<-function(MatrixA){
-  .Call( paste0("destroy", .getElement(MatrixA) ), MatrixA@ptr )
+  object <- deparse(substitute(MatrixA))
+  rm(list = object, envir = sys.frame(-1))
 }
 
 
