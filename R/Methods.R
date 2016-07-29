@@ -202,6 +202,92 @@ DistMatrixSetLocal<-function(DistMatrixA, i, j, alpha){
          as.integer(i), as.integer(j), as.double(alpha) )
 } 
 
+###-------------------------
+### Permutations
+###-------------------------
+
+PermutationMakeIdentity <- function(Permutation, size){
+  .Call( paste0("permutationMakeIdentity", .getSuffix(Permutation)), Permutation@ptr,
+         as.integer(size) )
+}
+
+PermutationReserveSwap <- function(Permutation, size){
+  .Call( paste0("permutationReserveSwap", .getSuffix(Permutation)), Permutation@ptr,
+         as.integer(size) )
+}
+
+PermutationMakeArbitrary <- function(Permutation){
+  .Call( paste0("permutationMakeArbitrary", .getSuffix(Permutation)), Permutation@ptr)
+}
+
+PermutationRowSwap <- function(Permutation, origin, dest){
+  .Call( paste0("permutationRowSwap", .getSuffix(Permutation)), Permutation@ptr,
+         as.integer(origin), as.integer(dest) )
+}
+
+PermutationRowSwapSequence <- function(Permutation, PermAppend, dest){
+  .Call( paste0("permutationRowSwapSequence", .getSuffix(Permutation)), Permutation@ptr,
+         PermAppend@ptr, as.integer(dest) )
+}
+
+PermutationSetImage <- function(Permutation, origin, dest){
+  .Call( paste0("permutationSetImage", .getSuffix(Permutation)), Permutation@ptr,
+         as.integer(origin), as.integer(dest) )
+}
+
+PermutationHeight <- function(Permutation){
+  .Call( paste0("permutationHeight", .getSuffix(Permutation)), Permutation@ptr)
+}
+
+PermutationWidth <- function(Permutation){
+  .Call( paste0("permutationWidth", .getSuffix(Permutation)), Permutation@ptr)
+}
+
+PermutationParity <- function(Permutation){
+  .Call( paste0("permutationParity", .getSuffix(Permutation)), Permutation@ptr)
+}
+
+PermutationIsSwapSequence <- function(Permutation){
+  .Call( paste0("permutationIsSwapSequence", .getSuffix(Permutation)), Permutation@ptr)
+}
+
+PermutationIsImplicitSwapSequence <- function(Permutation){
+  .Call( paste0("permutationIsImplicitSwapSequence", .getSuffix(Permutation)),
+         Permutation@ptr)
+}
+
+PermutationPermuteCols <- function(Permutation, MatrixA, offset){
+  .Call( paste0("permutationPermuteCols", .getSuffix(MatrixA)), Permutation@ptr,
+         MatrixA@ptr, as.integer(offset))
+}
+
+PermutationPermuteRows <- function(Permutation, MatrixA, offset){
+  .Call( paste0("permutationPermuteRows", .getSuffix(MatrixA)), Permutation@ptr,
+         MatrixA@ptr, as.integer(offset))
+}
+
+PermutationPermuteSymmetrically <- function(Permutation, uplo, MatrixA, offset, conjugate=TRUE){
+  if(MatrixA@datatype == "z"){
+     .Call(paste0("permutationPermuteSimmetrically", .getSuffix(MatrixA)), Permutation@ptr,
+           uplo, MatrixA@ptr, as.integer(offset), as.logical(conjugate))
+  }
+  else{
+     .Call(paste0("permutationPermuteSimmetrically", .getSuffix(MatrixA)), Permutation@ptr,
+           uplo, MatrixA@ptr)  
+  }
+}
+
+PermutationExplicitVector <- function(Permutation, VecA){
+  .Call( paste0("permutationExplicitVector", .getSuffix(Permutation)), Permutation@ptr,
+         VecA@ptr)
+}
+
+PermutationExplicitMatrix <- function(Permutation, MatA){
+  .Call( paste0("permutationExplicitMatrix", .getSuffix(Permutation)), Permutation@ptr,
+         MatA@ptr)
+}
+
+
 
 ###-------------------------
 ### Common Matrix Properties

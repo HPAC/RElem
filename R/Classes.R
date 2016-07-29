@@ -98,6 +98,38 @@ setMethod("initialize",
           })
 
 
+#' Class to represent an Elemental Distributed Permutation (for pivoting)
+#'
+#' @slot ptr A pointer to the permutation object (C++)
+
+ElDistPermutation <- setClass("ElDistPermutation", representation(ptr="externalptr"))
+
+setMethod("initialize",
+          signature(.Object = "ElDistPermutation"),
+          function(.Object, grid = new("ElGrid")){
+            if(Initialized()){
+              .Object@ptr <- .Call("newDistPermutation", grid)
+            }
+            else{
+              cat("To use Distributed Permutations, MPI/Elemental must be Initialized\n")
+            }
+            return(.Object)
+          })  
+
+
+#' Class to represent an Elemental Sequential Permutation (for pivoting)
+#'
+#' @slot ptr A pointer to the permutation object (C++)
+
+ElPermutation <- setClass("ElPermutation", representation(ptr="externalptr"))
+
+setMethod("initialize",
+          signature(.Object = "ElPermutation"),
+          function(.Object){
+            .Object@ptr <- .Call("newPermutation")
+            return(.Object)
+          })
+
 #####################
 # Adding some aliases
 #####################
@@ -105,7 +137,8 @@ setMethod("initialize",
 Matrix <- ElMatrix
 DistMatrix <- ElDistMatrix
 Grid <- ElGrid
-
+Permutation <- ElPermutation
+DistPermutation <- ElDistPermutation
 
 #############################################
 # Auxiliary Functions to extract the datatype
@@ -124,6 +157,15 @@ setMethod(".getSuffix", signature(.Object = "ElDistMatrix"),
             paste0("Dist_",.Object@datatype)
           })
 
+setMethod(".getSuffix", signature(.Object = "ElPermutation"),
+          function(.Object){
+            paste0("")
+          })
+
+setMethod(".getSuffix", signature(.Object = "ElDistPermutation"),
+          function(.Object){
+            paste0("Dist")
+          })
 
 .getElement<-function(.Object) 0
 setGeneric(".getElement", .getElement)
