@@ -1,4 +1,4 @@
-#R-El
+#RElem
 
 [![Build Status](https://travis-ci.org/rocanale/R-Elemental.svg?branch=master)](https://travis-ci.org/rocanale/R-Elemental)
 This R package links R and the dense linear algebra library
@@ -34,13 +34,13 @@ precision (real and complex)**. The following routines are included in this pack
 
 ## Installation
 
-The installation of the R-El interface requires two steps:
+The installation of the RElem requires two steps:
 
 #### 1. Install Elemental
 - [Install Elemental](http://libelemental.org/documentation/dev/build.html) as a shared library
 - Ideally, Elemental is installed in one of the default paths `/usr/local`, `$HOME/local`, `$HOME/.local`
 
-#### 2. Install R-Elemental
+#### 2. Install RElem
 We have plans to make R-El available in R's package manager CRAN in the future.  So far, **a
 superuser** can install the interface from R as follows:
 
