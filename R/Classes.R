@@ -120,7 +120,6 @@ setMethod("initialize",
 #' Class to represent an Elemental Sequential Permutation (for pivoting)
 #'
 #' @slot ptr A pointer to the permutation object (C++)
-
 ElPermutation <- setClass("ElPermutation", representation(ptr="externalptr"))
 
 setMethod("initialize",

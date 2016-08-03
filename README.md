@@ -1,6 +1,7 @@
 #RElem
 
 [![Build Status](https://travis-ci.org/rocanale/RElem.svg?branch=master)](https://travis-ci.org/rocanale/RElem)
+
 This R package links R and the dense linear algebra library
 [Elemental](http://www.libelemental.org), providing Elemental functionality in
 R.  It is based on the C-interface included in Elemental v0.85 and on-wards.

@@ -8,9 +8,10 @@ Maintainer: Rodrigo Canales <rodrigo.canales@rwth-aachen.de>
 Description: Wrappers to use Elemental library (0.85)
 License: MIT
 Collate:
-  Environment.R
-  Classes.R
-  Methods.R
-  Operators.R
-  pkgname.R
-  zzz.R
+    Environment.R
+    Classes.R
+    Methods.R
+    Operators.R
+    pkgname.R
+    zzz.R
+RoxygenNote: 5.0.1

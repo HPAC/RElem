@@ -728,6 +728,16 @@ Adjoint<-function(MatrixA, MatrixB){
   .Call( paste0("adjoint", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr)
 }
 
+#' Multiplies Matrix X by scalar alpha and adds Matrix Y
+#'
+#' Performs the operation `Y = aX + Y` on Elemental matrices
+#' 
+#' @param alpha Scalar that multiplies each element of MatrixX
+#' @param MatrixX An Elemental matrix (input)
+#' @param MatrixY An Elemental matrix (input and output)
+#'
+#' @return None
+#' 
 Axpy<-function(alpha, MatrixX, MatrixY){
   .Call( paste0("axpy", .getSuffix(MatrixX)), alpha, MatrixX@ptr, MatrixY@ptr)
 }
@@ -746,6 +756,15 @@ Conjugate<- function(MatrixA){
 }
 
 ##B=A
+
+#' Copies MatrixA into MatrixB
+#'
+#' Performs the operation `B = A` using Elemental Matrices
+#'
+#' @param MatrixA An elemental Matrix (input)
+#' @param MatrixB An elemental Matrix (output)
+#'
+#' @return None
 Copy<-function(MatrixA, MatrixB){
   .Call( paste0("copy", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
@@ -782,6 +801,14 @@ DiagonalSolve<-function(side, uplo, Matrixd, MatrixX, offset,
   }
 }
 
+#' Dot Product for Elemental Matrices
+#'
+#' Perform the dot product beween MatrixA and Matrix B returning an scalar
+#' depending on the matrix datatype
+#'
+#' @param MatrixA An Elemental Matrix (input)
+#' @param MatrixB An Elemental Matrix (input)
+#' @return A scalar value
 Dot<-function(MatrixA, MatrixB){
   .Call( paste0("dot", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }

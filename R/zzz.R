@@ -1,8 +1,8 @@
-.onLoad <- function(library = find.package("RElem"), package = "RElem"){
+.onLoad <- function(libname = find.package("RElem"), pkgname = "RElem"){
         Initialize()       
 }
 
-.onDetach <- function(library = find.package("RElem"), package = "RElem"){
+.onDetach <- function(libpath = find.package("RElem")){
          cat("MPI finalized")
          Finalize()
 }
