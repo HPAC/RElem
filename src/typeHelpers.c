@@ -9,13 +9,13 @@ ElNormType parseNorm(SEXP norm){
   if (strcmp("NUCLEAR_NORM",text)==0) return EL_NUCLEAR_NORM;
   if (strcmp("FROBENIUS_NORM",text)==0) return EL_FROBENIUS_NORM;
   if (strcmp("TWO_NORM",text)==0) return EL_TWO_NORM;
-  printf("wrong value: \"%s\", using \"TWO_NORM\" as default\n",text);
+  Rprintf("wrong value: \"%s\", using \"TWO_NORM\" as default\n",text);
   return EL_TWO_NORM;
 }
 
 ElDist parseDistText(SEXP dist){
   char *text=(char*) CHAR( STRING_ELT(dist,0) );
-  //  printf("The distro is: %s\n",text);
+  //  Rprintf("The distro is: %s\n",text);
   if (strcmp("MC",text)==0) return EL_MC;
   if (strcmp("MD",text)==0) return EL_MD;
   if (strcmp("MR",text)==0) return EL_MR;
@@ -23,13 +23,13 @@ ElDist parseDistText(SEXP dist){
   if (strcmp("VR",text)==0) return EL_VR;
   if (strcmp("STAR",text)==0) return EL_STAR;
   if (strcmp("CIRC",text)==0) return EL_CIRC;
-  printf("wrong value: \"%s\", using MC as default\n",text);
+  Rprintf("wrong value: \"%s\", using MC as default\n",text);
   return EL_MC;
 }
 
 ElFileFormat parseFormatText(SEXP format){
   char *text=(char*) CHAR( STRING_ELT(format,0) );
-  //  printf("The distro is: %s\n",text);
+  //  Rprintf("The distro is: %s\n",text);
   if (strcmp("AUTO",text)==0) return EL_AUTO;
   if (strcmp("ASCII",text)==0) return EL_ASCII;
   if (strcmp("ASCII_MATLAB",text)==0) return EL_ASCII_MATLAB;
@@ -43,7 +43,7 @@ ElFileFormat parseFormatText(SEXP format){
   if (strcmp("PPM",text)==0) return EL_PPM;
   if (strcmp("XBM",text)==0) return EL_XBM;
   if (strcmp("XPM",text)==0) return EL_XPM;
-  printf("wrong value: \"%s\", using AUTO as default\n",text);
+  Rprintf("wrong value: \"%s\", using AUTO as default\n",text);
   return EL_AUTO;
 }
 
@@ -68,7 +68,7 @@ ElUpperOrLower parseUpLo(SEXP uplo){
   if (strcmp("LOWER", text) == 0) return EL_LOWER;
   if (strcmp("U", text) == 0) return EL_UPPER;
   if (strcmp("UPPER", text) == 0) return EL_UPPER;
-  printf("wrong value: using LOWER as default");
+  Rprintf("wrong value: using LOWER as default");
   return EL_LOWER;
 }
 
@@ -165,7 +165,7 @@ SEXP checkDestroyed(SEXP Rptr){
 }
 
 SEXP extractComplex(SEXP cmp){
-  printf("The number is %lf + %lfi\n", COMPLEX(cmp)[0].r, COMPLEX(cmp)[0].i);
+  Rprintf("The number is %lf + %lfi\n", COMPLEX(cmp)[0].r, COMPLEX(cmp)[0].i);
   return R_NilValue;
 }
 

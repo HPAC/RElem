@@ -146,24 +146,24 @@ SEXP newDistMatrixSpecific_z(SEXP U, SEXP V, SEXP RptrGrid){
 SEXP showDistData_i(SEXP Rptr){
   ElElementalData data;
   ElDistMatrixDistData_i( toDistMatrix_i(Rptr), &data);
-  printf("Col Dist: %s\n",parseDistEnum(data.colDist));
-  printf("Row Dist: %s\n",parseDistEnum(data.rowDist));
+  Rprintf("Col Dist: %s\n",parseDistEnum(data.colDist));
+  Rprintf("Row Dist: %s\n",parseDistEnum(data.rowDist));
   return R_NilValue;
 }
 
 SEXP showDistData_d(SEXP Rptr){
   ElElementalData data;
   ElDistMatrixDistData_d( toDistMatrix_d(Rptr), &data);
-  printf("Col Dist: %s\n",parseDistEnum(data.colDist));
-  printf("Row Dist: %s\n",parseDistEnum(data.rowDist));
+  Rprintf("Col Dist: %s\n",parseDistEnum(data.colDist));
+  Rprintf("Row Dist: %s\n",parseDistEnum(data.rowDist));
   return R_NilValue;
 }
 
 SEXP showDistData_z(SEXP Rptr){
   ElElementalData data;
   ElDistMatrixDistData_z( toDistMatrix_z(Rptr), &data);
-  printf("Col Dist: %s\n",parseDistEnum(data.colDist));
-  printf("Row Dist: %s\n",parseDistEnum(data.rowDist));
+  Rprintf("Col Dist: %s\n",parseDistEnum(data.colDist));
+  Rprintf("Row Dist: %s\n",parseDistEnum(data.rowDist));
   return R_NilValue;
 }
 
@@ -184,7 +184,7 @@ SEXP distCommDistMatrix_z(SEXP RptrA, SEXP Rptrc){
 
 SEXP destroyDistMatrix_d(SEXP Rptr){
   if ( isDestroyed(Rptr) ){
-    /* printf("Destroyed from before\n"); */
+    /* Rprintf("Destroyed from before\n"); */
     return R_NilValue;
   }
   ElDistMatrixDestroy_d( toDistMatrix_d(Rptr) );
@@ -194,7 +194,7 @@ SEXP destroyDistMatrix_d(SEXP Rptr){
 
 SEXP destroyDistMatrix_i(SEXP Rptr){
   if ( isDestroyed(Rptr) ){
-    /* printf("Destroyed from before\n"); */
+    /* Rprintf("Destroyed from before\n"); */
     return R_NilValue;
   }
   ElDistMatrixDestroy_i( toDistMatrix_i(Rptr) );
@@ -204,7 +204,7 @@ SEXP destroyDistMatrix_i(SEXP Rptr){
 
 SEXP destroyDistMatrix_z(SEXP Rptr){
   if ( isDestroyed(Rptr) ){
-    /* printf("Destroyed from before\n"); */
+    /* Rprintf("Destroyed from before\n"); */
     return R_NilValue;
   }
   ElDistMatrixDestroy_z( toDistMatrix_z(Rptr) );

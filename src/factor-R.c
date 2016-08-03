@@ -2,7 +2,7 @@
 
 ElLDLPivotType parsePivotType(SEXP ptype){
   char *text=(char*) CHAR( STRING_ELT(ptype,0) );
-  //  printf("The distro is: %s\n",text);
+  //  Rprintf("The distro is: %s\n",text);
   if (strcmp("EL_BUNCH_KAUFMAN_A",text)==0) return EL_BUNCH_KAUFMAN_A;
   if (strcmp("EL_BUNCH_KAUFMAN_C",text)==0) return EL_BUNCH_KAUFMAN_C;
   if (strcmp("EL_BUNCH_KAUFMAN_D",text)==0) return EL_BUNCH_KAUFMAN_D;

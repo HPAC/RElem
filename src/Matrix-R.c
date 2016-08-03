@@ -64,7 +64,7 @@ SEXP newMatrix_z(){
 //ElMatrixDestroy:
 SEXP destroyMatrix_i(SEXP Rptr){
   if ( isDestroyed(Rptr) ){
-    /* printf("Destroyed from before\n"); */
+    /* Rprintf("Destroyed from before\n"); */
     return R_NilValue;
   }
   ElMatrixDestroy_i( toMatrix_i(Rptr) );
@@ -74,7 +74,7 @@ SEXP destroyMatrix_i(SEXP Rptr){
 
 SEXP destroyMatrix_s(SEXP Rptr){
   if ( isDestroyed(Rptr) ){
-    /* printf("Destroyed from before\n"); */
+    /* Rprintf("Destroyed from before\n"); */
     return R_NilValue;
   }
   ElMatrixDestroy_s( toMatrix_s(Rptr) );
@@ -84,7 +84,7 @@ SEXP destroyMatrix_s(SEXP Rptr){
 
 SEXP destroyMatrix_d(SEXP Rptr){
   if ( isDestroyed(Rptr) ){
-    /* printf("Destroyed from before\n"); */
+    /* Rprintf("Destroyed from before\n"); */
     return R_NilValue;
   }
   ElMatrixDestroy_d( toMatrix_d(Rptr) );
@@ -94,7 +94,7 @@ SEXP destroyMatrix_d(SEXP Rptr){
 
 SEXP destroyMatrix_c(SEXP Rptr){
   if ( isDestroyed(Rptr) ){
-    /* printf("Destroyed from before\n"); */
+    /* Rprintf("Destroyed from before\n"); */
     return R_NilValue;
   }
   ElMatrixDestroy_c( toMatrix_c(Rptr) );
@@ -104,7 +104,7 @@ SEXP destroyMatrix_c(SEXP Rptr){
 
 SEXP destroyMatrix_z(SEXP Rptr){
   if ( isDestroyed(Rptr) ){
-    /* printf("Destroyed from before\n"); */
+    /* Rprintf("Destroyed from before\n"); */
     return R_NilValue;
   }
   ElMatrixDestroy_z( toMatrix_z(Rptr) );

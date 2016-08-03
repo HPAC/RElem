@@ -47,7 +47,7 @@ SEXP allReduce( SEXP var, SEXP count, SEXP datatype, SEXP op, SEXP comm){
       UNPROTECT(1);
     }
     else{
-      printf("Not defined for this datatype\n");
+      Rprintf("Not defined for this datatype\n");
       ans=R_NilValue;
     }
   }
