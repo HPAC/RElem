@@ -62,39 +62,39 @@ SEXP permutationMakeArbitrary(SEXP RptrP){
   return R_NilValue;
 }
 
-SEXP permutationRowSwapDist(SEXP RptrP, SEXP origin, SEXP dest){
-  ElDistPermutationRowSwap( toDistPermutation(RptrP), toElInt(origin),
-                            toElInt(dest));
+SEXP permutationSwapDist(SEXP RptrP, SEXP origin, SEXP dest){
+  ElDistPermutationSwap( toDistPermutation(RptrP), toElInt(origin),
+                         toElInt(dest));
   return R_NilValue;
 }
 
-SEXP permutationRowSwap(SEXP RptrP, SEXP origin, SEXP dest){
-  ElPermutationRowSwap( toPermutation(RptrP), toElInt(origin),
-                        toElInt(dest));
+SEXP permutationSwap(SEXP RptrP, SEXP origin, SEXP dest){
+  ElPermutationSwap( toPermutation(RptrP), toElInt(origin),
+                     toElInt(dest));
   return R_NilValue;
 }
 
-SEXP permutationRowSwapSequenceDist(SEXP RptrP, SEXP PAppend, SEXP dest){
-  ElDistPermutationRowSwapSequence( toDistPermutation(RptrP), toDistPermutation(PAppend),
-                                    toElInt(dest));
+SEXP permutationSwapSequenceDist(SEXP RptrP, SEXP PAppend, SEXP dest){
+  ElDistPermutationSwapSequence( toDistPermutation(RptrP), toDistPermutation(PAppend),
+                                 toElInt(dest));
   return R_NilValue;
 }
 
-SEXP permutationRowSwapSequence(SEXP RptrP, SEXP PAppend, SEXP dest){
-  ElPermutationRowSwapSequence( toPermutation(RptrP), toPermutation(PAppend),
-                                toElInt(dest));
+SEXP permutationSwapSequence(SEXP RptrP, SEXP PAppend, SEXP dest){
+  ElPermutationSwapSequence( toPermutation(RptrP), toPermutation(PAppend),
+                             toElInt(dest));
   return R_NilValue;
 }
 
 SEXP permutationSetImageDist(SEXP RptrP, SEXP origin, SEXP dest){
   ElDistPermutationSetImage( toDistPermutation(RptrP), toElInt(origin),
-                            toElInt(dest));
+                             toElInt(dest));
   return R_NilValue;
 }
 
 SEXP permutationSetImage(SEXP RptrP, SEXP origin, SEXP dest){
   ElPermutationSetImage( toPermutation(RptrP), toElInt(origin),
-                        toElInt(dest));
+                         toElInt(dest));
   return R_NilValue;
 }
 
