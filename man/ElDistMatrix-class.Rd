@@ -4,9 +4,9 @@
 \name{ElDistMatrix-class}
 \alias{ElDistMatrix}
 \alias{ElDistMatrix-class}
-\title{Class to represent an elemental Dist Matrix}
+\title{Class to represent an Elemental Distributed Matrix}
 \description{
-Class to represent an elemental Dist Matrix
+Class to represent an Elemental Distributed Matrix
 }
 \section{Slots}{
 

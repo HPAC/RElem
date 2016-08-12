@@ -3,13 +3,15 @@
 [![Build Status](https://travis-ci.org/rocanale/RElem.svg?branch=master)](https://travis-ci.org/rocanale/RElem)
 
 This R package links R and the dense linear algebra library
-[Elemental](http://www.libelemental.org), providing Elemental functionality in
-R.  It is based on the C-interface included in Elemental v0.85 and on-wards.
+[Elemental](http://www.libelemental.org), providing distributed parallel
+computing support in R.  It is based on the C-API included in Elemental
+v0.85 and on-wards.
 
 ##Functionality
 
 At the moment the coverage of the interface is limited to **double
-precision (real and complex)**. The following routines are included in this package:
+precision (real and complex)**. The following routines are included in this
+package: 
 
 * Core and MPI routines
 * Sequential Matrices

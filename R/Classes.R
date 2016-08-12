@@ -9,7 +9,7 @@
 }
 
 
-#' Class to represent the Grid
+#' Class to represent the processes Grid
 #'
 #' @slot ptr A pointer to the grid (C++)
 ElGrid <- setClass("ElGrid", representation(ptr="externalptr"))
@@ -28,7 +28,7 @@ setMethod("initialize",
           })
             
 
-#' Class to represent an elemental Dist Matrix
+#' Class to represent an Elemental Distributed Matrix
 #'
 #' @slot ptr A pointer to the distributed matrix object (C++)
 #' @slot datatype A character that stores the datatype

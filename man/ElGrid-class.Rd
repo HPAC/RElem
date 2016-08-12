@@ -4,9 +4,9 @@
 \name{ElGrid-class}
 \alias{ElGrid}
 \alias{ElGrid-class}
-\title{Class to represent the Grid}
+\title{Class to represent the processes Grid}
 \description{
-Class to represent the Grid
+Class to represent the processes Grid
 }
 \section{Slots}{
 
