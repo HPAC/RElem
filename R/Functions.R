@@ -211,8 +211,8 @@ PermutationMakeIdentity <- function(Permutation, size){
          as.integer(size) )
 }
 
-PermutationReserveSwap <- function(Permutation, size){
-  .Call( paste0("permutationReserveSwap", .getSuffix(Permutation)), Permutation@ptr,
+PermutationReserveSwaps <- function(Permutation, size){
+  .Call( paste0("permutationReserveSwaps", .getSuffix(Permutation)), Permutation@ptr,
          as.integer(size) )
 }
 
@@ -220,13 +220,13 @@ PermutationMakeArbitrary <- function(Permutation){
   .Call( paste0("permutationMakeArbitrary", .getSuffix(Permutation)), Permutation@ptr)
 }
 
-PermutationRowSwap <- function(Permutation, origin, dest){
-  .Call( paste0("permutationRowSwap", .getSuffix(Permutation)), Permutation@ptr,
+PermutationSwap <- function(Permutation, origin, dest){
+  .Call( paste0("permutationSwap", .getSuffix(Permutation)), Permutation@ptr,
          as.integer(origin), as.integer(dest) )
 }
 
-PermutationRowSwapSequence <- function(Permutation, PermAppend, dest){
-  .Call( paste0("permutationRowSwapSequence", .getSuffix(Permutation)), Permutation@ptr,
+PermutationSwapSequence <- function(Permutation, PermAppend, dest){
+  .Call( paste0("permutationSwapSequence", .getSuffix(Permutation)), Permutation@ptr,
          PermAppend@ptr, as.integer(dest) )
 }
 
