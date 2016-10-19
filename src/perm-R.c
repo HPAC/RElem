@@ -63,7 +63,7 @@ SEXP permutationMakeArbitrary(SEXP RptrP){
 }
 
 /* TODO : Find the Bugs in Elemental to enable these functions */
-/*
+
 SEXP permutationSwapDist(SEXP RptrP, SEXP origin, SEXP dest){
   ElDistPermutationSwap( toDistPermutation(RptrP), toElInt(origin),
                          toElInt(dest));
@@ -88,7 +88,6 @@ SEXP permutationSwapSequence(SEXP RptrP, SEXP PAppend, SEXP dest){
   return R_NilValue;
 }
 
-*/
 
 SEXP permutationSetImageDist(SEXP RptrP, SEXP origin, SEXP dest){
   ElDistPermutationSetImage( toDistPermutation(RptrP), toElInt(origin),
