@@ -1,6 +1,5 @@
 #RElem
 
-[![Build Status](https://travis-ci.org/rocanale/RElem.svg?branch=master)](https://travis-ci.org/rocanale/RElem)
 
 This R package links R and the dense linear algebra library
 [Elemental](http://www.libelemental.org), providing distributed parallel
