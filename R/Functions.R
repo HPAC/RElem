@@ -751,6 +751,14 @@ AxpyTriangle<-function(uplo, alpha, MatrixX, MatrixY){
     AxpyTrapezoid(uplo, alpha, MatrixX, MatrixY, 0)
 }
 
+#' Calculates the conjugate transpose of an Elemental matrix
+#'
+#' It replaces the matrix by its complex conjugate.
+#'
+#' @param MatrixA An elemental Matrix (input, output)
+#'
+#' @return None
+#'
 Conjugate<- function(MatrixA){
   .Call( paste0("conjugate", .getSuffix(MatrixA)), MatrixA@ptr)
 }
@@ -803,25 +811,53 @@ DiagonalSolve<-function(side, uplo, Matrixd, MatrixX, offset,
 
 #' Dot Product for Elemental Matrices
 #'
-#' Perform the dot product beween MatrixA and Matrix B returning an scalar
+#' Performs the dot product beween MatrixA and Matrix B returning an scalar
 #' depending on the matrix datatype
 #'
 #' @param MatrixA An Elemental Matrix (input)
 #' @param MatrixB An Elemental Matrix (input)
-#' @return A scalar value
+#' @return a scalar value with the dot product
 Dot<-function(MatrixA, MatrixB){
   .Call( paste0("dot", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
 
+#' Fills an Elemental Matrix with a scalar value
+#'
+#' Fills each element from the MatrixA with the given scalar value
+#'
+#' @param MatrixA (input, output)
+#' @param alpha a scalar value (input)
+#'
+#' @return none
+#'
 Fill<-function(MatrixA, alpha){
   .Call( paste0("fill", .getSuffix(MatrixA)), MatrixA@ptr, alpha )
 }
 
+#' Fills the diagonal elements in an Elemental Matrix with a scalar value
+#'
+#' Fills each element in the diagonal from MatrixA with the given scalar value
+#'
+#' @param MatrixA (input, output)
+#' @param alpha a scalar value (input)
+#'
+#' @return none
+#'
 FillDiagonal<-function(MatrixA, alpha, offset=0){
   .Call( paste0("fillDiagonal", .getSuffix(MatrixA)), MatrixA@ptr, alpha,
          as.integer(offset) )
 }
 
+#' Calculates the element-wise multiplication of two matrices
+#'
+#' Performs the element-wise operation `C = A * B` on Elemental matrices
+#' 
+#' @param MatrixA An Elemental matrix (input)
+#' @param MatrixB An Elemental matrix (input)
+#' @param MatrixC An Elemental matrix (input and output)
+#'
+#' @return None
+#' 
 Hadamard<-function(MatrixA, MatrixB, MatrixC){
   .Call( paste0("hadamard", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr,
         MatrixC@ptr )
@@ -831,47 +867,153 @@ HilbertSchmidt<-function(MatrixA, MatrixB){
   .Call( paste0("hilbertSchmidt", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
 
+#' Extract the imaginary part of a complex Elemental matrix
+#'
+#' Takes the imaginary part from MatrixA and stores it intro MatrixAIm
+#' 
+#' @param MatrixA An Elemental matrix (input)
+#' @param MatrixAIm An Elemental matrix (input, output)
+#'
+#' @return None
+#'
 ImagPart<-function(MatrixA, MatrixAIm){
   .Call( paste0("imagPart", .getSuffix(MatrixA)), MatrixA@ptr, MatrixAIm@ptr )
 }
 
+#' Makes an Elemental matrix hermitian
+#'
+#' Makes the matrix A hermitian, keeping only its lower (or upper) 
+#' triangular part.
+#'
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' the matrix should be kept. 
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 MakeHermitian<-function(uplo, MatrixA){
   .Call( paste0("makeHermitian", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
 }
 
+#' Makes an Elemental (complex)matrix real
+#'
+#' Makes the matrix A real, keeping only its real part.
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 MakeReal<-function(MatrixA){
   .Call( paste0("makeReal", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+#' Makes an Elemental matrix symmetric
+#'
+#' Makes the matrix A symmetric, keeping only its lower (or upper) 
+#' triangular part.
+#'
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' the matrix should be kept. 
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 MakeSymmetric<-function(uplo, MatrixA){
   .Call( paste0("makeSymmetric", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
 }
 
-MakeTrapezoidal<-function(uplo, MatrixA, offset){
+#' Makes an Elemental matrix trapezoidal
+#'
+#' Makes the matrix A trapezoidal, keeping only its lower (or upper) 
+#' triangular part with a given offset.
+#'
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' the matrix should be kept. 
+#' @param MatrixA an Elemental matrix (input, output)
+#' @param offset an integer that indicates the diagonal offset
+#'
+#' @return None
+#'
+MakeTrapezoidal<-function(uplo, MatrixA, offset = 1){
   .Call( paste0("makeTrapezoidal", .getSuffix(MatrixA)), uplo, MatrixA@ptr,
          as.integer(offset) )
 }
 
+#' Makes an Elemental matrix triangular
+#'
+#' Makes the matrix A triangular, keeping only its lower (or upper) 
+#' triangular part. It calls MakeTrapezoidal with offset 0
+#'
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' the matrix should be kept. 
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 MakeTriangular<-function(uplo, MatrixA){
     MakeTrapezoidal(uplo, MatrixA, 0)
 }
 
+#' Finds the maximum value in an Elemental matrix
+#'
+#' Finds both, the maximum scalar value in the matrix and its coordinates (row, col)
+#'
+#' @param MatrixA an Elemental matrix (input)
+#'
+#' @return $value the maximum value in the matrix
+#'
+#'   	   $indices an array with the coordinates of the maximum value
+#'
 Max<-function(MatrixA){
   .Call( paste0("max", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+#' Finds the maximum value in an Elemental symmetric matrix
+#'
+#' Finds both, the maximum scalar value in a symmetric matrix and its coordinates (row, col)
+#'
+#' @param MatrixA an Elemental matrix (input)
+#' @param uplo (input). It can take the values "U" or "L" (upper or lower)
+#' to indicate in what part of the matrix is the data. 
+#' @return $value the maximum value in the matrix
+#'
+#'   	   $indices an array with the coordinates of the maximum value
+#'
 SymmetricMax<-function(uplo, MatrixA){
   .Call( paste0("symmetricMax", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
 }
+
 
 VectorMax<-function(MatrixA){
   .Call( paste0("vectorMax", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+#' Finds the maximum absolute value in an Elemental matrix
+#'
+#' Finds both, the maximum absolute scalar value in a 
+#' matrix and its coordinates (row, col)
+#'
+#' @param MatrixA an Elemental matrix (input)
+#' @return $value the maximum absolute value in the matrix
+#'
+#'   	   $indices an array with the coordinates of the maximum value
+#'
 MaxAbs<-function(MatrixA){
   .Call( paste0("maxAbs", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+#' Finds the maximum absolute value in an Elemental symmetric matrix
+#'
+#' Finds both, the maximum absolute scalar value in a 
+#' symmetric matrix and its coordinates (row, col)
+#'
+#' @param MatrixA an Elemental matrix (input)
+#' @param uplo (input). It can take the values "U" or "L" (upper or lower)
+#' to indicate in what part of the matrix is the data. 
+#' @return $value the maximum absolute value in the matrix
+#'
+#'   	   $indices an array with the coordinates of the maximum value
+#'
 SymmetricMaxAbs<-function(uplo, MatrixA){
   .Call( paste0("symmetricMaxAbs", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
 }
@@ -880,10 +1022,31 @@ VectorMaxAbs<-function(MatrixA){
   .Call( paste0("vectorMaxAbs", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+#' Finds the minimum value in an Elemental matrix
+#'
+#' Finds both, the minimum scalar value in the matrix and its coordinates (row, col)
+#'
+#' @param MatrixA an Elemental matrix (input)
+#'
+#' @return $value the minimum value in the matrix
+#'
+#'   	   $indices an array with the coordinates of the minimum value
+#'
 Min<-function(MatrixA){
   .Call( paste0("min", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+#' Finds the minimum value in an Elemental symmetric matrix
+#'
+#' Finds both, the minimum scalar value in a symmetric matrix and its coordinates (row, col)
+#'
+#' @param MatrixA an Elemental matrix (input)
+#' @param uplo (input). It can take the values "U" or "L" (upper or lower)
+#' to indicate in what part of the matrix is the data. 
+#' @return $value the minimum value in the matrix
+#'
+#'   	   $indices an array with the coordinates of the minimum value
+#'
 SymmetricMin<-function(uplo, MatrixA){
   .Call( paste0("symmetricMin", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
 }
@@ -892,32 +1055,38 @@ VectorMin<-function(MatrixA){
   .Call( paste0("vectorMin", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+#' Finds the minimum absolute value in an Elemental matrix
+#'
+#' Finds both, the minimum absolute scalar value in a 
+#' matrix and its coordinates (row, col)
+#'
+#' @param MatrixA an Elemental matrix (input)
+#' @return $value the minimum absolute value in the matrix
+#'
+#'   	   $indices an array with the coordinates of the minimum value
+#'
 MinAbs<-function(MatrixA){
   .Call( paste0("minAbs", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+#' Finds the minimum absolute value in an Elemental symmetric matrix
+#'
+#' Finds both, the minimum absolute scalar value in a 
+#' symmetric matrix and its coordinates (row, col)
+#'
+#' @param MatrixA an Elemental matrix (input)
+#' @param uplo (input). It can take the values "U" or "L" (upper or lower)
+#' to indicate in what part of the matrix is the data. 
+#' @return $value the minimum absolute value in the matrix
+#'
+#'   	   $indices an array with the coordinates of the minimum value
+#'
 SymmetricMinAbs<-function(uplo, MatrixA){
   .Call( paste0("symmetricMinAbs", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
 }
 
 VectorMinAbs<-function(MatrixA){
   .Call( paste0("vectorMinAbs", .getSuffix(MatrixA)), MatrixA@ptr )
-}
-
-SymmetricMax<-function(uplo, MatrixA){
-  .Call( paste0("symmetricMax", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
-}
-
-VectorMax<-function(MatrixA){
-  .Call( paste0("vectorMax", .getSuffix(MatrixA)), MatrixA@ptr )
-}
-
-MaxAbs<-function(MatrixA){
-  .Call( paste0("maxAbs", .getSuffix(MatrixA)), MatrixA@ptr )
-}
-
-SymmetricMaxAbs<-function(uplo, MatrixA){
-  .Call( paste0("symmetricMaxAbs", .getSuffix(MatrixA)), uplo, MatrixA@ptr )
 }
 
 Nrm2<-function(MatrixA){

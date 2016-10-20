@@ -12,10 +12,10 @@ Dot(MatrixA, MatrixB)
 \item{MatrixB}{An Elemental Matrix (input)}
 }
 \value{
-A scalar value
+a scalar value with the dot product
 }
 \description{
-Perform the dot product beween MatrixA and Matrix B returning an scalar
+Performs the dot product beween MatrixA and Matrix B returning an scalar
 depending on the matrix datatype
 }
 
