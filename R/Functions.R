@@ -777,6 +777,22 @@ Copy<-function(MatrixA, MatrixB){
   .Call( paste0("copy", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
 
+#' Multiplies a diagonal matrix by an Elemental matrix
+#'
+#' Multiplies the diagonal matrix made from the vector Matrixd by MatrixX, 
+#' storing the result on MatrixX. Which is equivalent to:
+#'
+#' MatrixX = diag(Matrixd) %*% MatrixX
+#'
+#' @param side "L" or "R" (input), indicating whether the diagonal matrix is on the 
+#' left or right side
+#' @param Matrixd an Elemental 1-D matrix (input)
+#' @param MatrixA an Elemental matrix (input, output)
+#' @param orientation indicates whether MatrixX is transposed or no (input).
+#'  Possible values "N" or "T" Normal or Transposed
+#'
+#' @return None
+#'
 DiagonalScale<-function(side, Matrixd, MatrixX, orientation="NORMAL"){
   if(MatrixX@datatype=="z"){
     .Call( paste0("diagonalScale", .getSuffix(MatrixX)), side, Matrixd@ptr,
@@ -787,7 +803,27 @@ DiagonalScale<-function(side, Matrixd, MatrixX, orientation="NORMAL"){
   }
 }
 
-DiagonalScaleTrapezoid<-function(side, uplo, Matrixd, MatrixX, offset,
+
+#' Multiplies a diagonal matrix by a trapezoidal Elemental matrix
+#'
+#' Multiplies the diagonal matrix made from the vector Matrixd by the trapezoidal MatrixX, 
+#' storing the result on MatrixX. Which is equivalent to:
+#'
+#' MatrixX = diag(Matrixd) %*% MatrixX
+#'
+#' @param side "L" or "R" (input), indicating whether the diagonal matrix is on the 
+#' left or right side
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixX has entries. 
+#' @param Matrixd an Elemental 1-D matrix (input)
+#' @param MatrixX an Elemental matrix (input, output)
+#' @param offset an integer value that indicates the diagonal offset of MatrixX
+#' @param orientation indicates whether MatrixX is transposed or no (input).
+#'  Possible values "N" or "T" Normal or Transposed
+#'
+#' @return None
+#'
+DiagonalScaleTrapezoid<-function(side, uplo, Matrixd, MatrixX, offset = 0,
                                  orientation="NORMAL"){
   if(MatrixX@datatype=="z"){
     .Call( paste0("diagonalScaleTrapezoid", .getSuffix(MatrixX)), side,
@@ -798,6 +834,23 @@ DiagonalScaleTrapezoid<-function(side, uplo, Matrixd, MatrixX, offset,
   }
 }
 
+#' Solves a diagonal linear system
+#'
+#' Solves a linear system with a diagonal matrix diag( Matrixd ) and right hand
+#' sides MatrixX. It stores the result on MatrixX.
+#'
+#' @param side "L" or "R" (input), indicating whether the diagonal matrix is on the 
+#' left or right side
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixX has entries. 
+#' @param Matrixd an Elemental 1-D matrix (input)
+#' @param MatrixX an Elemental matrix (input, output)
+#' @param offset an integer value that indicates the diagonal offset of MatrixX
+#' @param orientation indicates whether MatrixX is transposed or no (input).
+#'  Possible values "N" or "T" Normal or Transposed
+#'
+#' @return None
+#'
 DiagonalSolve<-function(side, uplo, Matrixd, MatrixX, offset,
                         orientation="NORMAL"){
   if(MatrixX@datatype=="z"){
@@ -828,7 +881,7 @@ Dot<-function(MatrixA, MatrixB){
 #' @param MatrixA (input, output)
 #' @param alpha a scalar value (input)
 #'
-#' @return none
+#' @return None
 #'
 Fill<-function(MatrixA, alpha){
   .Call( paste0("fill", .getSuffix(MatrixA)), MatrixA@ptr, alpha )
@@ -840,6 +893,7 @@ Fill<-function(MatrixA, alpha){
 #'
 #' @param MatrixA (input, output)
 #' @param alpha a scalar value (input)
+#' @param offset an integer value that indicates the diagonal offset
 #'
 #' @return none
 #'
@@ -863,6 +917,14 @@ Hadamard<-function(MatrixA, MatrixB, MatrixC){
         MatrixC@ptr )
 }
 
+#' Performs the Hilbert Schmidt inner product
+#'
+#'
+#'
+#' @param MatrixA an Elemental matrix (input)
+#' @param MatrixB an Elemental matrix(input)
+#'
+#' @return the value of the inner product
 HilbertSchmidt<-function(MatrixA, MatrixB){
   .Call( paste0("hilbertSchmidt", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
@@ -930,11 +992,11 @@ MakeSymmetric<-function(uplo, MatrixA){
 #' @param uplo (input). It can take the values "U" or "L" to indicate what part of
 #' the matrix should be kept. 
 #' @param MatrixA an Elemental matrix (input, output)
-#' @param offset an integer that indicates the diagonal offset
+#' @param offset an integer value that indicates the diagonal offset
 #'
 #' @return None
 #'
-MakeTrapezoidal<-function(uplo, MatrixA, offset = 1){
+MakeTrapezoidal<-function(uplo, MatrixA, offset = 0){
   .Call( paste0("makeTrapezoidal", .getSuffix(MatrixA)), uplo, MatrixA@ptr,
          as.integer(offset) )
 }
@@ -1089,43 +1151,125 @@ VectorMinAbs<-function(MatrixA){
   .Call( paste0("vectorMinAbs", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+
 Nrm2<-function(MatrixA){
   .Call( paste0("nrm2", .getSuffix(MatrixA)), MatrixA@ptr )
 }
 
+#' Extract the real part of a complex Elemental matrix
+#'
+#' Takes the real part from MatrixA and stores it intro MatrixAReal
+#' 
+#' @param MatrixA An Elemental matrix (input)
+#' @param MatrixAReal An Elemental matrix (input, output)
+#'
+#' @return None
+#'
 RealPart<-function(MatrixA, MatrixAReal){
   .Call( paste0("realPart", .getSuffix(MatrixA)), MatrixA@ptr, MatrixAReal@ptr )
 }
 
+#' Multiplies an Elemental matrix by an scalar
+#'
+#' Multiplies each element of the MatrixA by an scalar alpha
+#'
+#' @param alpha a scalar value
+#' @param MatrixA an Elemental matrix (input)
+#'
+#' @return None
+#'
 Scale<-function(alpha, MatrixA){
   .Call( paste0("scale", .getSuffix(MatrixA)), alpha, MatrixA@ptr )
 }
 
+#' Multiplies a trapeoidal section of an Elemental matrix by an scalar
+#'
+#' Multiplies each element of the MatrixA by an scalar alpha
+#'
+#' @param alpha a scalar value (input)
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' the matrix should be modified. 
+#' @param MatrixA an Elemental matrix (input, output)
+#' @param offset an integer value that indicates the diagonal offset (input)
+#'
+#' @return None
+#'
 ScaleTrapezoid<-function(alpha, uplo, MatrixA, offset){
   .Call( paste0("scaleTrapezoid", .getSuffix(MatrixA)), alpha, uplo, MatrixA@ptr,
          as.integer(offset) )
 }
 
+#' Shifts an Elemental matrix by an scalar
+#'
+#' Adds a scalar value to each element of the MatrixA
+#'
+#' @param alpha a scalar value (input)
+#' @param MatrixA an Elemental matrix (input)
+#'
+#' @return None
+#'
 Shift<-function(MatrixA, alpha){
   .Call( paste0("shift", .getSuffix(MatrixA)), MatrixA@ptr, alpha)
 }
 
-
+#' Shifts the diagonal elements of an Elemental matrix by an scalar
+#'
+#' Adds a scalar value to the diafonal elements of the MatrixA
+#'
+#' @param alpha a scalar value (input)
+#' @param MatrixA an Elemental matrix (input, output)
+#' @param offset an integer value that indicates the diagonal offset (input)
+#'
+#' @return None
+#'
 ShiftDiagonal<-function(MatrixA, alpha, offset=0){
   .Call( paste0("shiftDiagonal", .getSuffix(MatrixA)), MatrixA@ptr, alpha,
          as.integer(offset) )
 }
 
+#' Swaps two Elemental matrices
+#'
+#' Interchanges the contents of two elemental matrices, MatrixX becomes
+#' MatrixY and vice-versa
+#'
+#' @param orientation indicates whether the matrix is transposed or no (input).
+#'  Possible values "N" or "T" Normal or Transposed
+#' @param MatrixX an Elemental matrix (input, output)
+#' @param MatrixY an Elemental matrix (input, output)
+#'
+#' @return None
+#' 
 Swap<-function(orientation, MatrixX, MatrixY){
   .Call( paste0("swap", .getSuffix(MatrixX)), orientation, MatrixX@ptr,
          MatrixY@ptr )
 }
 
+
+#' Swaps two rows in an Elemental matrix
+#'
+#' Interchanges two rows inside an Elemental matrix
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#' @param to row destination (input) 0-indexed
+#' @param to row origin (input) 0-indexed
+#'
+#' @return None 
+#'
 RowSwap<-function(MatrixA, to, from){
   .Call( paste0("rowSwap", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(to),
          as.integer(from) )
 }
 
+#' Swaps two columns in an Elemental matrix
+#'
+#' Interchanges two columns inside an Elemental matrix MatrixA
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#' @param to col destination (input) 0-indexed
+#' @param to col origin (input) 0-indexed
+#'
+#' @return None
+#' 
 ColSwap<-function(MatrixA, to, from){
   .Call( paste0("colSwap", .getSuffix(MatrixA)), MatrixA, as.integer(to),
          as.integer(from) )
@@ -1136,44 +1280,126 @@ SymmetricSwap<-function(uplo, MatrixA, to, from){
          as.integer(to), as.integer(from) )
 }
 
+#' Transposes an Elemental matrix
+#'
+#' Transposes the MatrixA and stores into MatrixB
+#'
+#' @param MatrixA an Elemental matrix (input)
+#' @param MatrixB an Elemental matrix (input, output)
+#'
+#' @return None 
+#'
 Transpose<-function(MatrixA, MatrixB){
   .Call( paste0("transpose", .getSuffix(MatrixA)), MatrixA@ptr, MatrixB@ptr )
 }
 
 # Element-wise routines
 
+#' Element-wise square root on a Elemental matrix
+#'
+#' Replaces each entry from MatrixA by its square root
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 Sqrt<-function(MatrixA){
   .Call( paste0("sqrt", .getSuffix(MatrixA)), MatrixA@ptr)
 }
 
+#' Element-wise logarithm on a Elemental matrix
+#'
+#' Replaces each entry from MatrixA by its logarithm (base e)
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 Log<-function(MatrixA){
   .Call( paste0("log", .getSuffix(MatrixA)), MatrixA@ptr)
 }
 
+#' Element-wise exponential on a Elemental matrix
+#'
+#' Replaces each entry from MatrixA by its exponential function
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 Exp<-function(MatrixA){
   .Call( paste0("exp", .getSuffix(MatrixA)), MatrixA@ptr)
 }
 
+#' Element-wise cosine on a Elemental matrix
+#'
+#' Replaces each entry from MatrixA by its cosine function
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 Cos<-function(MatrixA){
   .Call( paste0("cos", .getSuffix(MatrixA)), MatrixA@ptr)
 }
 
+#' Element-wise sine on a Elemental matrix
+#'
+#' Replaces each entry from MatrixA by its sine function
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 Sin<-function(MatrixA){
   .Call( paste0("sin", .getSuffix(MatrixA)), MatrixA@ptr)
 }
 
+
+#' Element-wise tangent on a Elemental matrix
+#'
+#' Replaces each entry from MatrixA by its tangent function
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 Tan<-function(MatrixA){
   .Call( paste0("tan", .getSuffix(MatrixA)), MatrixA@ptr)
 }
 
+#' Element-wise inverse cosine on a Elemental matrix
+#'
+#' Replaces each entry from MatrixA by its inverse cosine function
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 Acos<-function(MatrixA){
   .Call( paste0("acos", .getSuffix(MatrixA)), MatrixA@ptr)
 }
 
+#' Element-wise inverse sine on a Elemental matrix
+#'
+#' Replaces each entry from MatrixA by its inverse sine function
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 Asin<-function(MatrixA){
   .Call( paste0("asin", .getSuffix(MatrixA)), MatrixA@ptr)
 }
 
+#' Element-wise inverse tangent on a Elemental matrix
+#'
+#' Replaces each entry from MatrixA by its inverse tangent function
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#'
+#' @return None
+#'
 Atan<-function(MatrixA){
   .Call( paste0("atan", .getSuffix(MatrixA)), MatrixA@ptr)
 }

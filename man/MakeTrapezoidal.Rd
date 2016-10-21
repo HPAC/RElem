@@ -4,7 +4,7 @@
 \alias{MakeTrapezoidal}
 \title{Makes an Elemental matrix trapezoidal}
 \usage{
-MakeTrapezoidal(uplo, MatrixA, offset = 1)
+MakeTrapezoidal(uplo, MatrixA, offset = 0)
 }
 \arguments{
 \item{uplo}{(input). It can take the values "U" or "L" to indicate what part of
@@ -12,7 +12,7 @@ the matrix should be kept.}
 
 \item{MatrixA}{an Elemental matrix (input, output)}
 
-\item{offset}{an integer that indicates the diagonal offset}
+\item{offset}{an integer value that indicates the diagonal offset}
 }
 \value{
 None

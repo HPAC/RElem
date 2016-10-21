@@ -12,7 +12,7 @@ Fill(MatrixA, alpha)
 \item{alpha}{a scalar value (input)}
 }
 \value{
-none
+None
 }
 \description{
 Fills each element from the MatrixA with the given scalar value

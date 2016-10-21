@@ -10,6 +10,8 @@ FillDiagonal(MatrixA, alpha, offset = 0)
 \item{MatrixA}{(input, output)}
 
 \item{alpha}{a scalar value (input)}
+
+\item{offset}{an integer value that indicates the diagonal offset}
 }
 \value{
 none
