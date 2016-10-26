@@ -102,32 +102,32 @@ SEXP hemmDist_z
 }
 
 SEXP herk_z
-(SEXP side, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP beta, SEXP RptrC){
-  ElHerk_z( parseSide(side), parseOrientation(orientation), toDComplex(alpha),
+(SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP beta, SEXP RptrC){
+  ElHerk_z( parseUpLo(uplo), parseOrientation(orientation), toDComplex(alpha),
 	    toMatrix_z(RptrA), toDComplex(beta), toMatrix_z(RptrC) );
   return R_NilValue;
 }
 
 SEXP herkDist_z
-(SEXP side, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP beta, SEXP RptrC){
-  ElHerkDist_z( parseSide(side), parseOrientation(orientation), toDComplex(alpha),
+(SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP beta, SEXP RptrC){
+  ElHerkDist_z( parseUpLo(uplo), parseOrientation(orientation), toDComplex(alpha),
 		toDistMatrix_z(RptrA), toDComplex(beta), toDistMatrix_z(RptrC) );
   return R_NilValue;
 }
 
 SEXP her2k_z
-(SEXP side, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta,
+(SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta,
  SEXP RptrC){
-  ElHer2k_z( parseSide(side), parseOrientation(orientation), toDComplex(alpha),
+  ElHer2k_z( parseUpLo(uplo), parseOrientation(orientation), toDComplex(alpha),
 	     toMatrix_z(RptrA), toMatrix_z(RptrB), toDComplex(beta),
 	     toMatrix_z(RptrC) );
   return R_NilValue;
 }
 
 SEXP her2kDist_z
-(SEXP side, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta,
+(SEXP uplo, SEXP orientation, SEXP alpha, SEXP RptrA, SEXP RptrB, SEXP beta,
  SEXP RptrC){
-  ElHer2kDist_z( parseSide(side), parseOrientation(orientation), toDComplex(alpha),
+  ElHer2kDist_z( parseUpLo(uplo), parseOrientation(orientation), toDComplex(alpha),
 		 toDistMatrix_z(RptrA), toDistMatrix_z(RptrB), toDComplex(beta),
 		 toDistMatrix_z(RptrC) );
   return R_NilValue;

@@ -154,7 +154,6 @@ DistMatrixGrid<-function(DistMatrixA, GridG){
          GridG@ptr )
 }
 
-
 DistMatrixSetRoot<-function(DistMatrixA, Root, constrain){
   .Call( paste0("setRootDistMatrix_", DistMatrixA@datatype), DistMatrixA@ptr,
          as.integer(Root), as.logical(constrain) )
@@ -292,6 +291,7 @@ PermutationExplicitMatrix <- function(Permutation, MatA){
 ###-------------------------
 ### Common Matrix Properties
 ###-------------------------
+
 
 MatrixDestroy<-function(MatrixA){
   object <- deparse(substitute(MatrixA))
@@ -548,6 +548,15 @@ LockedMerge2x2<-function( MatrixA, MatrixBTL, MatrixBTR, MatrixBBL, MatrixBBR){
 ### Matrix Generators
 #####################
 
+#' Generates a Demmel Elemental Matrix
+#'
+#' Generates an n x n demel Elemental matrix.
+#'
+#' @param MatrixA an Elemental matrix (input, output)
+#' @param n the dimension of the matrix (input)
+#'
+#' @return None
+#'
 Demmel<-function(MatrixA, n){
   .Call( paste0("demmel", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n) )
 }
@@ -563,13 +572,23 @@ HermitianUniformSpectrum<-function(MatrixA, n, lower, upper){
   }
   .Call( paste0("hermitianUniformSpectrum", .getSuffix(MatrixA)), MatrixA@ptr,
          as.integer(n), lower, upper)
-
 }
+
 
 Hilbert<-function(MatrixA, n){
   .Call( paste0("hilbert", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(n) )
 }
 
+#' Initializes an Elemental matrix as an identity matrix
+#'
+#' 
+#' 
+#' @param MatrixA an Elemental matrix (input and output)
+#' @param rows the number of rows (input)
+#' @param cols the number of columns (input)
+#'
+#' @return None
+#' 
 Identity<-function(MatrixA, rows, cols){
   .Call( paste0("identity", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(rows),
          as.integer(cols))
@@ -680,6 +699,18 @@ TriW<-function(MatrixA, n, alpha, k){
          as.integer(k) )
 }
 
+#' Fills an Elemental matrix with an uniform distribution
+#'
+#' Fills MatrixX with uniformly distributed entries
+#' 
+#' @param MatrixA an Elemental matrix (input and output)
+#' @param rows the number of rows (input)
+#' @param cols the number of columns (input)
+#' @param center the center of the uniform distribution (input)
+#' @param radius the radius of the uniform distribution (input)
+#'
+#' @return None
+#' 
 Uniform<-function(MatrixA, rows, cols, center=0.0, radius=1.0){
   if (MatrixA@datatype=="z"){
     center <- as.complex(center)
@@ -711,10 +742,22 @@ Wilkinson<-function(MatrixA, k){
   .Call( paste0("wilkinson", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(k) )
 }
 
+#' Fills an Elemental matrix with zeoros
+#'
+#' Fills with zeros and modifies the dimensions of the Elemental matrix
+#' MatrixX
+#' 
+#' @param MatrixA an Elemental matrix (input and out)
+#' @param rows the number of rows (input, output)
+#' @param cols the number of columns (input, output)
+#'
+#' @return None
+#' 
 Zeros<-function(MatrixA, rows, cols){
   .Call( paste0("zeros", .getSuffix(MatrixA)), MatrixA@ptr, as.integer(rows),
          as.integer(cols))
 }
+
 #############
 ### Blas Like
 #############
@@ -1409,51 +1452,177 @@ Atan<-function(MatrixA){
 ### Blas Level 2
 ###-------------
 
+#' Matrix vector multiplication of Elemental matrices
+#'
+#' Performs the operation `y = aAx + by` on Elemental matrices
+#' 
+#' @param orientation indicates whether matrixA is transposed or no (input).
+#'  Possible values "N" or "T" Normal or Transposed
+#' @param alpha Scalar that multiplies the matrix vector product(input)
+#' @param MatrixA an Elemental matrix (input)
+#' @param Matrixx a 1-D Elemental matrix (input)
+#' @param beta Scalar that multiplies scales Matrixy (input)
+#' @param Matrixy a 1-D Elemental matrix (input, output)
+#'
+#' @return None
+#' 
 Gemv<-function( orientationA="NORMAL", alpha, MatrixA, Matrixx, beta, Matrixy){
   .Call( paste0("gemv", .getSuffix(MatrixA)), orientationA, alpha, MatrixA@ptr,
          Matrixx@ptr, beta, Matrixy@ptr )
 }
 
+#' Outer product of of Elemental matrices (vectors)
+#'
+#' Performs the operation `A = alpha xy^H + A` on Elemental matrices
+#' 
+#' @param alpha Scalar that multiplies the outer product (input)
+#' @param MatrixA an Elemental matrix (input, output)
+#' @param Matrixx a 1-D Elemental matrix (input)
+#' @param Matrixy a 1-D Elemental matrix (input)
+#'
+#' @return None
+#' 
 Ger<-function( alpha, Matrixx, Matrixy, MatrixA){
   .Call( paste0("ger", .getSuffix(MatrixA)), alpha, Matrixx@ptr, Matrixy@ptr,
          MatrixA@ptr )
 }
 
+#' Outer product of of Elemental matrices (vectors)
+#'
+#' Performs the operation `A = alpha xy^T + A` on Elemental matrices
+#' 
+#' @param alpha Scalar that multiplies the outer product (input)
+#' @param MatrixA an Elemental matrix (input, output)
+#' @param Matrixx a 1-D Elemental matrix (input)
+#' @param Matrixy a 1-D Elemental matrix (input)
+#'
+#' @return None
+#' 
 Geru<-function( alpha, Matrixx, Matrixy, MatrixA){
   .Call( paste0("geru", .getSuffix(MatrixA)), alpha, Matrixx@ptr, Matrixy@ptr,
          MatrixA@ptr )
 }
 
+#' Hermitian matrix vector multiplication of Elemental matrices
+#'
+#' Performs the operation `y = aAx + by` on Elemental matrices
+#' 
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param alpha Scalar that multiplies the matrix vector product(input)
+#' @param MatrixA a hermitian Elemental matrix (input)
+#' @param Matrixx a 1-D Elemental matrix (input)
+#' @param beta Scalar that multiplies scales Matrixy (input)
+#' @param Matrixy a 1-D Elemental matrix (input, output)
+#'
+#' @return None
+#' 
 Hemv<-function( uplo, alpha, MatrixA, Matrixx, beta, Matrixy){
   .Call( paste0("hemv", .getSuffix(MatrixA)), uplo, alpha, MatrixA@ptr,
          Matrixx@ptr, beta, Matrixy@ptr )
 }
 
+#' Hermitian rank one update on Elemental matrices
+#'
+#' Performs the operation `A = alpha xx^H + A` on Elemental matrices,
+#' where only the selected section of A is updated
+#' 
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param alpha Scalar that multiplies the outer product (input)
+#' @param Matrixx a 1-D Elemental matrix (input)
+#' @param MatrixA an Elemental matrix (input, output)
+#' @return None
+#' 
 Her<-function( uplo, alpha, Matrixx, MatrixA){
   .Call( paste0("her", .getSuffix(MatrixA)), uplo, alpha, Matrixx@ptr,
          MatrixA@ptr )
 }
 
+#' Hermitian rank two update on Elemental matrices
+#'
+#' Performs the operation `A = alpha xy^H + alpha_conj yx^H + A`
+#' on Elemental matrices, where only the selected section of A is updated
+#' 
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param alpha Scalar that multiplies the outer products (input)
+#' @param Matrixx a 1-D Elemental matrix (input)
+#' @param Matrixy a 1-D Elemental matrix (input)
+#' @param MatrixA an Elemental matrix (input, output)
+#' @return None
+#' 
 Her2<-function( uplo, alpha, Matrixx, Matrixy, MatrixA){
   .Call( paste0("her2", .getSuffix(MatrixA)), uplo, alpha, Matrixx@ptr,
          Matrixy@ptr, MatrixA@ptr )
 }
 
+#' Quasi-Triangular solve for Elemental matrices
+#'
+#' Performs the operation `x = A^(-1)x` on Elemental matrices.
+#' 
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param orientation indicates whether matrixA is transposed or no (input).
+#'  Possible values "N" or "T" Normal or Transposed
+#' @param MatrixA an Elemental matrix (input)
+#' @param Matrixx a 1-D Elemental matrix (input, output)
+#' @return None
+#' 
 QuasiTrsv<-function( uplo, orientation, MatrixA, Matrixx){
   .Call( paste0("quasiTrsv", .getSuffix(MatrixA)), uplo, orientation,
          MatrixA@ptr, Matrixx@ptr)
 }
 
+#' Symmetric matrix vector multiplication of Elemental matrices
+#'
+#' Performs the operation `y = aAx + by` on Elemental matrices
+#' 
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param alpha Scalar that multiplies the matrix vector product(input)
+#' @param MatrixA a hermitian Elemental matrix (input)
+#' @param Matrixx a 1-D Elemental matrix (input)
+#' @param beta Scalar that multiplies scales Matrixy (input)
+#' @param Matrixy a 1-D Elemental matrix (input, output)
+#'
+#' @return None
+#' 
 Symv<-function( uplo, alpha, MatrixA, Matrixx, beta, Matrixy){
   .Call( paste0("symv", .getSuffix(MatrixA)), uplo, alpha, MatrixA@ptr,
          Matrixx@ptr, beta, Matrixy@ptr )
 }
 
+#' Symmetric rank one update on Elemental matrices
+#'
+#' Performs the operation `A = alpha xx^T + A` on Elemental matrices,
+#' where only the selected section of A is updated
+#' 
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param alpha Scalar that multiplies the outer product (input)
+#' @param Matrixx a 1-D Elemental matrix (input)
+#' @param MatrixA an Elemental matrix (input, output)
+#' @return None
+#' 
 Syr<-function( uplo, alpha, Matrixx, MatrixA){
   .Call( paste0("syr", .getSuffix(MatrixA)), uplo, alpha, Matrixx@ptr,
          MatrixA@ptr )
 }
 
+#' Symmetric rank two update on Elemental matrices
+#'
+#' Performs the operation `A = alpha (xy^T + yx^T) + A`
+#' on Elemental matrices, where only the selected section of A is updated
+#' 
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param alpha Scalar that multiplies the outer products (input)
+#' @param Matrixx a 1-D Elemental matrix (input)
+#' @param Matrixy a 1-D Elemental matrix (input)
+#' @param MatrixA an Elemental matrix (input, output)
+#' @return None
+#' 
 Syr2<-function( uplo, alpha, Matrixx, Matrixy, MatrixA){
   .Call( paste0("syr2", .getSuffix(MatrixA)), uplo, alpha, Matrixx@ptr,
          Matrixy@ptr, MatrixA@ptr )
@@ -1484,6 +1653,20 @@ Trr2<-function( uplo, alpha, MatrixX, MatrixY, MatrixA, conjugate=FALSE){
   }
 }
 
+#' Triangular solve for Elemental matrices
+#'
+#' Performs the operation `x = A^(-1)x` on Elemental matrices. A is treated
+#' as either lower or upper triangular.
+#' 
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param orientation indicates whether matrixA is transposed or no (input).
+#'  Possible values "N" or "T" Normal or Transposed
+#' @param diagUnit indicates if matrixA has a unit diagonal; true or false (input)
+#' @param MatrixA an Elemental matrix (input)
+#' @param Matrixx a 1-D Elemental matrix (input, output)
+#' @return None
+#' 
 Trsv<-function( uplo, orientation, diagUnit, MatrixA, Matrixx){
   .Call( paste0("trsv", .getSuffix(MatrixA)), uplo, orientation, diagUnit,
          MatrixA@ptr, Matrixx@ptr)
@@ -1495,6 +1678,22 @@ Trsv<-function( uplo, orientation, diagUnit, MatrixA, Matrixx){
 ### Blas Level 3
 ###-------------
 
+#' Matrix matrix multiplication of Elemental matrices
+#'
+#' Performs the operation `C = aAB + bC` on Elemental matrices
+#' 
+#' @param orientationA indicates whether matrixA is transposed or no (input).
+#'  Possible values "N" or "T" Normal or Transposed
+#' @param orientationB indicates whether matrixB is transposed or no (input).
+#'  Possible values "N" or "T" Normal or Transposed
+#' @param alpha Scalar that multiplies the matrix vector product(input)
+#' @param MatrixA an Elemental matrix (input)
+#' @param MatrixB an Elemental matrix (input)
+#' @param beta Scalar that multiplies scales Matrixy (input)
+#' @param MatrixC an Elemental matrix (input, output)
+#'
+#' @return None
+#' 
 Gemm<-function( orientationA="NORMAL", orientationB="NORMAL", alpha, MatrixA,
                 MatrixB, beta, MatrixC){
   .Call( paste0("gemm", .getSuffix(MatrixA)),orientationA, orientationB, alpha,
@@ -1507,17 +1706,68 @@ GemmX<-function( orientationA="NORMAL", orientationB="NORMAL", alpha, MatrixA,
          MatrixA@ptr, MatrixB@ptr, beta, MatrixC@ptr, algorithm )
 }
 
+#' Hermitian matrix matrix multiplication of Elemental matrices
+#'
+#' Performs the operation `C = aAB + bC` or `C = aBA + bC` on Elemental matrices,
+#' wehere A is implicitly Hermitian
+#' 
+#' @param side "L" or "R" (input), indicating whether matrixA is on the 
+#' left or right side
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param alpha Scalar that multiplies the matrix vector product(input)
+#' @param MatrixA an Elemental matrix (input)
+#' @param MatrixB an Elemental matrix (input)
+#' @param beta Scalar that multiplies scales Matrixy (input)
+#' @param MatrixC an Elemental matrix (input, output)
+#'
+#' @return None
+#' 
 Hemm<-function( side, uplo, alpha, MatrixA, MatrixB, beta, MatrixC ){
   .Call( paste0("hemm", .getSuffix(MatrixA)), side, uplo, alpha, MatrixA@ptr,
          MatrixB@ptr, beta, MatrixC@ptr )
 }
 
-Herk<-function( side, orientation, alpha, MatrixA, beta, MatrixC ){
+#' Hermitian rank k update of Elemental matrices
+#'
+#' Performs the operation `C = aAA^H + bC` or `C = aA^H A + bC` on Elemental matrices,
+#' only the selected triangle of C is modified
+#' 
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param orientation indicates whether matrixA is an adjoint or no (input).
+#'  Possible values "N", "A" Normal or Adjoint
+#' @param alpha Scalar that multiplies the matrix product(input)
+#' @param MatrixA an Elemental matrix (input)
+#' @param beta Scalar that multiplies scales Matrixy (input)
+#' @param MatrixC an Elemental matrix (input, output)
+#'
+#' @return None
+#' 
+Herk<-function( uplo, orientation, alpha, MatrixA, beta, MatrixC ){
   .Call( paste0("herk", .getSuffix(MatrixA)), side, orientation, alpha,
          MatrixA@ptr, beta, MatrixC@ptr )
 }
 
-Her2k<-function( side, orientation, alpha, MatrixA, MatrixB, beta, MatrixC ){
+#' Hermitian rank 2k update of Elemental matrices
+#'
+#' Performs the operation `C = a AB^H + a_conj BA^H + bC` or 
+#' `C = a A^H B + a_conj B^H A + bC` on Elemental matrices, only the
+#'  selected triangle of C is modified
+#' 
+#' @param uplo (input). It can take the values "U" or "L" to indicate what part of
+#' matrixA has entries. 
+#' @param orientation indicates whether matrixA is an adjoint or no (input).
+#'  Possible values "N", "A" Normal or Adjoint
+#' @param alpha Scalar that multiplies the matrix products (input)
+#' @param MatrixA an Elemental matrix (input)
+#' @param MatrixB an Elemental matrix (input)
+#' @param beta Scalar that multiplies scales Matrixy (input)
+#' @param MatrixC an Elemental matrix (input, output)
+#'
+#' @return None
+#' 
+Her2k<-function( uplo, orientation, alpha, MatrixA, MatrixB, beta, MatrixC ){
   .Call( paste0("her2k", .getSuffix(MatrixA)), side, orientation, alpha,
          MatrixA@ptr, MatrixB@ptr, beta, MatrixC@ptr )
 }
