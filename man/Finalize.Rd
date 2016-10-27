@@ -6,6 +6,9 @@
 \usage{
 Finalize()
 }
+\value{
+None
+}
 \description{
 Finalizes MPI
 }

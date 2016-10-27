@@ -6,6 +6,9 @@
 \usage{
 Initialize()
 }
+\value{
+None
+}
 \description{
 Initializes MPI allowing the use of Distributed Matrices
 }
