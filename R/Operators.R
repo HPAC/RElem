@@ -360,6 +360,42 @@ setMethod("[<-",
           })
 
 ######################
+### Matrix Properties
+######################
+
+setMethod("dim",
+    signature(x = "ElMatrix"),
+    function (x) 
+    {
+	c(x$Height(), x$Width())
+    }
+)
+
+setMethod("dim",
+    signature(x = "ElDistMatrix"),
+    function (x) 
+    {
+	c(x$Height(), x$Width())
+    }
+)
+
+setMethod("dim<-",
+    signature(x = "ElMatrix"),
+    function (x, value) 
+    {
+	x$Resize(value[1],value[2])
+    }
+)
+
+setMethod("dim<-",
+    signature(x = "ElDistMatrix"),
+    function (x, value) 
+    {
+	x$Resize(value[1],value[2])
+    }
+)
+
+######################
 ### Solvers
 ######################
 
