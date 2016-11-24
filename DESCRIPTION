@@ -1,11 +1,11 @@
 Package: RElem
 Type: Package
-Title: Wrappers to use Elemental library www.libelemental.org
+Title: RElem : Distributed parallel linear algebra through Elemental www.libelemental.org
 Version: 0.02.0874
 Date: 2016.11.24
 Author: Rodrigo Canales
 Maintainer: Rodrigo Canales <rodrigo.canales@rwth-aachen.de>
-Description: Wrappers to use Elemental library (0.87.4)
+Description: Wrappers to use Elemental library (0.87.4), allowing distributed parallel computations using native R syntax.
 License: MIT
 Collate:
     Environment.R
