@@ -1,0 +1,5 @@
+.gitignore
+.travis.yml
+SimpleDist.R
+TODO.md
+configure.ac

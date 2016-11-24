@@ -13,6 +13,7 @@ before_install:
  - curl https://cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz | sudo tar -x -z --strip-components 1 -C /usr
  - git clone git://github.com/elemental/Elemental.git
  - cd Elemental
+ - git checkout aa0d2f8
  - mkdir build && cd build
  - cmake .. -DCMAKE_CXX_COMPILER=g++-5 -DCMAKE_C_COMPILER=gcc-5 -DCMAKE_Fortran_COMPILER=gfortran-5 -DCMAKE_INSTALL_PREFIX=~/local/El;
  - make -j2 && sudo make install
