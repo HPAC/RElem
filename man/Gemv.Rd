@@ -7,6 +7,9 @@
 Gemv(orientationA = "NORMAL", alpha, MatrixA, Matrixx, beta, Matrixy)
 }
 \arguments{
+\item{orientationA}{indicates whether matrixA is transposed or no (input).
+Possible values "N" or "T" Normal or Transposed}
+
 \item{alpha}{Scalar that multiplies the matrix vector product(input)}
 
 \item{MatrixA}{an Elemental matrix (input)}
@@ -16,9 +19,6 @@ Gemv(orientationA = "NORMAL", alpha, MatrixA, Matrixx, beta, Matrixy)
 \item{beta}{Scalar that multiplies scales Matrixy (input)}
 
 \item{Matrixy}{a 1-D Elemental matrix (input, output)}
-
-\item{orientation}{indicates whether matrixA is transposed or no (input).
-Possible values "N" or "T" Normal or Transposed}
 }
 \value{
 None
