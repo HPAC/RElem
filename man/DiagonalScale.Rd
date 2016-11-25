@@ -12,10 +12,10 @@ left or right side}
 
 \item{Matrixd}{an Elemental 1-D matrix (input)}
 
+\item{MatrixX}{an Elemental matrix (input, output)}
+
 \item{orientation}{indicates whether MatrixX is transposed or no (input).
 Possible values "N" or "T" Normal or Transposed}
-
-\item{MatrixA}{an Elemental matrix (input, output)}
 }
 \value{
 None

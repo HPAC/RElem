@@ -830,7 +830,7 @@ Copy<-function(MatrixA, MatrixB){
 #' @param side "L" or "R" (input), indicating whether the diagonal matrix is on the 
 #' left or right side
 #' @param Matrixd an Elemental 1-D matrix (input)
-#' @param MatrixA an Elemental matrix (input, output)
+#' @param MatrixX an Elemental matrix (input, output)
 #' @param orientation indicates whether MatrixX is transposed or no (input).
 #'  Possible values "N" or "T" Normal or Transposed
 #'
@@ -1294,7 +1294,7 @@ Swap<-function(orientation, MatrixX, MatrixY){
 #'
 #' @param MatrixA an Elemental matrix (input, output)
 #' @param to row destination (input) 0-indexed
-#' @param to row origin (input) 0-indexed
+#' @param from row origin (input) 0-indexed
 #'
 #' @return None 
 #'
@@ -1309,7 +1309,7 @@ RowSwap<-function(MatrixA, to, from){
 #'
 #' @param MatrixA an Elemental matrix (input, output)
 #' @param to col destination (input) 0-indexed
-#' @param to col origin (input) 0-indexed
+#' @param from col origin (input) 0-indexed
 #'
 #' @return None
 #' 
@@ -1456,7 +1456,7 @@ Atan<-function(MatrixA){
 #'
 #' Performs the operation `y = aAx + by` on Elemental matrices
 #' 
-#' @param orientation indicates whether matrixA is transposed or no (input).
+#' @param orientationA indicates whether matrixA is transposed or no (input).
 #'  Possible values "N" or "T" Normal or Transposed
 #' @param alpha Scalar that multiplies the matrix vector product(input)
 #' @param MatrixA an Elemental matrix (input)

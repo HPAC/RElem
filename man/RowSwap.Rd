@@ -11,7 +11,7 @@ RowSwap(MatrixA, to, from)
 
 \item{to}{row destination (input) 0-indexed}
 
-\item{to}{row origin (input) 0-indexed}
+\item{from}{row origin (input) 0-indexed}
 }
 \value{
 None

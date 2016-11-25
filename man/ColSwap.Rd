@@ -11,7 +11,7 @@ ColSwap(MatrixA, to, from)
 
 \item{to}{col destination (input) 0-indexed}
 
-\item{to}{col origin (input) 0-indexed}
+\item{from}{col origin (input) 0-indexed}
 }
 \value{
 None
