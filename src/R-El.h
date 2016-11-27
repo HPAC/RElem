@@ -214,3 +214,16 @@ complex_double RElAsin_z(complex_double val);
 double RElAtan_d(double val);
 complex_double RElAtan_z(complex_double val);
 
+#define RELEM_ABORT_ON_ERROR(error) \
+  do \
+  { \
+      if( error != EL_SUCCESS ) \
+      { \
+          int commRank_; MPI_Comm_rank( MPI_COMM_WORLD, &commRank_ ); \
+          const char* errString = ElErrorString(error); \
+          Rprintf( \
+	    "Rank %d aborting: %s was returned from line %d of file %s\n", \
+            commRank_, errString, __LINE__, __FILE__ ); \
+          MPI_Abort( MPI_COMM_WORLD, 1 ); \
+      } \
+  } while( 0 )
