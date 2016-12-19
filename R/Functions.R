@@ -2368,11 +2368,6 @@ LAV<-function(MatrixA, Matrixb, Matrixx){
          Matrixx@ptr)
 }
 
-LogisticRegression<-function(MatrixA, Matrixq, Matrixz, gamma, penalty){
-  .Call( paste0("logisticRegression", .getSuffix(MatrixA)), MatrixA@ptr,
-         Matrixq@ptr, Matrixz@ptr, gamma, penalty)
-}
-
 NMF<-function(MatrixA, MatrixX, MatrixY){
   .Call( paste0("nMF", .getSuffix(MatrixA)), MatrixA@ptr, MatrixX@ptr,
          MatrixY@ptr)
