@@ -72,29 +72,6 @@ SEXP lAVDist_d( SEXP MatrixA, SEXP Matrixb, SEXP Matrixx){
 
 /* Expert version pending */
 
-/* Logistic Regression
- */
-
-
-SEXP logisticRegression_d
-( SEXP MatrixQ, SEXP Matrixq, SEXP Matrixz, SEXP gamma, SEXP penalty){
-  SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElLogisticRegression_d( toMatrix_d(MatrixQ), toMatrix_d(Matrixq),
-                          toMatrix_d(Matrixz), toDouble(gamma),
-                          parseRegularization(penalty), INTEGER(numIts));
-  UNPROTECT(1);
-  return numIts;
-} 
-
-SEXP logisticRegressionDist_d
-( SEXP MatrixQ, SEXP Matrixq, SEXP Matrixz, SEXP gamma, SEXP penalty){
-  SEXP numIts = PROTECT( allocVector(INTSXP,1) );
-  ElLogisticRegressionDist_d( toDistMatrix_d(MatrixQ), toDistMatrix_d(Matrixq),
-                              toDistMatrix_d(Matrixz), toDouble(gamma),
-                              parseRegularization(penalty), INTEGER(numIts));
-  UNPROTECT(1);
-  return numIts;
-} 
 
 /* Model Fit (PENDING) */
 

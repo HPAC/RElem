@@ -24,21 +24,61 @@ SEXP initialized(){
 }
 
 SEXP printVersion(){
-  ElPrintVersion(stdout);
+  char buffer[256];
+  FILE *tmp;
+  tmp = tmpfile();
+  ElPrintVersion(tmp);
+  rewind(tmp);
+  while (!feof(tmp)) {
+    if (fgets (buffer,256,tmp) == NULL)
+      break;
+    Rprintf("%s",buffer);
+  }
+  fclose(tmp);
   return R_NilValue;
 }
 
 SEXP printConfig(){
-  ElPrintConfig(stdout);
+  char buffer[256];
+  FILE *tmp;
+  tmp = tmpfile();
+  ElPrintConfig(tmp);
+  rewind(tmp);
+  while (!feof(tmp)) {
+    if (fgets (buffer,256,tmp) == NULL)
+      break;
+    Rprintf("%s",buffer);
+  }
+  fclose(tmp);
   return R_NilValue;
 }
 
 SEXP printCCompilerInfo(){
-  ElPrintCCompilerInfo(stdout);
+  char buffer[256];
+  FILE *tmp;
+  tmp = tmpfile();
+  ElPrintCCompilerInfo(tmp);
+  rewind(tmp);
+  while (!feof(tmp)) {
+    if (fgets (buffer,256,tmp) == NULL)
+      break;
+    Rprintf("%s",buffer);
+  }
+  fclose(tmp);
   return R_NilValue;
 }
 
 SEXP printCxxCompilerInfo(){
-  ElPrintCxxCompilerInfo(stdout);
+  char buffer[256];
+  FILE *tmp;
+  tmp = tmpfile();
+  ElPrintCxxCompilerInfo(tmp);
+  rewind(tmp);
+  while (!feof(tmp)) {
+    if (fgets (buffer,256,tmp) == NULL)
+      break;
+    Rprintf("%s",buffer);
+  }
+  fclose(tmp);
   return R_NilValue;
 }

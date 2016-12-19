@@ -127,14 +127,6 @@ ElTikhonovAlg parseTikhonovAlg(SEXP alg){
   return EL_TIKHONOV_CHOLESKY;
 }
 
-ElRegularization parseRegularization(SEXP pen){
-  char *text = (char*)toChar_p(pen);
-  if (strcmp("NO_PENALTY", text) == 0) return EL_NO_PENALTY;
-  if (strcmp("L1_PENALTY", text) == 0) return EL_L1_PENALTY;
-  if (strcmp("L2_PENALTY", text) == 0) return EL_L1_PENALTY;
-  return EL_NO_PENALTY;
-}
-
 ElLPApproach parseLPApproach(SEXP app){
   char *text = (char*)toChar_p(app);
   if (strcmp("LP_ADMM", text) == 0) return EL_LP_ADMM;

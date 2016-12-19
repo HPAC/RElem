@@ -12,7 +12,7 @@ SEXP newDistPermutation(SEXP RptrGrid){
   ElError e;
   ElDistPermutation *pDPerm = malloc(sizeof(ElDistPermutation));
   e=ElDistPermutationCreate( pDPerm, toGrid(RptrGrid));
-  EL_ABORT_ON_ERROR(e);
+  RELEM_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT( R_MakeExternalPtr( pDPerm, install("DistPermutation"),
                                           R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
@@ -24,7 +24,7 @@ SEXP newPermutation(){
   ElError e;
   ElPermutation *pPerm = malloc(sizeof(ElPermutation));
   e=ElPermutationCreate(pPerm);
-  EL_ABORT_ON_ERROR(e);
+  RELEM_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT( R_MakeExternalPtr( pPerm, install("Permutation"),
                                           R_NilValue) );
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);

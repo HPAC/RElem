@@ -14,7 +14,7 @@ SEXP newMatrix_i(){
   ElError e;
   ElMatrix_i *pMat = malloc(sizeof(ElMatrix_i));
   e=ElMatrixCreate_i(pMat);
-  EL_ABORT_ON_ERROR(e);
+  RELEM_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   UNPROTECT(1);
@@ -24,7 +24,7 @@ SEXP newMatrix_s(){
   ElError e;
   ElMatrix_s *pMat = malloc(sizeof(ElMatrix_s));
   e=ElMatrixCreate_s(pMat);
-  EL_ABORT_ON_ERROR(e);
+  RELEM_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   UNPROTECT(1);
@@ -34,7 +34,7 @@ SEXP newMatrix_d(){
   ElError e;
   ElMatrix_d *pMat = malloc(sizeof(ElMatrix_d));
   e=ElMatrixCreate_d(pMat);
-  EL_ABORT_ON_ERROR(e);
+  RELEM_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   UNPROTECT(1);
@@ -44,7 +44,7 @@ SEXP newMatrix_c(){
   ElError e;
   ElMatrix_c *pMat = malloc(sizeof(ElMatrix_c));
   e=ElMatrixCreate_c(pMat);
-  EL_ABORT_ON_ERROR(e);
+  RELEM_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   UNPROTECT(1);
@@ -54,7 +54,7 @@ SEXP newMatrix_z(){
   ElError e;
   ElMatrix_z *pMat = malloc(sizeof(ElMatrix_z));
   e=ElMatrixCreate_z(pMat);
-  EL_ABORT_ON_ERROR(e);
+  RELEM_ABORT_ON_ERROR(e);
   SEXP Rptr = PROTECT(R_MakeExternalPtr(pMat, install("Matrix"),R_NilValue));
   R_RegisterCFinalizerEx(Rptr, _clear, TRUE);
   UNPROTECT(1);
