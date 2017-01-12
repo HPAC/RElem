@@ -157,3 +157,35 @@ C <- A%*%B
 print(C)
 
 ```
+
+## Appendix: Full installation script using mac OS X
+
+This script assumes that the computer has gfortran and mpich from macports.
+
+```
+git clone git@github.com:elemental/Elemental.git
+git checkout  v0.87.6
+
+mkdir build
+cd build
+
+cmake \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX=${HOME}/local/El \
+    -D EL_DISABLE_PARMETIS=ON \
+    -D CMAKE_Fortran_COMPILER=gfortran-mp-5 \
+    -D MPI_C_COMPILER=mpicc-mpich-mp \
+    -D MPI_CXX_COMPILER=mpic++-mpich-mp \
+    -D MPI_FORTRAN_COMPILER=mpifort-mpich-mp \
+    -D MPI_F77_COMPILER=mpif77-mpich-mp \
+    -D EL_DISABLE_SCALAPACK=ON \
+    ..
+
+make -j4
+make install
+
+export LD_LIBRARY_PATH=${HOME}/local/El/lib:$LD_LIBRARY_PATH
+
+R CMD INSTALL RElem.tar.gz
+
+```
