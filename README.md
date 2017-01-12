@@ -1,6 +1,6 @@
 #RElem
 
-[![Build Status](https://travis-ci.org/rocanale/RElem.svg?branch=master)](https://travis-ci.org/rocanale/RElem) using Elemental v0.87.6 (8a1a42c)
+[![Build Status](https://travis-ci.org/rocanale/RElem.svg?branch=master)](https://travis-ci.org/rocanale/RElem) using Elemental v0.87.6
 
 This R package links R and the dense linear algebra library
 [Elemental](http://www.libelemental.org), providing distributed parallel
@@ -25,12 +25,11 @@ package:
     * Matrix Factorizations
     * Spectral Decomposition
     * Solvers
+    * Optimization Models
 * Matrix Generators
 * LibFLAME-like
     * Partition
     * Merge
-    * Repartition (_Not yet active in El headers_)
-    * Slide Partition (_Not yet active in El headers_)
 * I/O routines
   
 
@@ -40,12 +39,31 @@ package:
 The installation of the RElem requires two steps:
 
 #### 1. Install Elemental
-- [Install Elemental](http://libelemental.org/documentation/dev/build.html) as a shared library
-- Ideally, Elemental is installed in one of the default paths `/usr/local`, `$HOME/local`, `$HOME/.local`
+- [Install Elemental latest release](https://github.com/elemental/Elemental/releases/tag/v0.87.6) 0.87.6
+    - Elemental requires a C/C++ compiler, a fortran compiler and an MPI distribution like mpich. 
+- Ideally, Elemental is installed in one of these paths `/usr/local`, `$HOME/local`, `$HOME/.local`
+
+
+##### Unix Installation example
+
+```
+mkdir build
+cd build
+cmake \
+    -D EL_DISABLE_SCALAPACK=ON \
+    -D CMAKE_INSTALL_PREFIX=$HOME/local \
+    -D EL_DISABLE_PARMETIS=ON \
+    ..
+make -j4
+make install
+```
+
+*If you installed Elemental in a non default path, please be sure that libEl.so can be loaded*:
+
+`export LD_LIBRARY_PATH=$HOME/local:$LD_LIBRARY_PATH`
 
 #### 2. Install RElem
-We have plans to make R-El available in R's package manager CRAN in the future.  So far, **a
-superuser** can install the interface from R as follows:
+We have plans to make R-El available in R's package manager CRAN in the future. Nevertheless it is possible to install it manually.
 
 A zip file from the package can be downloaded from our [releases](https://github.com/rocanale/RElem/releases) and then installed using the following command:
 
@@ -117,21 +135,17 @@ For distributed computations, R needs to be invoked by MPI as follows:
 
 `mpiexec -n 4 R --no-readline --slave --quiet --vanilla -f SimpleDist.R`
 
-Note: The openmpi library (or the one installed in the system) must be preloaded using the `LD_PRELOAD` environment variable:
+### Simple Script
 
-`export LD_PRELOAD=/usr/lib/libmpi.so:$LD_PRELOAD`
-
-### Source
-
-The following example invokes `GEMM` with distributed matrices
+The following example invokes a matrix multiplication `GEMM` using distributed matrices
 
 ```s
 # Load the library
 library(RElem)
 
 # Create the Matrices
-A <- DistMatrix(g)
-B <- DistMatrix(g)
+A <- DistMatrix()
+B <- DistMatrix()
 
 #Initialize the Matrices
 Uniform(A,6,4)
@@ -141,5 +155,37 @@ Uniform(B,3,4)
 C <- A%*%B
 
 print(C)
+
+```
+
+## Appendix: Full installation script using mac OS X
+
+This script assumes that the computer has gfortran and mpich from macports.
+
+```
+git clone git@github.com:elemental/Elemental.git
+git checkout  v0.87.6
+
+mkdir build
+cd build
+
+cmake \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX=${HOME}/local/El \
+    -D EL_DISABLE_PARMETIS=ON \
+    -D CMAKE_Fortran_COMPILER=gfortran-mp-5 \
+    -D MPI_C_COMPILER=mpicc-mpich-mp \
+    -D MPI_CXX_COMPILER=mpic++-mpich-mp \
+    -D MPI_FORTRAN_COMPILER=mpifort-mpich-mp \
+    -D MPI_F77_COMPILER=mpif77-mpich-mp \
+    -D EL_DISABLE_SCALAPACK=ON \
+    ..
+
+make -j4
+make install
+
+export LD_LIBRARY_PATH=${HOME}/local/El/lib:$LD_LIBRARY_PATH
+
+R CMD INSTALL RElem.tar.gz
 
 ```

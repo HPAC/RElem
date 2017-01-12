@@ -1,4 +1,4 @@
-AC_INIT(configRElem, v0.01.085)
+AC_INIT(configRElem, v0.2.876)
 AC_ARG_WITH(ElPrefix,
     AC_HELP_STRING(--with-ElPrefix=EL_PREFIX,
         The elemental prefix at the installation),
@@ -15,7 +15,7 @@ if test -n "${UsrPrefix}"; then
 else
   #Checking the common folders
   HIDLOC="/.local"
-  for pr in /usr/local /usr/local/El /usr/local/opt/Elemental /opt/El "$HOME/local" "$HOME/local/El" "$HOME$HIDLOC"; do
+  for pr in /usr/local /usr/local/El /usr/local/Elemental /usr/share /usr/local/share /opt/El "$HOME/local" "$HOME/local/El" "$HOME$HIDLOC" /usr/local/Cellar/elemental /usr/opt/Cellar/elemental; do
     if test -f "${pr}/conf/ElVars"; then
       EL_PREFIX="${pr}"
       echo "Found Elemental in ${pr}"
@@ -25,7 +25,7 @@ else
 fi
 
 if test ! -n "${EL_PREFIX}" ; then
-   AC_MSG_ERROR([Elemental not found, please specify the prefix of its installation using the flag --with-ElPrefix=/THE/PREFIX])
+   AC_MSG_ERROR([Elemental not found, please specify the prefix of its installation using the flag --configure-args=--with-ElPrefix=/THE/PREFIX])
 fi
 
 AC_SUBST(EL_PREFIX)

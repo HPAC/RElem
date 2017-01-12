@@ -1,12 +1,12 @@
 Package: RElem
 Type: Package
 Title: Distributed Parallel Linear Algebra Through Elemental (Libelemental.org)
-Version: 0.2.874
+Version: 0.2.876
 Date: 2016-11-25
 Depends: R (>= 3.1.0)
 Author: Rodrigo Canales
 Maintainer: Rodrigo Canales <rodrigo.canales@rwth-aachen.de>
-Description: Wrappers to use Elemental library (0.87.4), allowing distributed parallel computations using native R syntax.
+Description: Wrappers to use Elemental library (0.87.6), allowing distributed parallel computations using native R syntax.
 License: MIT | file LICENSE
 URL: https://github.com/HPAC/RElem
 Collate:
