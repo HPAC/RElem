@@ -464,7 +464,7 @@ setMethod("t",
 setMethod("t",
           signature(x = "ElDistMatrix"),
           function (x){
-            y <- Matrix(x@datatype)
+            y <- DistMatrix(x@datatype)
             Transpose(x,y)
             y
           })
